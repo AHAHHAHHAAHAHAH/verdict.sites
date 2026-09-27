@@ -20,6 +20,8 @@ Diese Erklärung beschreibt, wie personenbezogene Daten bei der Nutzung dieser W
 
 **Besuchsstatistiken.** Wir nutzen Cloudflare Web Analytics. Es misst Seitenaufrufe in zusammengefasster Form, ohne Cookies und ohne einzelne Besucher zu identifizieren. Rechtsgrundlage: unser berechtigtes Interesse daran, zu verstehen, welche Seiten nützlich sind (Art. 6 Abs. 1 lit. f DSGVO).
 
+**Klicks zu den Shops.** Wir zählen, wie viele Klicks jeden Tag von jeder Seite zu jedem Shop gehen. Wir speichern nur die Zahl, die Seite und den Shop: keine Cookies, keine IP-Adresse, nichts, was die klickende Person identifiziert.
+
 **E-Mails an uns.** Wenn du uns schreibst, verwenden wir deine Adresse und deine Nachricht nur, um dir zu antworten, und löschen sie, sobald sie dafür nicht mehr nötig sind. Rechtsgrundlage: Bearbeitung deiner Anfrage (Art. 6 Abs. 1 lit. b und f DSGVO).
 
 **Land und Sprache.** Wenn du im Menü ein Land und eine Sprache wählst, merkt sich dein Browser die Wahl (in seinem lokalen Speicher, nicht in einem Cookie), damit die Adresse der Website beim nächsten Mal dieselbe Version öffnet. Sie bleibt auf deinem Gerät und wird nie an uns gesendet; du kannst sie in den Einstellungen deines Browsers löschen.

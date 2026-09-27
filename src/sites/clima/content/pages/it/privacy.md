@@ -20,6 +20,8 @@ Questa informativa spiega come vengono trattati i dati personali quando usi ques
 
 **Statistiche di visita.** Usiamo Cloudflare Web Analytics, che misura le visite in forma aggregata, senza cookie e senza identificare i singoli visitatori. Base giuridica: il nostro legittimo interesse a capire quali pagine sono utili (art. 6, par. 1, lett. f GDPR).
 
+**Clic verso i negozi.** Contiamo quanti clic partono ogni giorno da ciascuna pagina verso ciascun negozio. Salviamo solo il numero, la pagina e il negozio: niente cookie, niente indirizzo IP, niente che identifichi chi clicca.
+
 **Email che ci invii.** Se ci scrivi, usiamo il tuo indirizzo e il tuo messaggio solo per risponderti, e li cancelliamo quando non servono più a questo scopo. Base giuridica: rispondere alla tua richiesta (art. 6, par. 1, lett. b e f GDPR).
 
 **Paese e lingua.** Quando scegli paese e lingua dal menu, il tuo browser ricorda la scelta (nella sua memoria locale, non con un cookie), così l'indirizzo del sito ti riapre la stessa versione la volta dopo. Resta sul tuo dispositivo e non ci viene mai inviata; puoi cancellarla dalle impostazioni del browser.

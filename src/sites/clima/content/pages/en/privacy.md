@@ -20,6 +20,8 @@ This policy explains how personal data is processed when you use this website. T
 
 **Visit statistics.** We use Cloudflare Web Analytics, which measures page views in aggregate form without cookies and without identifying individual visitors. Legal basis: our legitimate interest in understanding which pages are useful (Art. 6(1)(f) GDPR).
 
+**Clicks to the stores.** We count how many clicks go from each page to each store every day. We keep only the number, the page and the store: no cookies, no IP address, nothing that identifies who clicks.
+
 **Emails you send us.** If you write to us, we use your address and message only to reply, and we delete them when they are no longer needed for that purpose. Legal basis: responding to your request (Art. 6(1)(b) and (f) GDPR).
 
 **Your country and language.** When you choose a country and a language in the menu, your browser remembers the choice (in its local storage, not in a cookie) so that the site's address opens the same version next time. It stays on your device and is never sent to us; you can clear it in your browser settings.

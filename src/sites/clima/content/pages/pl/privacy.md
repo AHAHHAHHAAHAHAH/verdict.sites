@@ -20,6 +20,8 @@ Ta polityka wyjaśnia, jak przetwarzane są dane osobowe, gdy korzystasz z tego 
 
 **Statystyki odwiedzin.** Korzystamy z Cloudflare Web Analytics, które mierzy odwiedziny w formie zbiorczej, bez plików cookie i bez identyfikowania poszczególnych osób. Podstawa prawna: nasz prawnie uzasadniony interes w poznaniu, które strony są przydatne (art. 6 ust. 1 lit. f RODO).
 
+**Kliknięcia do sklepów.** Liczymy, ile kliknięć prowadzi każdego dnia z każdej strony do każdego sklepu. Zapisujemy tylko liczbę, stronę i sklep: bez plików cookie, bez adresu IP, bez niczego, co identyfikuje osobę klikającą.
+
 **Wiadomości e-mail od Ciebie.** Jeśli do nas napiszesz, używamy Twojego adresu i wiadomości wyłącznie, aby odpowiedzieć, i usuwamy je, gdy nie są już do tego potrzebne. Podstawa prawna: odpowiedź na Twoje zapytanie (art. 6 ust. 1 lit. b i f RODO).
 
 **Kraj i język.** Gdy wybierasz w menu kraj i język, przeglądarka zapamiętuje ten wybór (w swojej pamięci lokalnej, nie w pliku cookie), aby adres serwisu następnym razem otworzył tę samą wersję. Wybór zostaje na Twoim urządzeniu i nigdy nie jest do nas wysyłany; możesz go usunąć w ustawieniach przeglądarki.

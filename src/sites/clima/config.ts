@@ -9,7 +9,9 @@ export const site: SiteConfig = {
   // searches there (Keyword Planner, 25/09/2026). Italy first (the default for search engines).
   markets: ['it', 'fr', 'es', 'de', 'pl'],
   english: true,
-  englishIndexed: true,
+  // English dehumidifier and heater searches in these countries are few; the English pages stay for visitors.
+  englishIndexed: false,
+  clickCount: true,
   amazonAssociate: false,
   amazonTags: {},
   themeColor: '#0c1719',

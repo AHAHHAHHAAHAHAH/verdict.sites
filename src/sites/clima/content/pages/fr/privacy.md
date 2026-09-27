@@ -20,6 +20,8 @@ Cette politique explique comment les données personnelles sont traitées lorsqu
 
 **Statistiques de visite.** Nous utilisons Cloudflare Web Analytics, qui mesure les visites de façon agrégée, sans cookies et sans identifier les visiteurs. Base légale : notre intérêt légitime à comprendre quelles pages sont utiles (art. 6, par. 1, point f du RGPD).
 
+**Clics vers les boutiques.** Nous comptons combien de clics partent chaque jour de chaque page vers chaque boutique. Nous ne gardons que le nombre, la page et la boutique : aucun cookie, aucune adresse IP, rien qui identifie la personne qui clique.
+
 **E-mails que vous nous envoyez.** Si vous nous écrivez, nous utilisons votre adresse et votre message uniquement pour vous répondre, et nous les supprimons quand ils ne sont plus nécessaires à cette fin. Base légale : répondre à votre demande (art. 6, par. 1, points b et f du RGPD).
 
 **Pays et langue.** Quand vous choisissez un pays et une langue dans le menu, votre navigateur retient ce choix (dans son stockage local, pas dans un cookie) pour que l'adresse du site rouvre la même version la fois suivante. Il reste sur votre appareil et ne nous est jamais envoyé ; vous pouvez l'effacer dans les réglages de votre navigateur.
