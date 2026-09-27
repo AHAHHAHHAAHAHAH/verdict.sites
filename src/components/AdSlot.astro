@@ -1,0 +1,40 @@
+---
+// One hand-placed ad slot. Renders nothing until AdSense is approved and configured for the site.
+// Space is reserved up front, so a late ad never pushes the page around.
+import { site } from '@site/config';
+import type { Edition } from '../i18n/editions';
+import { t } from '../i18n/ui';
+
+interface Props {
+  ed: Edition;
+  slot: 'afterFaq' | 'guide';
+}
+const { ed, slot } = Astro.props;
+const { lang } = ed;
+const id = site.adsense?.slots[slot];
+const label = t(lang).ad;
+---
+
+{
+  site.adsense && id && (
+    <aside class="ad" aria-label={label}>
+      <p class="ad-l">{label}</p>
+      <ins class="adsbygoogle" style="display:block" data-ad-client={site.adsense.client} data-ad-slot={id} data-ad-format="auto" data-full-width-responsive="true" />
+      <script is:inline>(window.adsbygoogle = window.adsbygoogle || []).push({});</script>
+    </aside>
+  )
+}
+
+<style>
+  .ad-l {
+    font: 600 var(--t-label) / 1.3 var(--f-text);
+    color: var(--text-3);
+    margin-bottom: 0.5rem;
+  }
+  .ad {
+    min-height: 280px;
+    margin-top: clamp(3rem, 2.2rem + 3vw, 5rem);
+    border-top: 1px solid var(--line);
+    padding-top: 1rem;
+  }
+</style>

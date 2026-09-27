@@ -1,0 +1,70 @@
+---
+// The signature element: a scale-style display with amber digits.
+interface Props {
+  label: string;
+  out: string;
+  unit?: string;
+  size?: 'xl' | 'lg' | 'md';
+  primary?: boolean;
+}
+const { label, out, unit, size = 'lg', primary = false } = Astro.props;
+---
+
+<div class:list={['readout', `size-${size}`]}>
+  <span class="r-label" data-label-for={out}>{label}</span>
+  <div class="r-line">
+    <output data-out={out} data-primary={primary ? '' : undefined}>—</output>
+    {unit && <span class="r-unit" data-unit-for={out}>{unit}</span>}
+  </div>
+</div>
+
+<style>
+  .readout {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .r-label {
+    font: 600 var(--t-label) / 1.3 var(--f-text);
+    color: var(--on-ink-3);
+  }
+  .r-line {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    min-width: 0;
+    flex-wrap: wrap;
+  }
+  output {
+    font-family: var(--f-mono);
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+    letter-spacing: -0.04em;
+    color: var(--accent);
+    line-height: 1;
+    text-shadow: 0 0 28px color-mix(in srgb, var(--accent) 35%, transparent);
+    overflow-wrap: anywhere;
+  }
+  .size-xl output {
+    font-size: clamp(2.4rem, 1.7rem + 3vw, 3.6rem);
+  }
+  .size-lg output {
+    font-size: clamp(1.6rem, 1.3rem + 1.2vw, 2.1rem);
+  }
+  .size-md output {
+    font-size: 1.15rem;
+    color: var(--on-ink);
+    text-shadow: none;
+    letter-spacing: -0.02em;
+  }
+  .r-unit {
+    font: 500 0.8rem/1 var(--f-mono);
+    color: var(--on-ink-2);
+  }
+  :global(.is-negative) output,
+  output:global(.is-negative) {
+    color: var(--bad-lit);
+    text-shadow: 0 0 28px color-mix(in srgb, var(--bad-lit) 30%, transparent);
+  }
+</style>

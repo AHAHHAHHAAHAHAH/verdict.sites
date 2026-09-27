@@ -1,0 +1,672 @@
+---
+// The bar on top: the logo, where you are (country and language) and the menu. The menu is a panel
+// that slides in from the right with every page of the site, grouped in sections that open and
+// close: the product types (each with today's deals), the calculators and the site's own pages; at
+// the bottom, the country and language in use with a button to change them. The country button in
+// the bar opens only the country and language chooser (RegionDialog). Built on <dialog>, so focus,
+// Escape and the page behind behave natively.
+import { getCollection } from 'astro:content';
+import Logo from '@site/Logo.astro';
+import Icon from './ui/Icon.astro';
+import RegionDialog from './RegionDialog.astro';
+import type { Edition } from '../i18n/editions';
+import { languageName } from '../i18n/locales';
+import { countryName, marketMeta } from '../i18n/markets';
+import { offersPath, pathFor, toolKeys, verdictPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { categories, categoryIdsIn } from '../lib/catalog';
+import { dealsFor, hasDealSource } from '../lib/deals';
+import { modelsFor } from '../lib/models';
+import { tx } from '../lib/pack';
+import { contactEmail } from '../lib/webora';
+import { brandPagesIn, brandPath } from '../lib/brandpages';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+}
+const { ed, alternates } = Astro.props;
+const { lang, market } = ed;
+const ui = t(lang);
+const m = ui.menu;
+const path = Astro.url.pathname;
+const hasGuides = (await getCollection('articles', (a) => a.data.lang === lang && !a.data.draft)).length > 0;
+const types = categoryIdsIn(market).map((id) => {
+  const c = categories[id];
+  const deals = hasDealSource(id, market) ? dealsFor(id, market).length : 0;
+  const href = verdictPath(ed, tx(c.slug, lang));
+  return { id, icon: c.icon, name: tx(c.name, lang), href, models: modelsFor(id, market).length, deals, dealsHref: offersPath(ed, tx(c.slug, lang)) };
+});
+const tools = toolKeys.map((k) => ({ href: pathFor(k, ed), label: ui.tools?.short[k] ?? k }));
+// Every brand whose store we read here, each leading to all its models (only where model pages exist).
+const brands = ed.indexed ? brandPagesIn(market).map((b) => ({ href: brandPath(ed, b.slug), label: b.brand, n: b.count })) : [];
+const pages = [
+  { href: pathFor('about', ed), label: ui.footer.about, icon: 'info' },
+  ...(hasGuides ? [{ href: pathFor('guides', ed), label: ui.nav.guides, icon: 'source' }] : []),
+  { href: pathFor('privacy', ed), label: ui.footer.privacy, icon: 'shield' },
+  { href: pathFor('legal', ed), label: ui.footer.legal, icon: 'source' },
+];
+const here = (href: string) => (path === href ? 'page' : undefined);
+const within = (href: string) => path === href || path.startsWith(href);
+const current = fill(m.current, { country: countryName(market, lang), language: languageName[lang] });
+---
+
+<header class="hdr">
+  <div class="wrap bar">
+    <a class="brand" href={pathFor('home', ed)} aria-label={site.name}>
+      <Logo />
+    </a>
+    <div class="side">
+      <button class="where" type="button" data-region-open aria-haspopup="dialog" aria-label={`${m.region}: ${current}`}>
+        <Icon name="globe" size={16} />
+        <span class="where-code">{marketMeta[market].region}</span>
+        <span class="where-lang">{languageName[lang]}</span>
+      </button>
+      <button class="menu-btn" type="button" data-menu-open aria-haspopup="dialog" aria-controls="site-menu">
+        <span class="menu-word">{m.open}</span>
+        <span class="bars" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="visually-hidden">{ui.a11y.mainNav}</span>
+      </button>
+    </div>
+  </div>
+
+  <dialog id="site-menu" class="sheet" aria-labelledby="site-menu-title" data-menu>
+    <div class="sheet-top">
+      <p class="sheet-title" id="site-menu-title">{m.title}</p>
+      <button class="x" type="button" data-menu-close aria-label={m.close}>
+        <Icon name="cross" size={20} stroke={2} />
+      </button>
+    </div>
+    <nav class="sheet-body" aria-label={ui.a11y.mainNav}>
+      <section class="sec" data-sec="types" data-open="true">
+        <h2 class="sec-h">
+          <button type="button" aria-expanded="true" aria-controls="sec-types" data-sec-toggle>
+            <span>{m.types}</span>
+            <Icon name="chevron-down" size={18} stroke={2} class="chev" />
+          </button>
+        </h2>
+        <div class="sec-b" id="sec-types">
+          <ul class="sec-in types">
+            {
+              types.map((x) => (
+                <li class="type">
+                  <a class="type-a" href={x.href} aria-current={within(x.href) ? 'page' : undefined}>
+                    <span class="ti">
+                      <Icon name={x.icon} size={22} />
+                    </span>
+                    <span class="tn">{x.name}</span>
+                    <Icon name="arrow-right" size={16} class="go" />
+                  </a>
+                  {x.models > 1 && (
+                    <a class="deal" href={`${x.href}#models`}>
+                      <Icon name="list" size={14} stroke={1.8} />
+                      {fill(m.all, { n: String(x.models) })}
+                    </a>
+                  )}
+                  {x.deals > 0 && (
+                    <a class="deal" href={x.dealsHref} aria-current={here(x.dealsHref)}>
+                      <Icon name="tag" size={14} stroke={1.8} />
+                      {fill(m.deals, { n: String(x.deals) })}
+                    </a>
+                  )}
+                </li>
+              ))
+            }
+          </ul>
+        </div>
+      </section>
+
+      {
+        brands.length > 0 && (
+          <section class="sec" data-sec="brands" data-open="false">
+            <h2 class="sec-h">
+              <button type="button" aria-expanded="false" aria-controls="sec-brands" data-sec-toggle>
+                <span>{m.brands}</span>
+                <Icon name="chevron-down" size={18} stroke={2} class="chev" />
+              </button>
+            </h2>
+            <div class="sec-b" id="sec-brands">
+              <ul class="sec-in links" inert>
+                {brands.map((x) => (
+                  <li>
+                    <a href={x.href} aria-current={here(x.href)}>
+                      <Icon name="tag" size={17} />
+                      {x.label} <span class="bn">{x.n}</span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )
+      }
+
+      {
+        tools.length > 0 && (
+          <section class="sec" data-sec="tools" data-open="false">
+            <h2 class="sec-h">
+              <button type="button" aria-expanded="false" aria-controls="sec-tools" data-sec-toggle>
+                <span>{m.tools}</span>
+                <Icon name="chevron-down" size={18} stroke={2} class="chev" />
+              </button>
+            </h2>
+            <div class="sec-b" id="sec-tools">
+              <ul class="sec-in links" inert>
+                <li>
+                  <a href={pathFor('tools', ed)} aria-current={here(pathFor('tools', ed))}>
+                    <Icon name="calc" size={17} />
+                    {ui.tools?.indexTitle}
+                  </a>
+                </li>
+                {tools.map((x) => (
+                  <li>
+                    <a class="sub" href={x.href} aria-current={here(x.href)}>
+                      {x.label}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          </section>
+        )
+      }
+
+      <section class="sec" data-sec="site" data-open="false">
+        <h2 class="sec-h">
+          <button type="button" aria-expanded="false" aria-controls="sec-site" data-sec-toggle>
+            <span>{m.site}</span>
+            <Icon name="chevron-down" size={18} stroke={2} class="chev" />
+          </button>
+        </h2>
+        <div class="sec-b" id="sec-site">
+          <ul class="sec-in links" inert>
+            {
+              pages.map((x) => (
+                <li>
+                  <a href={x.href} aria-current={here(x.href)}>
+                    <Icon name={x.icon} size={17} />
+                    {x.label}
+                  </a>
+                </li>
+              ))
+            }
+            <li>
+              <a href={`mailto:${contactEmail}`}>
+                <Icon name="mail" size={17} />
+                {contactEmail}
+              </a>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <div class="region-row">
+        <span class="rr-txt">
+          <span class="rr-label">{m.region}</span>
+          <span class="rr-now">
+            <span class="cc">{marketMeta[market].region}</span>
+            {countryName(market, lang)} · {languageName[lang]}
+          </span>
+        </span>
+        <button type="button" class="rr-btn" data-region-open aria-haspopup="dialog" aria-label={`${ui.region.change}: ${m.region}`}>
+          {ui.region.change}
+        </button>
+      </div>
+    </nav>
+  </dialog>
+  <RegionDialog ed={ed} alternates={alternates} />
+</header>
+
+<style>
+  .hdr {
+    position: sticky;
+    top: 0;
+    z-index: 40;
+    /* Solid on purpose: a translucent sticky bar makes contrast audits blend it into the text below. */
+    background: var(--ink);
+    color: var(--on-ink);
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .bar {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    height: var(--header-h);
+  }
+  .brand {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.75rem;
+    color: var(--on-ink);
+    text-decoration: none;
+    flex: none;
+  }
+  .side {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin-left: auto;
+  }
+  .where,
+  .menu-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    height: 2.6rem;
+    padding: 0 0.95rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    background: none;
+    color: var(--on-ink-2);
+    font: 600 0.9rem/1 var(--f-text);
+    cursor: pointer;
+    transition:
+      color var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .where:hover,
+  .menu-btn:hover {
+    color: var(--on-ink);
+    border-color: var(--on-ink-3);
+  }
+  .where-code {
+    font: 600 0.75rem/1 var(--f-mono);
+    letter-spacing: 0.06em;
+    color: var(--on-ink);
+  }
+  .menu-btn {
+    color: var(--on-ink);
+    background: var(--ink-2);
+  }
+  .bars {
+    position: relative;
+    display: grid;
+    gap: 4px;
+    width: 18px;
+  }
+  .bars i {
+    display: block;
+    height: 1.8px;
+    border-radius: 2px;
+    background: currentColor;
+    transition: transform var(--d-3) var(--ease-out);
+  }
+  .bars i:nth-child(2) {
+    width: 70%;
+    margin-left: auto;
+  }
+  .menu-btn:hover .bars i:nth-child(2) {
+    transform: scaleX(1.43);
+    transform-origin: right;
+  }
+  @media (max-width: 30rem) {
+    .where-lang,
+    .menu-word {
+      display: none;
+    }
+    .where,
+    .menu-btn {
+      padding: 0 0.8rem;
+    }
+  }
+
+  /* The panel. */
+  .sheet {
+    position: fixed;
+    inset: 0 0 0 auto;
+    width: min(26rem, 100vw);
+    max-width: 100vw;
+    height: 100dvh;
+    max-height: 100dvh;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    border-left: 1px solid var(--ink-line);
+    background: var(--ink);
+    color: var(--on-ink);
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+    box-shadow: -30px 0 80px rgb(0 0 0 / 35%);
+    transform: translateX(100%);
+    transition:
+      transform 460ms var(--ease-out),
+      overlay 460ms allow-discrete,
+      display 460ms allow-discrete;
+  }
+  .sheet:not([open]) {
+    display: none;
+  }
+  .sheet[open] {
+    transform: none;
+  }
+  @starting-style {
+    .sheet[open] {
+      transform: translateX(100%);
+    }
+  }
+  .sheet::backdrop {
+    background: rgb(4 8 10 / 0%);
+    transition:
+      background-color 460ms var(--ease-out),
+      overlay 460ms allow-discrete,
+      display 460ms allow-discrete;
+  }
+  .sheet[open]::backdrop {
+    background: rgb(4 8 10 / 55%);
+  }
+  @starting-style {
+    .sheet[open]::backdrop {
+      background: rgb(4 8 10 / 0%);
+    }
+  }
+  :global(html:has(.sheet[open])) {
+    overflow: hidden;
+  }
+  .sheet-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: var(--header-h);
+    padding: 0 1rem 0 1.4rem;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .sheet-title {
+    font: 700 1.25rem/1 var(--f-display);
+    letter-spacing: -0.02em;
+  }
+  .x {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 50%;
+    background: none;
+    color: var(--on-ink);
+    cursor: pointer;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      transform var(--d-3) var(--ease-out);
+  }
+  .x:hover {
+    border-color: var(--on-ink-3);
+    transform: rotate(90deg);
+  }
+  .sheet-body {
+    overflow-y: auto;
+    overscroll-behavior: contain;
+    padding: 0.4rem 0 2.5rem;
+  }
+
+  /* Sections that open and close. */
+  .sec {
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .sec-h {
+    margin: 0;
+    font: inherit;
+  }
+  .sec-h button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    width: 100%;
+    min-height: 3.6rem;
+    padding: 0.4rem 1.4rem;
+    border: 0;
+    background: none;
+    color: var(--on-ink);
+    font: 650 1.02rem/1.25 var(--f-text);
+    text-align: left;
+    cursor: pointer;
+  }
+  .sec-h button > span:first-child {
+    flex: 1;
+  }
+  .sec-h :global(.chev) {
+    flex: none;
+    color: var(--on-ink-3);
+    transition: transform var(--d-3) var(--ease-out);
+  }
+  .sec[data-open='true'] .sec-h :global(.chev) {
+    transform: rotate(180deg);
+  }
+  .sec-b {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 420ms var(--ease-out);
+  }
+  .sec[data-open='true'] .sec-b {
+    grid-template-rows: 1fr;
+  }
+  .sec-in {
+    min-height: 0;
+    overflow: hidden;
+    margin: 0;
+    padding: 0 1rem;
+    list-style: none;
+  }
+  .sec[data-open='true'] .sec-in {
+    padding-bottom: 1rem;
+  }
+
+  /* Product types. */
+  .types {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .type {
+    display: grid;
+    border-radius: var(--r-md);
+    background: var(--ink-2);
+    border: 1px solid var(--ink-line);
+    overflow: hidden;
+  }
+  .type-a {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 3.4rem;
+    padding: 0.5rem 0.9rem 0.5rem 0.55rem;
+    color: var(--on-ink);
+    font-weight: 600;
+    line-height: 1.25;
+    text-decoration: none;
+    transition: background-color var(--d-2) var(--ease-out);
+  }
+  .type-a:hover {
+    background: var(--ink-3);
+  }
+  .ti {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: var(--r-sm);
+    background: var(--ink-3);
+    color: var(--accent);
+  }
+  .type-a :global(.go) {
+    color: var(--on-ink-3);
+    transition: transform var(--d-2) var(--ease-out);
+  }
+  .type-a:hover :global(.go) {
+    transform: translateX(3px);
+    color: var(--on-ink);
+  }
+  .type-a[aria-current] .tn {
+    color: var(--accent);
+  }
+  .deal {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.5rem;
+    padding: 0.3rem 0.9rem 0.3rem 3.75rem;
+    border-top: 1px solid var(--ink-line);
+    color: var(--on-ink-2);
+    font-size: 0.9rem;
+    font-weight: 550;
+    text-decoration: none;
+    transition: color var(--d-2) var(--ease-out);
+  }
+  .deal :global(svg) {
+    color: var(--accent);
+  }
+  .deal:hover,
+  .deal[aria-current] {
+    color: var(--on-ink);
+  }
+
+  /* Plain lists of links. */
+  .links {
+    display: grid;
+  }
+  .links a {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 2.9rem;
+    padding: 0.3rem 0.45rem;
+    border-radius: var(--r-sm);
+    color: var(--on-ink-2);
+    text-decoration: none;
+    font-weight: 550;
+    overflow-wrap: anywhere;
+    transition:
+      color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+  .links a:hover {
+    color: var(--on-ink);
+    background: var(--ink-2);
+  }
+  .links a[aria-current] {
+    color: var(--accent);
+  }
+  .links a :global(svg) {
+    flex: none;
+    color: var(--on-ink-3);
+  }
+  .links .bn {
+    margin-left: auto;
+    color: var(--on-ink-3);
+    font: 600 0.8rem/1 var(--f-text);
+  }
+  .links .sub {
+    padding-left: 2.35rem;
+  }
+
+  /* Country and language in use, and the button that changes them. */
+  .region-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 1rem 1.4rem;
+    border-bottom: 1px solid var(--ink-line);
+  }
+  .rr-txt {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .rr-label {
+    color: var(--on-ink-3);
+    font-size: 0.85rem;
+    font-weight: 600;
+  }
+  .rr-now {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 650;
+  }
+  .cc {
+    display: inline-grid;
+    place-items: center;
+    min-width: 2rem;
+    height: 1.5rem;
+    border-radius: 4px;
+    background: var(--ink-3);
+    color: var(--on-ink-2);
+    font: 600 0.68rem/1 var(--f-mono);
+    letter-spacing: 0.06em;
+  }
+  .rr-btn {
+    flex: none;
+    min-height: 2.6rem;
+    padding: 0 1.1rem;
+    border: 1px solid var(--on-ink-3);
+    border-radius: 999px;
+    background: none;
+    color: var(--on-ink);
+    font: 650 0.92rem/1 var(--f-text);
+    cursor: pointer;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+  .rr-btn:hover {
+    border-color: var(--on-ink);
+    background: var(--ink-2);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .sheet,
+    .sheet::backdrop,
+    .sec-b,
+    .bars i,
+    .x,
+    .sec-h :global(.chev) {
+      transition: none !important;
+    }
+  }
+</style>
+
+<script>
+  // Opens the panel (on the section asked for, if any), and opens or closes one section at a time on tap.
+  function setOpen(sec: HTMLElement, open: boolean) {
+    sec.dataset.open = String(open);
+    sec.querySelector('[data-sec-toggle]')?.setAttribute('aria-expanded', String(open));
+    const inner = sec.querySelector<HTMLElement>('.sec-in');
+    if (inner) inner.inert = !open;
+  }
+
+  document.addEventListener('astro:page-load', () => {
+    const dialog = document.querySelector<HTMLDialogElement>('[data-menu]:not([data-ready])');
+    if (!dialog) return;
+    dialog.dataset.ready = '1';
+    const sections = [...dialog.querySelectorAll<HTMLElement>('[data-sec]')];
+
+    document.querySelectorAll<HTMLButtonElement>('[data-menu-open]').forEach((btn) =>
+      btn.addEventListener('click', () => {
+        const want = btn.dataset.menuOpen;
+        const target = want ? sections.find((s) => s.dataset.sec === want) : undefined;
+        if (target) setOpen(target, true);
+        dialog.showModal();
+        if (target) {
+          target.scrollIntoView({ block: 'start' });
+          target.querySelector<HTMLElement>('[aria-current="true"], a')?.focus({ preventScroll: true });
+        }
+      }),
+    );
+    dialog.querySelector('[data-menu-close]')?.addEventListener('click', () => dialog.close());
+    // A tap on the dimmed page outside the panel closes it.
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    sections.forEach((sec) =>
+      sec.querySelector('[data-sec-toggle]')?.addEventListener('click', () => setOpen(sec, sec.dataset.open !== 'true')),
+    );
+    // Leaving the page closes the panel, so it is never open on the next one.
+    dialog.querySelectorAll('a[href]').forEach((a) => a.addEventListener('click', () => dialog.close()));
+  });
+</script>

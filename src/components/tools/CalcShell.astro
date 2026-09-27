@@ -1,0 +1,217 @@
+---
+import Icon from '../ui/Icon.astro';
+import { numberLocale, type Edition } from '../../i18n/editions';
+import { pathFor, type ToolKey } from '../../i18n/routes';
+import { t } from '../../i18n/ui';
+
+interface Props {
+  ed: Edition;
+  calc: string;
+  tool: ToolKey;
+  next: ToolKey;
+  nextHref?: string;
+  nextLabel?: string;
+  [key: `data-${string}`]: string;
+}
+const { ed, calc, tool, next, nextHref, nextLabel, ...data } = Astro.props;
+const { lang } = ed;
+const ui = t(lang);
+const tt = ui.tools!;
+---
+
+<form class="shell" data-shell data-calc={calc} data-locale={numberLocale(ed)} {...data} novalidate>
+  <div class="inputs" data-reveal>
+    <slot name="inputs" />
+    <p class="example">{tt.example}</p>
+  </div>
+
+  <section class="results" data-results data-reveal style="--i:1" aria-label={tt.result}>
+    <div class="r-head">
+      <span class="eyebrow">{tt.result}</span>
+      <span class="live" aria-hidden="true"></span>
+    </div>
+    <div class="ticks" aria-hidden="true"></div>
+    <div class="r-body">
+      <slot name="results" />
+    </div>
+    <a class="next" href={nextHref ?? pathFor(next, ed)}>
+      <span>{nextLabel ?? tt.next[tool]}</span>
+      <Icon name="arrow-right" size={18} />
+    </a>
+    <p class="visually-hidden" aria-live="polite" data-announce></p>
+  </section>
+
+  <div class="result-bar" data-result-bar inert>
+    <span class="eyebrow">{tt.result}</span>
+    <strong data-mirror></strong>
+    <button type="button" aria-label={ui.a11y.showResult}>
+      <Icon name="arrow-up" size={18} stroke={2} />
+    </button>
+  </div>
+</form>
+
+<style>
+  .shell {
+    display: grid;
+    grid-template-columns: minmax(0, 1.2fr) minmax(0, 1fr);
+    gap: clamp(1rem, 0.5rem + 1.5vw, 1.75rem);
+    align-items: start;
+    margin: clamp(1.5rem, 1rem + 2vw, 2.5rem) 0;
+  }
+  .inputs {
+    display: grid;
+    gap: 1.4rem;
+    padding: clamp(1.1rem, 0.8rem + 1.2vw, 1.75rem);
+    background: var(--card);
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+  }
+  .inputs :global(.grid) {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 14.5rem), 1fr));
+    gap: 1.25rem 1.1rem;
+  }
+  .example {
+    font-size: 0.82rem;
+    color: var(--text-3);
+    padding-top: 1rem;
+    border-top: 1px dashed var(--line);
+  }
+  .results {
+    position: sticky;
+    top: calc(var(--header-h) + 1.25rem);
+    display: grid;
+    gap: 1rem;
+    padding: clamp(1.1rem, 0.8rem + 1.2vw, 1.75rem);
+    background:
+      radial-gradient(120% 90% at 100% 0%, color-mix(in srgb, var(--accent) 12%, transparent), transparent 55%),
+      var(--ink);
+    color: var(--on-ink);
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-lg);
+    box-shadow: 0 24px 60px -30px rgb(0 0 0 / 55%);
+  }
+  .r-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .r-head .eyebrow {
+    color: var(--on-ink-3);
+  }
+  .live {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--good-lit);
+    box-shadow: 0 0 0 0 color-mix(in srgb, var(--good-lit) 60%, transparent);
+    animation: pulse 2.4s var(--ease-out) infinite;
+  }
+  @keyframes pulse {
+    70% {
+      box-shadow: 0 0 0 8px transparent;
+    }
+    100% {
+      box-shadow: 0 0 0 0 transparent;
+    }
+  }
+  .results .ticks {
+    color: var(--on-ink-3);
+    margin-top: -0.4rem;
+  }
+  .r-body {
+    display: grid;
+    gap: 1.25rem;
+  }
+  .next {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-top: 0.4rem;
+    padding: 0.95rem 1.1rem;
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-md);
+    color: var(--on-ink);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    line-height: 1.35;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+  .next :global(svg) {
+    flex: none;
+    color: var(--accent);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .next:hover {
+    border-color: var(--accent);
+    background: var(--ink-2);
+  }
+  .next:hover :global(svg) {
+    transform: translateX(4px);
+  }
+
+  .result-bar {
+    position: fixed;
+    left: var(--gutter);
+    right: var(--gutter);
+    bottom: max(0.9rem, env(safe-area-inset-bottom));
+    z-index: 35;
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.55rem 0.55rem 0.55rem 1.1rem;
+    background: var(--ink);
+    color: var(--on-ink);
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    box-shadow: 0 16px 40px -12px rgb(0 0 0 / 60%);
+    transform: translateY(calc(100% + 2rem));
+    transition: transform var(--d-3) var(--ease-out);
+  }
+  .result-bar:global(.is-shown) {
+    transform: none;
+  }
+  .result-bar .eyebrow {
+    color: var(--on-ink-3);
+    flex: none;
+  }
+  .result-bar strong {
+    flex: 1;
+    min-width: 0;
+    font: 600 1.05rem/1 var(--f-mono);
+    color: var(--accent);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .result-bar button {
+    display: grid;
+    place-items: center;
+    width: 2.75rem;
+    height: 2.75rem;
+    flex: none;
+    border: 0;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  @media (max-width: 62rem) {
+    .shell {
+      grid-template-columns: 1fr;
+    }
+    .results {
+      position: static;
+    }
+  }
+  @media (min-width: 62.01rem) {
+    .result-bar {
+      display: none;
+    }
+  }
+</style>

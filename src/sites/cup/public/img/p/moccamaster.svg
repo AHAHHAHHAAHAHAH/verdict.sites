@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <ellipse cx="200" cy="352" rx="130" ry="10" fill="#000" opacity="0.12"/>
+    <rect x="96" y="326" width="212" height="26" rx="6" fill="#dde2e6" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="120" cy="339" r="5" fill="#d9483b"/>
+    <rect x="130" y="332" width="20" height="12" rx="3" fill="#2c3035"/>
+    <rect x="112" y="150" width="34" height="178" rx="4" fill="#dde2e6" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M122 160v160" stroke="#ffffff" stroke-width="5" opacity="0.8"/>
+    <path d="M100 40h72v112h-72Z" fill="rgba(206, 226, 234, 0.55)" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M102 96h68v54h-68Z" fill="#cde6f2" opacity="0.8"/>
+    <path d="M110 60h10M110 76h10M110 92h10" stroke="#1f2328" stroke-width="3"/>
+    <path d="M100 40h72v112h-72Z" fill="none" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="96" y="30" width="80" height="14" rx="5" fill="#2c3035" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M146 130h60" stroke="#dde2e6" stroke-width="12"/>
+    <path d="M146 124h60M146 136h60" stroke="#1f2328" stroke-width="3"/>
+    <path d="M196 112h92l-20 70h-52Z" fill="#2c3035" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="190" y="102" width="104" height="16" rx="5" fill="#2c3035" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M190 226h84v84a14 14 0 0 1-14 14h-56a14 14 0 0 1-14-14Z" fill="rgba(206, 226, 234, 0.55)" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M192 256h80v54a12 12 0 0 1-12 12h-56a12 12 0 0 1-12-12Z" fill="#5b341c"/>
+    <path d="M190 226h84v84a14 14 0 0 1-14 14h-56a14 14 0 0 1-14-14Z" fill="none" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="186" y="210" width="92" height="20" rx="6" fill="#2c3035" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M274 240q26 0 26 30t-26 30" fill="none" stroke="#2c3035" stroke-width="12" stroke-linecap="round"/></svg>

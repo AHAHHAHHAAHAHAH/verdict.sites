@@ -1,0 +1,203 @@
+---
+import CalcShell from '../../../components/tools/CalcShell.astro';
+import CurrencySwitch from './CurrencySwitch.astro';
+import Stepper from '../../../components/ui/Stepper.astro';
+import Readout from '../../../components/ui/Readout.astro';
+import Advanced from '../../../components/ui/Advanced.astro';
+import type { Edition } from '../../../i18n/editions';
+import type { PerMarket } from '../../../lib/pack';
+import { t } from '../ui';
+
+interface Props {
+  ed: Edition;
+}
+const { ed } = Astro.props;
+const { lang, market } = ed;
+const s = t(lang).cafeCost;
+
+// Example values only (labelled as such in the UI), never presented as market data.
+const examples: PerMarket<Record<string, number>> = {
+  us: { beans: 22, dose: 18, milk: 180, milkPrice: 1.1, packaging: 0.25, other: 0.05, price: 4.75, vat: 0, cupsDay: 120, daysMonth: 30 },
+  gb: { beans: 22, dose: 18, milk: 180, milkPrice: 1.1, packaging: 0.25, other: 0.05, price: 4.75, vat: 0, cupsDay: 120, daysMonth: 30 },
+  it: { beans: 20, dose: 7, milk: 0, milkPrice: 1.3, packaging: 0.02, other: 0.03, price: 1.3, vat: 10, cupsDay: 200, daysMonth: 26 },
+  de: { beans: 20, dose: 16, milk: 150, milkPrice: 1.1, packaging: 0.1, other: 0.05, price: 3.6, vat: 19, cupsDay: 120, daysMonth: 26 },
+  es: { beans: 20, dose: 7, milk: 0, milkPrice: 1, packaging: 0.02, other: 0.03, price: 1.5, vat: 10, cupsDay: 200, daysMonth: 26 },
+  pl: { beans: 90, dose: 18, milk: 150, milkPrice: 4.5, packaging: 0.4, other: 0.2, price: 14, vat: 8, cupsDay: 120, daysMonth: 26 },
+  se: { beans: 250, dose: 18, milk: 150, milkPrice: 16, packaging: 1.5, other: 0.5, price: 40, vat: 12, cupsDay: 120, daysMonth: 26 },
+};
+const v = examples[market]!;
+const parts = ['beans', 'milk', 'packaging', 'other', 'margin'] as const;
+---
+
+<CalcShell ed={ed} calc="cafe-cost" tool="tool-cafe-cost" next="tool-office-cost" data-loss={s.loss}>
+  <Fragment slot="inputs">
+    <div class="grid">
+      <Stepper ed={ed} idPrefix="cc" name="price" label={s.price} currency value={v.price} step={0.05} max={100} range={[0.5, 8]} />
+      <Stepper ed={ed} idPrefix="cc" name="beans" label={s.beans} currency unit="/kg" value={v.beans} step={0.5} max={500} range={[5, 60]} />
+      <Stepper ed={ed} idPrefix="cc" name="dose" label={s.dose} unit="g" value={v.dose} step={0.5} max={60} range={[5, 25]} />
+      <Stepper ed={ed} idPrefix="cc" name="cupsDay" label={s.cupsDay} value={v.cupsDay} step={5} max={10000} range={[10, 600]} />
+    </div>
+    <Advanced label={t(lang).advanced}>
+      <CurrencySwitch ed={ed} />
+      <Stepper ed={ed} idPrefix="cc" name="vat" label={s.vat} unit="%" value={v.vat} step={1} max={100} range={[0, 25]} />
+      <Stepper ed={ed} idPrefix="cc" name="milk" label={s.milk} unit="ml" value={v.milk} step={10} max={2000} range={[0, 300]} />
+      <Stepper ed={ed} idPrefix="cc" name="milkPrice" label={s.milkPrice} currency unit="/L" value={v.milkPrice} step={0.05} max={20} range={[0.5, 3]} />
+      <Stepper ed={ed} idPrefix="cc" name="packaging" label={s.packaging} currency value={v.packaging} step={0.01} max={20} range={[0, 1]} />
+      <Stepper ed={ed} idPrefix="cc" name="other" label={s.other} currency value={v.other} step={0.01} max={20} range={[0, 1]} />
+      <Stepper ed={ed} idPrefix="cc" name="daysMonth" label={s.daysMonth} value={v.daysMonth} step={1} min={1} max={31} range={[1, 31]} />
+    </Advanced>
+  </Fragment>
+
+  <Fragment slot="results">
+    <div class="duo">
+      <Readout label={s.margin} out="margin" size="xl" primary />
+      <Readout label={s.marginPct} out="marginPct" unit="%" size="lg" />
+    </div>
+    <p class="verdict" data-out="verdict" hidden></p>
+    <div class="stack-wrap">
+      <span class="eyebrow">{s.breakdown}</span>
+      <div class="stack" aria-hidden="true">
+        {parts.map((p) => <span class={`sg sg-${p}`} data-bar={p} />)}
+      </div>
+      <ul class="legend">
+        {
+          parts.map((p) => (
+            <li>
+              <i class={`sw sg-${p}`} />
+              <span>{s.parts[p]}</span>
+              <span class="lv" data-out={`part-${p}`} />
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+    <div class="grid2">
+      <Readout label={s.netPrice} out="net" size="md" />
+      <Readout label={s.cost} out="cost" size="md" />
+    </div>
+    <Readout label={s.monthly} out="monthly" size="lg" />
+  </Fragment>
+</CalcShell>
+
+<style>
+  .duo {
+    display: grid;
+    grid-template-columns: minmax(0, 1.5fr) minmax(0, 1fr);
+    align-items: end;
+    gap: 1rem;
+  }
+  .verdict {
+    color: var(--bad-lit);
+    font-weight: 600;
+  }
+  .stack-wrap {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .stack-wrap .eyebrow {
+    color: var(--on-ink-3);
+  }
+  .stack {
+    display: flex;
+    height: 14px;
+    gap: 2px;
+    border-radius: 7px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--on-ink) 8%, transparent);
+  }
+  .sg {
+    width: var(--w, 0%);
+    transition: width var(--d-3) var(--ease-out);
+  }
+  .sg-beans {
+    background: var(--accent);
+  }
+  .sg-milk {
+    background: #f2e3c6;
+  }
+  .sg-packaging {
+    background: #b7894a;
+  }
+  .sg-other {
+    background: #6f5a45;
+  }
+  .sg-margin {
+    background: var(--good-lit);
+  }
+  .legend {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(9.5rem, 1fr));
+    gap: 0.45rem 1rem;
+    font: 500 0.8rem/1.3 var(--f-mono);
+    color: var(--on-ink-2);
+  }
+  .legend li {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+  }
+  .sw {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+    flex: none;
+  }
+  .lv {
+    margin-left: auto;
+    color: var(--on-ink);
+  }
+  .grid2 {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--ink-line);
+  }
+</style>
+
+<script>
+  import { onCalc, num, allFinite, money, plain, tween, blank, out, bar, currencyOf, announce } from '../../../scripts/calc';
+
+  onCalc('cafe-cost', (form) => {
+    const locale = form.dataset.locale!;
+    const loss = form.dataset.loss!;
+    const verdict = out(form, 'verdict')!;
+
+    return () => {
+      const m = (x: number) => money(locale, currencyOf(form), x);
+      const names = ['beans', 'dose', 'milk', 'milkPrice', 'packaging', 'other', 'price', 'vat', 'cupsDay', 'daysMonth'];
+      const [beans, dose, milk, milkPrice, packaging, other, price, vat, cupsDay, daysMonth] = names.map((n) => num(form, n));
+      if (!allFinite(beans, dose, milk, milkPrice, packaging, other, price, vat, cupsDay, daysMonth) || price <= 0) {
+        ['margin', 'marginPct', 'net', 'cost', 'monthly'].forEach((k) => blank(out(form, k)));
+        return;
+      }
+
+      const net = price / (1 + vat / 100);
+      const parts = { beans: (beans * dose) / 1000, milk: (milk / 1000) * milkPrice, packaging, other };
+      const cost = parts.beans + parts.milk + parts.packaging + parts.other;
+      const margin = net - cost;
+      const base = Math.max(net, cost, 0.0001);
+
+      tween(out(form, 'margin'), margin, m);
+      tween(out(form, 'marginPct'), (margin / net) * 100, (n) => plain(locale, n, 1));
+      tween(out(form, 'net'), net, m);
+      tween(out(form, 'cost'), cost, m);
+      tween(out(form, 'monthly'), margin * cupsDay * daysMonth, m);
+      out(form, 'margin')!.classList.toggle('is-negative', margin < 0);
+      out(form, 'marginPct')!.classList.toggle('is-negative', margin < 0);
+
+      const shares = { ...parts, margin: Math.max(0, margin) };
+      for (const [key, value] of Object.entries(shares)) {
+        bar(form, key, (value / base) * 100);
+        out(form, `part-${key}`)!.textContent = m(value);
+      }
+
+      verdict.hidden = margin >= 0;
+      verdict.textContent = margin < 0 ? loss : '';
+      announce(form, margin < 0 ? loss : `${m(margin)} · ${plain(locale, (margin / net) * 100, 1)} %`);
+    };
+  });
+</script>

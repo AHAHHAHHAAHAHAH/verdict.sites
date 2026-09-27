@@ -1,0 +1,52 @@
+---
+// Mark: a hygrometer dial with its needle settled in the comfortable band: the verdict.
+interface Props {
+  size?: number;
+  wordmark?: boolean;
+}
+const { size = 28, wordmark = true } = Astro.props;
+---
+
+<span class="logo">
+  <svg width={size} height={size} viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+    <path d="M4.2 16.5a8.2 8.2 0 1 1 15.6 0" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"></path>
+    <path d="M9.2 5.2a8.2 8.2 0 0 1 5.6 0" fill="none" stroke="var(--accent)" stroke-width="2.4" stroke-linecap="round"></path>
+    <path class="needle" d="M12 15.5 13.6 8.3" fill="none" stroke="var(--accent)" stroke-width="2" stroke-linecap="round"></path>
+    <circle cx="12" cy="15.5" r="1.9" fill="var(--accent)"></circle>
+  </svg>
+  {
+    wordmark && (
+      <span class="word">
+        <b>Clima</b>Verdict
+      </span>
+    )
+  }
+</span>
+
+<style>
+  .logo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.55rem;
+  }
+  .word {
+    font: 500 1.08rem/1 var(--f-display);
+    letter-spacing: -0.03em;
+  }
+  .word b {
+    font-weight: 800;
+  }
+  .needle {
+    transform-origin: 12px 15.5px;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .logo:hover .needle {
+      animation: settle 1s var(--ease-spring);
+    }
+  }
+  @keyframes settle {
+    from {
+      transform: rotate(-70deg);
+    }
+  }
+</style>

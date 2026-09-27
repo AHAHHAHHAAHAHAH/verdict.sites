@@ -1,0 +1,136 @@
+---
+// Today's deals, one small card per product type: how many products are discounted on the brands'
+// own stores and the biggest discount. Nothing is shown for a type without deals, and nothing at
+// all when the stores were not read recently.
+import Icon from './ui/Icon.astro';
+import type { Edition } from '../i18n/editions';
+import { offersPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import { categories, categoryIdsIn } from '../lib/catalog';
+import { dealSummary } from '../lib/deals';
+import { tx } from '../lib/pack';
+
+interface Props {
+  ed: Edition;
+  /** Show the section heading (off where the page's own title already says it). */
+  heading?: boolean;
+}
+const { ed, heading = true } = Astro.props;
+const { lang, market } = ed;
+const d = t(lang).deals;
+const cards = categoryIdsIn(market)
+  .map((id) => ({ id, ...dealSummary(id, market) }))
+  .filter((c) => c.n > 0);
+---
+
+{
+  cards.length > 0 && (
+    <section class="dc" aria-labelledby={heading ? 'dc-h' : undefined} aria-label={heading ? undefined : d.index} data-deals-cards>
+      {heading && (
+        <div class="dc-head">
+          <h2 id="dc-h">{d.index}</h2>
+          <p>{d.sub}</p>
+        </div>
+      )}
+      <div class="cards">
+        {cards.map((c) => (
+          <a class="card" href={offersPath(ed, tx(categories[c.id].slug, lang))} data-deal-card={c.id}>
+            <span class="ic">
+              <Icon name={categories[c.id].icon} size={22} stroke={1.6} />
+            </span>
+            <span class="txt">
+              <span class="nm">{tx(categories[c.id].name, lang)}</span>
+              <span class="ct">
+                <Icon name="tag" size={14} stroke={1.8} />
+                {fill(d.card, { n: String(c.n), p: String(c.best) })}
+              </span>
+            </span>
+            <Icon name="arrow-right" size={17} class="go" />
+          </a>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+<style>
+  .dc {
+    display: grid;
+    gap: 1rem;
+  }
+  .dc-head {
+    display: grid;
+    gap: 0.35rem;
+  }
+  .dc-head h2 {
+    font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.8rem);
+  }
+  .dc-head p {
+    color: var(--text-2);
+  }
+  /* Small cards: two or three across on a desktop, one per row on a phone, never a wall of tiles. */
+  .cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
+    gap: 0.6rem;
+  }
+  .card {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+    min-height: 3.6rem;
+    padding: 0.6rem 0.9rem 0.6rem 0.6rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      transform var(--d-3) var(--ease-out);
+  }
+  .card:hover {
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+    transform: translateY(-1px);
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border-radius: var(--r-sm, 0.6rem);
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+  }
+  .txt {
+    display: grid;
+    gap: 0.15rem;
+    min-width: 0;
+  }
+  .nm {
+    font-weight: 650;
+    line-height: 1.25;
+  }
+  .ct {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    font-size: 0.88rem;
+    color: var(--good);
+    font-weight: 600;
+  }
+  .card :global(.go) {
+    color: var(--accent-ink);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .card:hover :global(.go) {
+    transform: translateX(3px);
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .card,
+    .card :global(.go) {
+      transition: none;
+    }
+  }
+</style>

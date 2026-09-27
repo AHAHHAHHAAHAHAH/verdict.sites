@@ -1,0 +1,134 @@
+---
+// Who runs the site, how it chooses and how it earns money. One text for every site in each
+// language (src/i18n/ui.ts), with the site's own words for what it covers (its strings.ts) and
+// the independent testers its pages actually quote, read from the catalogue.
+import Base from '../layouts/Base.astro';
+import { tag, type Edition } from '../i18n/editions';
+import { pathFor, toolKeys } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { contactEmail, publisher } from '../lib/webora';
+import { CHECKED, products, testersCited } from '../lib/catalog';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+}
+const { ed, alternates } = Astro.props;
+const { lang, market } = ed;
+const ui = t(lang);
+const a = ui.about;
+const vars = { site: site.name, what: a.what };
+const heading = fill(a.title, vars);
+const title = heading.includes(site.name) ? heading : `${heading} | ${site.name}`;
+const testers = testersCited(market);
+const hasPrices = products.some((p) => p.price);
+const picture = { src: '/og/home.png', alt: fill(a.image, vars) };
+const url = (p: string) => new URL(p, site.url).href;
+const pageUrl = url(pathFor('about', ed));
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'AboutPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: title,
+    description: a.description,
+    inLanguage: tag(ed),
+    dateModified: CHECKED,
+    primaryImageOfPage: { '@type': 'ImageObject', url: url(picture.src), width: 1200, height: 630, caption: picture.alt },
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    about: { '@type': 'Organization', name: site.name, url: site.url, email: contactEmail, parentOrganization: { '@type': 'Organization', name: publisher.name, url: publisher.url } },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: site.name, item: url(pathFor('home', ed)) },
+      { '@type': 'ListItem', position: 2, name: heading, item: pageUrl },
+    ],
+  },
+];
+
+// A sentence with links in it: {studio}, {email} and {testers} become links, the rest is text.
+const parts = (s: string) => fill(s, vars).split(/(\{studio\}|\{email\}|\{testers\})/);
+---
+
+<Base ed={ed} title={title} description={a.description} alternates={alternates} jsonLd={jsonLd} keyphrase={a.keyphrase} image={picture}>
+  <div class="wrap">
+    <header class="ph">
+      <h1 data-reveal>{heading}</h1>
+      <p class="lede" data-reveal style="--i:1">{a.description}</p>
+    </header>
+    <img class="covers" src="/img/home.svg" alt={picture.alt} width="1600" height="400" decoding="async" />
+    <article class="prose" data-reveal>
+      <h2>{fill(a.who, vars)}</h2>
+      <p>{fill(a.whoText, vars)}</p>
+      {
+        [a.studio, a.fix].map((s) => (
+          <p>
+            {parts(s).map((x) =>
+              x === '{studio}' ? (
+                <a href={publisher.url}>{publisher.name}</a>
+              ) : x === '{email}' ? (
+                <a href={`mailto:${contactEmail}`}>{contactEmail}</a>
+              ) : (
+                x
+              ),
+            )}
+          </p>
+        ))
+      }
+
+      <h2>{a.how}</h2>
+      <ul>
+        <li>{a.rules[0]}</li>
+        <li>
+          {
+            testers.length
+              ? parts(a.rules[1]).map((x) =>
+                  x === '{testers}'
+                    ? testers.map((tt, i) => (
+                        <>
+                          {i > 0 && ', '}
+                          <a href={tt.url}>{tt.name}</a>
+                        </>
+                      ))
+                    : x,
+                )
+              : a.noTests
+          }
+        </li>
+        <li>{a.rules[2]}</li>
+        <li>{a.rules[3]}</li>
+        {hasPrices && <li>{a.price}</li>}
+        <li>{a.rules[4]}</li>
+        <li>{a.rules[5]}</li>
+        {toolKeys.length > 0 && <li>{a.tools}</li>}
+      </ul>
+      <p>
+        <a href={pathFor('home', ed)}>{a.start}</a> →
+      </p>
+
+      <h2>{a.money}</h2>
+      <p>{a.moneyText}</p>
+      <p>{a.noGifts}</p>
+    </article>
+  </div>
+</Base>
+
+<style>
+  .ph {
+    display: grid;
+    gap: 1.2rem;
+    padding: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) 0 1.6rem;
+    max-width: 48rem;
+  }
+  .covers {
+    display: block;
+    width: min(100%, 40rem);
+    height: auto;
+    margin-bottom: clamp(1.5rem, 1rem + 2vw, 2.5rem);
+  }
+</style>

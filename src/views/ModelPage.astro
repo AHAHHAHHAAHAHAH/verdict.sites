@@ -1,0 +1,593 @@
+---
+// One model on sale in one country: today's price at the brand's own store, its price history
+// since we started reading it, the independent tests, where it stands among the others, our pick
+// for comparison, alternatives and what to check before buying. Every sentence is built from data
+// we read or research we documented, and every number links its source.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import { currencyOf, numberLocale, tag, type Edition } from '../i18n/editions';
+import { countryIn } from '../i18n/markets';
+import { pathFor, verdictPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { categories, needsIn, productName } from '../lib/catalog';
+import { historyOf } from '../lib/history';
+import { indexable, modelPageOf, type ModelPage } from '../lib/modelpages';
+import { brandPageOf } from '../lib/brandpages';
+import { modelsFor } from '../lib/models';
+import { tx } from '../lib/pack';
+import { modelPicture } from '../lib/pictures';
+import { DESC_CHARS, TITLE_PX, titleWidth } from '../lib/seo-measure';
+import { brandUrl, formatPrice, hostOf } from '../lib/shop';
+import { pickOf, testBadge, testsFor } from '../lib/tests';
+import { publisher } from '../lib/webora';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  page: ModelPage;
+}
+const { ed, alternates, page } = Astro.props;
+const { lang, market } = ed;
+const { model: m, category, name, keyphrase } = page;
+const c = categories[category];
+const ui = t(lang);
+const mp = ui.modelPage;
+const nf = numberLocale(ed);
+const longDate = (iso: string) => new Intl.DateTimeFormat(nf, { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date(iso));
+const dayMonth = (iso: string) => new Intl.DateTimeFormat(nf, { day: 'numeric', month: 'long' }).format(new Date(iso));
+const where = countryIn(market, lang);
+const typeName = tx(c.name, lang);
+
+const price = formatPrice(m.price, ed);
+const pct = m.was ? Math.floor((1 - m.price / m.was) * 100) : undefined;
+const link = brandUrl(m.store, market, m.url);
+const pic = modelPicture(category, m, ed);
+const history = historyOf(m.key);
+const pick = pickOf(category, market, m);
+const tests = [...new Map([...testsFor(category, m.name), ...(pick ? testsFor(category, productName(pick, ed)) : [])].map((x) => [`${x.tester}|${x.source}`, x])).values()];
+
+// Its place by price among this type's models here (colours joined), and our pick to compare.
+const all = [...new Map(modelsFor(category, market).map((x) => [x.key ?? x.name, x])).values()].sort((a, b) => a.price - b.price);
+const rank = all.findIndex((x) => (x.key ?? x.name) === (m.key ?? m.name)) + 1;
+const needs = needsIn(category, market);
+const pickNeed = pick ? needs.find((n) => n.picks.some((p) => p.product.id === pick.id)) : undefined;
+const main = needs[0];
+const mainPick = main.picks[0].product;
+const mainPrice = mainPick.price?.[market] && !mainPick.price[market]!.soldOut ? formatPrice(mainPick.price[market]!.value, ed) : undefined;
+
+// Alternatives: the tested ones first, then the closest in price; never itself.
+const others = all.filter((x) => (x.key ?? x.name) !== (m.key ?? m.name));
+const tested = others.filter((x) => testsFor(category, x.name).length || pickOf(category, market, x));
+const near = [...others].sort((a, b) => Math.abs(a.price - m.price) - Math.abs(b.price - m.price));
+const alternatives = [...new Set([...tested.slice(0, 2), ...near])].slice(0, 4).map((x) => {
+  const own = pickOf(category, market, x);
+  return {
+    name: own ? productName(own, ed) : x.name,
+    price: formatPrice(x.price, ed),
+    href: modelPageOf(ed, x),
+    pic: modelPicture(category, x, ed),
+    test: testsFor(category, own ? productName(own, ed) : x.name)[0],
+    ours: Boolean(own),
+  };
+});
+
+// The title and description that fit Google's snippet, longest first.
+// A short name also gets its type ("Mova M1 (Robot aspirapolvere e lavapavimenti): …") to fill the line.
+const titles = [...mp.titles.map((x) => fill(x, { name })), ...mp.titles.map((x) => fill(x, { name: `${name} (${typeName})` }))];
+const title = titles.find((x) => titleWidth(x) >= TITLE_PX[0] + 5 && titleWidth(x) <= TITLE_PX[1] - 5) ?? titles.find((x) => titleWidth(x) <= TITLE_PX[1] - 5);
+const start = fill(mp.descStart, { name, price, store: m.store }) + (pct ? fill(mp.descOff, { pct: String(pct) }) : '');
+const description = mp.descEnd.map((end) => start + end).find((x) => x.length >= DESC_CHARS[0] && x.length <= DESC_CHARS[1]);
+// A page with nothing the brand's own page lacks, whose words another page already uses, or whose
+// snippet cannot be written well stays out of search (src/lib/modelpages.ts).
+const noindex = !indexable(page) || !title || !description;
+
+const url = (p: string) => new URL(p, site.url).href;
+const pageUrl = url(Astro.url.pathname);
+const categoryHref = verdictPath(ed, tx(c.slug, lang));
+const og = { src: `/og/${market}/${category}.png`, alt: `${name} (${ui.verdict.drawing})` };
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: title ?? name,
+    description: description ?? start,
+    inLanguage: tag(ed),
+    dateModified: m.seen,
+    primaryImageOfPage: { '@type': 'ImageObject', url: url(og.src), width: 1200, height: 630 },
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    publisher: { '@type': 'Organization', name: site.name, url: site.url, parentOrganization: { '@type': 'Organization', name: publisher.name, url: publisher.url } },
+    breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+    mainEntity: { '@id': `${pageUrl}#product` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Product',
+    '@id': `${pageUrl}#product`,
+    name,
+    brand: { '@type': 'Brand', name: m.store },
+    category: typeName,
+    ...(pic ? { image: url(pic.src) } : {}),
+    offers: {
+      '@type': 'Offer',
+      price: m.price,
+      priceCurrency: currencyOf(ed),
+      availability: 'https://schema.org/InStock',
+      url: m.url,
+      seller: { '@type': 'Organization', name: m.store },
+    },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: site.name, item: url(pathFor('home', ed)) },
+      { '@type': 'ListItem', position: 2, name: typeName, item: url(categoryHref) },
+      { '@type': 'ListItem', position: 3, name, item: pageUrl },
+    ],
+  },
+];
+const testList = tests.map((x) => testBadge(x, lang)).join('; ');
+const criteria = c.criteria[lang] ?? [];
+const brandHref = brandPageOf(ed, m.store);
+---
+
+<Base ed={ed} title={title ?? name} description={description ?? start} alternates={alternates} jsonLd={jsonLd} keyphrase={keyphrase} image={og} noindex={noindex}>
+  <div class="wrap mp">
+    <nav class="crumb" aria-label="Breadcrumb">
+      <a href={`${categoryHref}#models`}>
+        <Icon name="arrow-left" size={15} stroke={2} />
+        {fill(mp.crumb, { type: typeName })}
+      </a>
+    </nav>
+
+    <header class="top">
+      <div class="pic">
+        {pic && <img src={pic.src} alt={`${name} (${ui.verdict.drawing})`} width="400" height="400" decoding="async" />}
+      </div>
+      <div class="id">
+        {pick && <span class="ours"><Icon name="check" size={13} stroke={2.6} />{mp.ours}{pickNeed ? `: ${tx(pickNeed.label, lang)}` : ''}</span>}
+        <h1>{name}</h1>
+        <p class="lead">
+          {fill(mp.lead, { name, price, store: m.store, date: dayMonth(m.seen) })}
+          {pct && m.was && <> {fill(mp.leadOff, { was: formatPrice(m.was, ed), pct: String(pct) })}</>}
+        </p>
+        <div class="buy-row">
+          <p class="price">
+            <b>{price}</b>
+            {m.was && <s>{formatPrice(m.was, ed)}</s>}
+            {pct && <span class="off">−{pct}%</span>}
+          </p>
+          <a class="buy" href={link.href} target="_blank" rel={link.sponsored ? 'sponsored nofollow noopener' : 'nofollow noopener'}>
+            {fill(ui.models.cta, { store: m.store })}
+            <Icon name="arrow-up-right" size={16} stroke={2} />
+          </a>
+        </div>
+        {tests.length > 0 && (
+          <ul class="badges">
+            {tests.map((x) => (
+              <li>
+                <a href={x.source} target="_blank" rel="noopener">
+                  <Icon name="check" size={12} stroke={2.4} />
+                  {testBadge(x, lang)}
+                </a>
+              </li>
+            ))}
+          </ul>
+        )}
+      </div>
+    </header>
+
+    <section class="block">
+      <h2>{fill(mp.hPrice, { name })}</h2>
+      {
+        history && (
+          <p>
+            {fill(mp.historyStart, { name, since: longDate(history.since) })}{' '}
+            {history.points.length < 2
+              ? mp.historyFlat
+              : `${fill(mp.historyRange, { low: formatPrice(history.low.price, ed), lowDay: longDate(history.low.day), high: formatPrice(history.high.price, ed), highDay: longDate(history.high.day) })} ${m.price <= history.low.price ? mp.historyAtLow : fill(mp.historyAbove, { diff: formatPrice(Math.round((m.price - history.low.price) * 100) / 100, ed) })}`}
+          </p>
+        )
+      }
+      {
+        history && history.points.length >= 2 && (
+          <svg class="spark" viewBox="0 0 300 60" role="img" aria-label={fill(mp.historyRange, { low: formatPrice(history.low.price, ed), lowDay: longDate(history.low.day), high: formatPrice(history.high.price, ed), highDay: longDate(history.high.day) })}>
+            <polyline
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linejoin="round"
+              points={[...history.points, { day: m.seen.slice(0, 10), price: m.price }]
+                .map((p, i, a) => {
+                  const lo = history.low.price;
+                  const hi = Math.max(history.high.price, lo + 1);
+                  const x = (i / Math.max(a.length - 1, 1)) * 296 + 2;
+                  const y = 56 - ((p.price - lo) / (hi - lo)) * 52;
+                  return `${x.toFixed(1)},${y.toFixed(1)}`;
+                })
+                .join(' ')}
+            />
+          </svg>
+        )
+      }
+      <p class="src-line">
+        <a class="link" href={m.url} target="_blank" rel="noopener">{hostOf(m.url)}</a>
+        {brandHref && (
+          <>
+            {' · '}
+            <a class="link" href={brandHref}>{fill(ui.brandPage.h1, { brand: m.store, where })} →</a>
+          </>
+        )}
+      </p>
+    </section>
+
+    <section class="block">
+      <h2>{fill(mp.hTests, { name })}</h2>
+      {
+        tests.length ? (
+          <>
+            <p>{mp.testsIntro}</p>
+            <ul class="tests">
+              {tests.map((x) => (
+                <li>
+                  <span>{testBadge(x, lang)}</span>
+                  <a class="link" href={x.source} target="_blank" rel="noopener">
+                    {ui.models.readTest}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </>
+        ) : (
+          <p>{mp.testsNone}</p>
+        )
+      }
+    </section>
+
+    <section class="block">
+      <h2>{mp.hPlace}</h2>
+      <p>
+        {fill(rank === 1 ? mp.rankFirst : mp.rank, { n: String(all.length), where, rank: String(rank) })}
+        {m.specs?.pa && <> {fill(mp.specPa, { pa: new Intl.NumberFormat(nf).format(m.specs.pa) })}</>}
+        {!m.specs?.pa && m.specs?.aw && <> {fill(mp.specAw, { aw: String(m.specs.aw) })}</>}
+      </p>
+      <p>
+        {
+          pick && pickNeed
+            ? fill(mp.isPick, { need: tx(pickNeed.label, lang), why: tx(pick.why, lang) })
+            : fill(mp.pickFor, { pick: productName(mainPick, ed), why: tx(mainPick.why, lang) })
+        }
+        {!pick && mainPrice && <> {fill(mp.pickPrice, { price: mainPrice })}</>}
+      </p>
+      <p>
+        <a class="link" href={categoryHref}>{mp.verdict} →</a>
+      </p>
+    </section>
+
+    {
+      alternatives.length > 0 && (
+        <section class="block">
+          <h2>{fill(mp.hAlt, { name })}</h2>
+          <p>{mp.altIntro}</p>
+          <ul class="alts" data-seo-skip>
+            {alternatives.map((a) => (
+              <li>
+                {a.pic && <img data-pic src={a.pic.src} alt="" width="56" height="56" loading="lazy" decoding="async" />}
+                <span class="an">
+                  {a.href ? <a href={a.href}>{a.name}</a> : <span>{a.name}</span>}
+                  {a.ours && <span class="tag">{mp.ours}</span>}
+                  {a.test && <span class="tag test">{testBadge(a.test, lang)}</span>}
+                </span>
+                <b class="ap">{a.price}</b>
+              </li>
+            ))}
+          </ul>
+          <p>
+            <a class="link" href={`${categoryHref}#models`}>{fill(mp.seeAll, { where })} →</a>
+          </p>
+        </section>
+      )
+    }
+
+    {
+      criteria.length > 0 && (
+        <section class="block">
+          <h2>{mp.hChoose}</h2>
+          <p>{tx(c.line, lang)}</p>
+          <ol class="crit">
+            {criteria.map((k) => (
+              <li>
+                <b>{k.t}.</b> {k.d}
+              </li>
+            ))}
+          </ol>
+          {(c.goodIf[lang] ?? []).length > 0 && (
+            <>
+              <p>
+                <b>{tx(c.heads.good, lang)}:</b>
+              </p>
+              <ul class="crit">
+                {(c.goodIf[lang] ?? []).map((g) => (
+                  <li>{g}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
+      )
+    }
+
+    <section class="block faq">
+      <h2>{mp.hFaq}</h2>
+      {
+        history && (
+          <>
+            <h3>{fill(mp.qLow, { name })}</h3>
+            <p>{history.points.length < 2 ? fill(mp.aLowFlat, { since: longDate(history.since), price }) : fill(mp.aLow, { since: longDate(history.since), low: formatPrice(history.low.price, ed), lowDay: longDate(history.low.day), price })}</p>
+          </>
+        )
+      }
+      <h3>{fill(mp.qWhere, { name })}</h3>
+      <p>{fill(mp.aWhere, { store: m.store, price })}</p>
+      <h3>{fill(mp.qTested, { name })}</h3>
+      <p>{tests.length ? fill(mp.aTestedYes, { list: testList }) : mp.aTestedNo}</p>
+    </section>
+
+    <p class="note">
+      <Icon name="shield" size={14} />
+      <span>{pic?.exact ? mp.noteExact : mp.note}</span>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .mp {
+    padding-block: 1rem 3rem;
+    display: grid;
+    gap: 1.6rem;
+    max-width: 52rem;
+  }
+  .crumb a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    color: var(--text-2);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .crumb a:hover {
+    color: var(--accent-ink);
+  }
+  .top {
+    display: grid;
+    grid-template-columns: minmax(8rem, 15rem) minmax(0, 1fr);
+    gap: clamp(1rem, 0.5rem + 2vw, 2rem);
+    align-items: start;
+  }
+  .pic {
+    aspect-ratio: 1;
+    border-radius: var(--r-lg);
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+    display: grid;
+    place-items: center;
+  }
+  .pic img {
+    width: 90%;
+    height: 90%;
+    object-fit: contain;
+  }
+  .id {
+    display: grid;
+    gap: 0.75rem;
+    align-content: start;
+  }
+  .ours {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.25rem 0.7rem;
+    border-radius: 999px;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+    font-size: 0.85rem;
+    font-weight: 650;
+  }
+  h1 {
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .lead {
+    color: var(--text-2);
+  }
+  .buy-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.2rem;
+  }
+  .price {
+    display: flex;
+    align-items: baseline;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+  }
+  .price b {
+    font: 700 1.6rem/1 var(--f-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .price s {
+    color: var(--text-3);
+  }
+  .off {
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--good);
+    color: var(--paper);
+    font-size: 0.85rem;
+    font-weight: 700;
+  }
+  .buy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3rem;
+    padding: 0.4rem 1.3rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--on-ink);
+    font-weight: 700;
+    text-decoration: none;
+  }
+  .buy:hover {
+    background: var(--ink-2);
+  }
+  .badges {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .badges a {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.2rem 0.6rem;
+    border: 1px solid color-mix(in srgb, var(--good) 45%, transparent);
+    border-radius: 999px;
+    color: var(--good);
+    font-size: 0.82rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .badges a::after {
+    content: '';
+    position: absolute;
+    inset: -0.5rem -0.2rem;
+  }
+  .block {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .block h2 {
+    font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+  }
+  .block h3 {
+    font-size: 1.05rem;
+    margin-top: 0.4rem;
+  }
+  .spark {
+    width: 100%;
+    max-width: 22rem;
+    height: 3.75rem;
+    color: var(--accent-ink);
+  }
+  .src-line {
+    font-size: 0.88rem;
+    color: var(--text-3);
+  }
+  .tests,
+  .alts,
+  .crit {
+    margin: 0;
+    padding: 0;
+  }
+  .tests {
+    list-style: none;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .tests li {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    padding: 0.6rem 0.8rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+  }
+  .alts {
+    list-style: none;
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .alts li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.6rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .alts img {
+    width: 3.25rem;
+    height: 3.25rem;
+    padding: 0.15rem;
+    border-radius: var(--r-sm);
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .an {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.35rem 0.5rem;
+    font-weight: 650;
+  }
+  .an a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    color: var(--text);
+  }
+  .tag {
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+    font-size: 0.78rem;
+  }
+  .tag.test {
+    background: none;
+    border: 1px solid color-mix(in srgb, var(--good) 45%, transparent);
+    color: var(--good);
+  }
+  .ap {
+    font-variant-numeric: tabular-nums;
+  }
+  .crit {
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .note {
+    display: flex;
+    gap: 0.5rem;
+    align-items: flex-start;
+    color: var(--text-3);
+    font-size: 0.88rem;
+  }
+  @media (max-width: 36rem) {
+    .top {
+      grid-template-columns: 1fr;
+    }
+    .pic {
+      width: 11rem;
+    }
+  }
+</style>

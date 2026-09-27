@@ -1,0 +1,84 @@
+/* ClimaVerdict theme: the hygrometer. A deep teal-black dial around misty, cool reading surfaces,
+   and one frost-cyan signal (the needle) used sparingly for the answer and the primary action. */
+
+/* Metric-matched fallbacks (measured on real text against Arial and Courier New with fontkit),
+   so text keeps its size and line breaks while the web fonts load: no layout shift. */
+@font-face {
+  font-family: 'Epilogue Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 113%;
+  ascent-override: 69.91%;
+  descent-override: 20.8%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Figtree Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 100.47%;
+  ascent-override: 94.55%;
+  descent-override: 24.88%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Spline Fallback';
+  src: local('Courier New'), local('Courier'), local('Liberation Mono');
+  size-adjust: 99.98%;
+  ascent-override: 96.37%;
+  descent-override: 23.65%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Instrument (always dark) */
+  --ink: #0c1719;
+  --ink-2: #122124;
+  --ink-3: #1a2c30;
+  --ink-line: #294045;
+  --on-ink: #eaf4f4;
+  --on-ink-2: #9fb6b8;
+  --on-ink-3: #82999c;
+
+  /* Reading surfaces */
+  --paper: #edf3f3;
+  --card: #fbfdfd;
+  --line: #d2dfe0;
+  --line-strong: #a7bbbd;
+  --text: #0c1618;
+  --text-2: #42555a;
+  --text-3: #55686c;
+
+  /* Signal */
+  --accent: #7fe3ec;
+  --accent-hot: #a6f0f5;
+  --accent-ink: #06606a;
+  --accent-wash: #d7f3f5;
+  --good: #16794a;
+  --good-lit: #5fe39a;
+  --bad: #c1362c;
+  --bad-lit: #ff6f63;
+
+  --f-display: 'Epilogue Variable', 'Epilogue Fallback', sans-serif;
+  --f-text: 'Figtree Variable', 'Figtree Fallback', sans-serif;
+  --f-mono: 'Spline Sans Mono Variable', 'Spline Fallback', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0a1416;
+    --card: #11201f;
+    --line: #22363a;
+    --line-strong: #3a5156;
+    --text: #eaf4f4;
+    --text-2: #a8bec0;
+    --text-3: #8aa2a5;
+    --accent-ink: #7fe3ec;
+    --accent-wash: #0f2c30;
+    --good: #5fe39a;
+    --bad: #ff6f63;
+    --ink-2: #0f1d20;
+    --ink-3: #172a2e;
+    color-scheme: dark;
+  }
+}

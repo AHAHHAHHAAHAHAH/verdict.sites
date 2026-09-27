@@ -1,0 +1,137 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import { numberLocale, tag, type Edition } from '../i18n/editions';
+import { articlePath, pathFor, type ToolKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { tools as siteTools } from '@site/tools';
+
+const toolMeta = siteTools?.meta ?? {};
+import { site } from '@site/config';
+import { publisher } from '../lib/webora';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  entry: CollectionEntry<'articles'>;
+}
+const { ed, alternates, entry } = Astro.props;
+const { lang } = ed;
+const ui = t(lang);
+const { Content } = await render(entry);
+const date = new Intl.DateTimeFormat(numberLocale(ed), { dateStyle: 'long' });
+const tools = entry.data.tools as ToolKey[];
+const url = (p: string) => new URL(p, site.url).href;
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: entry.data.title,
+    description: entry.data.description,
+    inLanguage: tag(ed),
+    dateModified: entry.data.updated.toISOString(),
+    url: url(articlePath(ed, entry.data.slug)),
+    author: { '@type': 'Organization', name: site.name, url: site.url },
+    publisher: { '@type': 'Organization', name: publisher.name, url: publisher.url },
+  },
+];
+---
+
+<Base ed={ed} title={`${entry.data.title} | ${site.name}`} description={entry.data.description} alternates={alternates} jsonLd={jsonLd} ogType="article">
+  <div class="wrap">
+    <header class="ph">
+      <nav class="eyebrow" aria-label="Breadcrumb" data-reveal>
+        <a class="crumb" href={pathFor('guides', ed)}>{ui.guides.indexTitle}</a>
+      </nav>
+      <h1 data-reveal style="--i:1">{entry.data.title}</h1>
+      <p class="lede" data-reveal style="--i:2">{entry.data.description}</p>
+      <p class="eyebrow" data-reveal style="--i:3">
+        {ui.guides.updated} · <time datetime={entry.data.updated.toISOString().slice(0, 10)}>{date.format(entry.data.updated)}</time>
+      </p>
+    </header>
+    <div class="body">
+      <article class="prose">
+        <Content />
+      </article>
+      {
+        tools.length > 0 && (
+          <aside class="side" aria-label={ui.nav.tools}>
+            <p class="eyebrow">{ui.nav.tools}</p>
+            <ul>
+              {tools.map((tool) => (
+                <li>
+                  <a href={pathFor(tool, ed)}>
+                    <span class="mini">
+                      <Icon name={toolMeta[tool].icon} size={18} />
+                    </span>
+                    {ui.tools?.short[tool]}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </aside>
+        )
+      }
+    </div>
+  </div>
+</Base>
+
+<style>
+  .ph {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) 0 2rem;
+    max-width: 50rem;
+  }
+  .crumb {
+    color: var(--text-3);
+    text-decoration: none;
+  }
+  .crumb:hover {
+    color: var(--accent-ink);
+  }
+  .body {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 16rem);
+    gap: clamp(2rem, 1rem + 4vw, 5rem);
+  }
+  .side {
+    position: sticky;
+    top: calc(var(--header-h) + 1.5rem);
+    align-self: start;
+  }
+  .side ul {
+    list-style: none;
+    margin: 0.9rem 0 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .side a {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .mini {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: var(--r-sm);
+    background: var(--ink);
+    color: var(--accent);
+  }
+  @media (max-width: 58rem) {
+    .body {
+      grid-template-columns: 1fr;
+    }
+    .side {
+      position: static;
+    }
+  }
+</style>

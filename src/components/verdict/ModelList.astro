@@ -1,0 +1,964 @@
+---
+// Every model of this type on sale in the visitor's country: what the brands' own stores sell
+// today (read every morning), with our picks first and marked with the situation they answer.
+// Sort by price, discount, suction or test results; narrow by price range or brand, and undo it
+// with one tap. A tap on a model opens what we know about it: today's price and where it was read,
+// its price range, the suction the brand states, independent test results with their sources and,
+// for our picks, why we chose them. Nothing here is a verdict: the verdict is above.
+import Icon from '../ui/Icon.astro';
+import FactList from './FactList.astro';
+import { numberLocale, type Edition } from '../../i18n/editions';
+import { countryIn } from '../../i18n/markets';
+import { fill, t } from '../../i18n/ui';
+import { budgetLines, lineup, needsIn, productName, productSearch, tierOfPrice } from '../../lib/catalog';
+import { budgetLabel, tiers } from '../../lib/budget';
+import { modelsCheckedAt, modelsFor } from '../../lib/models';
+import { tx, type Product, type TestResult, type Tier } from '../../lib/pack';
+import { amazonSearchUrl, brandUrl, formatPrice, hostOf, offerAttrs, offerCta, offersFor, offerShopLabel, type Offer } from '../../lib/shop';
+import { pickOf, testBadge, testsFor } from '../../lib/tests';
+import { modelPicture, productPicture, type Picture } from '../../lib/pictures';
+import { modelPageOf } from '../../lib/modelpages';
+
+interface Props {
+  ed: Edition;
+  category: string;
+  /** The type's name as its keyphrase says it ("Robot lavapavimenti"), for the heading. */
+  typeName: string;
+}
+const { ed, category, typeName } = Astro.props;
+const { lang, market } = ed;
+const ui = t(lang);
+const m = ui.models;
+const v = ui.verdict;
+const FIRST = 10;
+
+// One brand, one name ("De'Longhi" and "De’Longhi" are the same brand).
+const brandOf = (b: string) => b.replace(/[’‘`´]/g, "'");
+
+// Our picks, each with the situation it answers (the first one it appears in).
+const needOf = new Map<string, string>();
+for (const n of needsIn(category, market)) for (const p of n.picks) if (!needOf.has(p.product.id)) needOf.set(p.product.id, tx(n.label, lang));
+const picks = lineup(category, market);
+const rank = (id: string | undefined) => (id ? picks.findIndex((p) => p.id === id) : -1);
+
+interface Row {
+  name: string;
+  brand: string;
+  price?: number;
+  was?: number;
+  pct?: number;
+  pa?: number;
+  aw?: number;
+  href: string;
+  rel: string;
+  cta: string;
+  pick: number;
+  need?: string;
+  tier?: Tier;
+  tests: TestResult[];
+  /** The store the price was read in, when, and its page. */
+  store?: { name: string; seen: string; url: string };
+  /** Its own page (price history, tests, alternatives), in the editions that have one. */
+  page?: string;
+  product?: Product;
+  /** Every shop for a pick no store we read sells here. */
+  offers?: Offer[];
+  pic?: Picture;
+}
+
+const rows: Row[] = [];
+const matched = new Set<string>();
+for (const x of modelsFor(category, market)) {
+  const own = pickOf(category, market, x);
+  if (own) matched.add(own.id);
+  const link = brandUrl(x.store, market, x.url);
+  rows.push({
+    name: own ? productName(own, ed) : x.name,
+    brand: brandOf(x.store),
+    price: x.price,
+    was: x.was,
+    pct: x.was ? Math.floor((1 - x.price / x.was) * 100) : undefined,
+    pa: x.specs?.pa,
+    aw: x.specs?.aw,
+    href: link.href,
+    rel: link.sponsored ? 'sponsored nofollow noopener' : 'nofollow noopener',
+    cta: fill(m.cta, { store: x.store }),
+    pick: rank(own?.id),
+    need: own ? needOf.get(own.id) : undefined,
+    tier: tierOfPrice(category, market, x.price),
+    tests: testsFor(category, own ? productName(own, ed) : x.name),
+    store: { name: x.store, seen: x.seen, url: x.url },
+    product: own,
+    pic: modelPicture(category, x, ed),
+    page: modelPageOf(ed, x),
+  });
+}
+// Our picks that no store we read sells here (Amazon, or a brand that publishes no catalogue).
+for (const p of picks) {
+  if (matched.has(p.id)) continue;
+  const offers = offersFor(p, ed, productSearch(p, ed));
+  const price = p.price?.[market] && !p.price[market]!.soldOut ? p.price[market]!.value : undefined;
+  const attrs = offerAttrs(offers[0]);
+  rows.push({
+    name: productName(p, ed),
+    brand: brandOf(p.brand ?? productName(p, ed).split(' ')[0]),
+    price,
+    href: attrs.href,
+    rel: attrs.rel,
+    cta: offerCta(offers[0].kind, lang, offers[0].shop),
+    pick: rank(p.id),
+    need: needOf.get(p.id),
+    tier: price ? tierOfPrice(category, market, price) : p.tier,
+    tests: testsFor(category, productName(p, ed)),
+    product: p,
+    offers,
+    pic: productPicture(p, ed),
+  });
+}
+// Our picks first, then from the lowest price; rows without a price last.
+const byPrice = (a: Row, b: Row) => (a.price ?? Infinity) - (b.price ?? Infinity);
+rows.sort((a, b) => (a.pick < 0 ? Infinity : a.pick) - (b.pick < 0 ? Infinity : b.pick) || byPrice(a, b));
+
+const brands = [...rows.reduce((acc, r) => acc.set(r.brand, (acc.get(r.brand) ?? 0) + 1), new Map<string, number>())].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]));
+const lines = budgetLines(category, market);
+const tierCount = Object.fromEntries(tiers.map((tt) => [tt, rows.filter((r) => r.tier === tt).length]));
+// Suction is sortable when most rows state it in the same unit.
+const paRows = rows.filter((r) => r.pa).length;
+const awRows = rows.filter((r) => r.aw).length;
+const power: 'pa' | 'aw' | undefined = paRows >= 3 && paRows >= awRows ? 'pa' : awRows >= 3 ? 'aw' : undefined;
+const anyDeal = rows.some((r) => r.pct);
+const anyTest = rows.some((r) => r.tests.length && !r.need);
+// "Test results first": the best place in any ranking, then any award.
+const testScore = (r: Row) => (r.tests.length ? Math.min(...r.tests.map((x) => (x.rank ? x.rank[0] / x.rank[1] : 0.5))) : '');
+const nl = numberLocale(ed);
+const num = new Intl.NumberFormat(nl);
+const day = (iso: string) => new Intl.DateTimeFormat(nl, { day: 'numeric', month: 'long' }).format(new Date(iso));
+const month = (ym: string) => new Intl.DateTimeFormat(nl, { month: 'long', year: 'numeric' }).format(new Date(`${ym}-15`));
+// The brands actually read here today (a store that sells in another currency is not).
+const stores = [...new Set(modelsFor(category, market).map((x) => x.store))];
+const listFmt = new Intl.ListFormat(lang, { type: 'conjunction' });
+const read = modelsCheckedAt ? day(modelsCheckedAt) : '';
+const sorts = [
+  { id: 'picks', label: m.sortPicks },
+  { id: 'low', label: m.sortLow },
+  { id: 'high', label: m.sortHigh },
+  ...(anyTest ? [{ id: 'tested', label: ui.tests.sort }] : []),
+  ...(anyDeal ? [{ id: 'deal', label: m.sortDeal }] : []),
+  ...(power ? [{ id: 'power', label: m.sortPower }] : []),
+];
+---
+
+{
+  modelsFor(category, market).length > 0 && rows.length > 1 && (
+    <section class="models" id="models" aria-labelledby="models-h" data-models data-first={FIRST} data-count-text={m.count} data-more-text={m.showAll}>
+      <div class="m-head">
+        <h2 id="models-h">{fill(m.title, { type: typeName, where: countryIn(market, lang) })}</h2>
+        {stores.length > 0 && modelsCheckedAt && <p class="m-lede">{fill(m.lede, { n: String(rows.length), d: read, stores: listFmt.format(stores) })}</p>}
+        {stores.length > 0 && !modelsCheckedAt && <p class="m-lede">{m.stale}</p>}
+      </div>
+
+      <div class="m-tools" data-tools hidden>
+        <div class="m-group" role="group" aria-label={m.sort}>
+          <span class="m-label">
+            <Icon name="sort" size={15} />
+            {m.sort}
+          </span>
+          <div class="chips">
+            {sorts.map((s, i) => (
+              <button type="button" class="chip" data-sort={s.id} aria-pressed={i === 0 ? 'true' : 'false'}>
+                {s.label}
+              </button>
+            ))}
+          </div>
+        </div>
+        {lines && (
+          <div class="m-group" role="group" aria-label={m.budget}>
+            <span class="m-label">
+              <Icon name="coins" size={15} />
+              {m.budget}
+            </span>
+            <div class="chips">
+              <button type="button" class="chip" data-tier="" aria-pressed="true">
+                {m.all}
+              </button>
+              {tiers.map((tt) => (
+                <button type="button" class="chip" data-tier={tt} aria-pressed="false" disabled={tierCount[tt] === 0}>
+                  {budgetLabel(lines, tt, ed)} <span class="n">{tierCount[tt]}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+        {brands.length > 1 && (
+          <div class="m-group" role="group" aria-label={m.brand}>
+            <span class="m-label">
+              <Icon name="filter" size={15} />
+              {m.brand}
+            </span>
+            <div class="chips">
+              <button type="button" class="chip" data-brand="" aria-pressed="true">
+                {m.allBrands}
+              </button>
+              {brands.map(([b, n]) => (
+                <button type="button" class="chip" data-brand={b} aria-pressed="false">
+                  {b} <span class="n">{n}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+      </div>
+
+      <p class="m-count" data-count-line hidden>
+        <span data-count aria-live="polite" />
+        <button type="button" class="m-reset" data-reset>
+          <Icon name="cross" size={13} stroke={2.2} />
+          {m.reset}
+        </button>
+      </p>
+
+      <ul class="m-list" data-list data-seo-skip>
+        {rows.map((r, i) => (
+          <li
+            class:list={['m', { mine: r.pick >= 0 }]}
+            data-row
+            data-i={i}
+            data-pick={r.pick}
+            data-price={r.price ?? ''}
+            data-pct={r.pct ?? ''}
+            data-power={power ? (r[power] ?? '') : ''}
+            data-row-brand={r.brand}
+            data-row-tier={r.tier ?? ''}
+            data-test={testScore(r)}
+          >
+            <div class="m-top">
+              <button type="button" class="m-open" aria-expanded="false" aria-controls={`m-det-${i}`} data-open>
+                {r.pic && <img class="m-pic" data-pic src={r.pic.src} alt="" loading="lazy" decoding="async" width="56" height="56" />}
+                <span class="m-main">
+                  <span class="m-name">{r.name}</span>
+                  {(r.need || r.pa || r.aw || r.pct || r.tests.length > 0) && (
+                    <span class="m-tags">
+                      {r.need && (
+                        <span class="tag pick">
+                          <Icon name="check" size={12} stroke={2.6} />
+                          {fill(m.oursFor, { need: r.need })}
+                        </span>
+                      )}
+                      {r.tests.slice(0, 2).map((x) => (
+                        <span class="tag test">
+                          <Icon name="check" size={12} stroke={2.4} />
+                          {testBadge(x, lang)}
+                        </span>
+                      ))}
+                      {r.pa && <span class="tag spec">{num.format(r.pa)} Pa</span>}
+                      {!r.pa && r.aw && <span class="tag spec">{num.format(r.aw)} AW</span>}
+                      {r.pct && <span class="tag off">−{r.pct}%</span>}
+                    </span>
+                  )}
+                </span>
+                {r.price !== undefined && (
+                  <span class="m-price">
+                    <span class="now">{formatPrice(r.price, ed)}</span>
+                    {r.was && <s class="was">{formatPrice(r.was, ed)}</s>}
+                  </span>
+                )}
+                <span class="m-chev" aria-hidden="true">
+                  <Icon name="chevron-down" size={18} stroke={2} />
+                </span>
+                <span class="visually-hidden">{m.details}</span>
+              </button>
+              <a class="m-cta" href={r.href} target="_blank" rel={r.rel}>
+                {r.cta}
+                <Icon name="arrow-up-right" size={14} stroke={2} />
+              </a>
+            </div>
+
+            <div class="m-det" id={`m-det-${i}`} hidden>
+              {r.page && (
+                <a class="m-page link" href={r.page}>
+                  {m.page} →
+                </a>
+              )}
+              <dl class="m-facts">
+                {r.price !== undefined && (
+                  <div>
+                    <dt>{m.priceToday}</dt>
+                    <dd>
+                      <b>{formatPrice(r.price, ed)}</b>
+                      {r.was && (
+                        <>
+                          {' '}
+                          <s>{formatPrice(r.was, ed)}</s> <span class="off">−{r.pct}%</span>
+                        </>
+                      )}
+                      {r.store && <span class="where">{fill(m.storeRead, { store: r.store.name, d: day(r.store.seen) })}</span>}
+                    </dd>
+                  </div>
+                )}
+                {lines && r.tier && (
+                  <div>
+                    <dt>{m.range}</dt>
+                    <dd>{budgetLabel(lines, r.tier, ed)}</dd>
+                  </div>
+                )}
+                {(r.pa || r.aw) && r.store && (
+                  <div>
+                    <dt>{m.suction}</dt>
+                    <dd>
+                      {r.pa ? `${num.format(r.pa)} Pa` : `${num.format(r.aw!)} AW`}
+                      <a class="src" href={r.store.url} target="_blank" rel="nofollow noopener" aria-label={`${v.source}: ${hostOf(r.store.url)}`}>
+                        <Icon name="external" size={12} stroke={2} />
+                      </a>
+                    </dd>
+                  </div>
+                )}
+              </dl>
+
+              {r.tests.length > 0 && (
+                <div class="m-block">
+                  <p class="m-sub">{m.inTests}</p>
+                  <ul class="m-tests">
+                    {r.tests.map((x) => (
+                      <li>
+                        <span>
+                          {testBadge(x, lang)} <span class="when">· {month(x.date)}</span>
+                        </span>
+                        <a class="link" href={x.source} target="_blank" rel="noopener">
+                          {m.readTest}
+                          <Icon name="arrow-up-right" size={13} stroke={2} />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+
+              {r.product && (
+                <div class="m-block">
+                  <p class="m-sub">
+                    {m.whyPick}
+                    {r.need && <span class="when"> · {r.need}</span>}
+                  </p>
+                  <p class="m-why">{tx(r.product.why, lang)}</p>
+                  {r.product.lab && (
+                    <p class="m-lab">
+                      <Icon name="check" size={13} stroke={2.4} />
+                      <span>
+                        <b>{v.lab}{lang === 'fr' ? ' :' : ':'}</b> {tx(r.product.lab.text, lang)}
+                      </span>
+                      <a class="src" href={r.product.lab.source} target="_blank" rel="noopener" aria-label={`${v.source}: ${hostOf(r.product.lab.source)}`}>
+                        <Icon name="external" size={12} stroke={2} />
+                      </a>
+                    </p>
+                  )}
+                  <FactList lang={lang} facts={r.product.facts} />
+                </div>
+              )}
+
+              {!r.product && !r.tests.length && !r.pa && !r.aw && <p class="m-hint">{m.noData}</p>}
+
+              <div class="m-links">
+                {r.offers ? (
+                  r.offers.map((o, j) => (
+                    <a class:list={['m-go', { main: j === 0 }]} {...offerAttrs(o)} target="_blank">
+                      {offerShopLabel(o.kind, lang, o.shop)}
+                      <Icon name="arrow-up-right" size={14} stroke={2} />
+                    </a>
+                  ))
+                ) : (
+                  <>
+                    <a class="m-go main" href={r.href} target="_blank" rel={r.rel}>
+                      {r.cta}
+                      <Icon name="arrow-up-right" size={14} stroke={2} />
+                    </a>
+                    <a class="m-go" href={amazonSearchUrl(market, r.name)} target="_blank" rel="sponsored nofollow noopener">
+                      {v.ctaSearch}
+                      <Icon name="arrow-up-right" size={14} stroke={2} />
+                    </a>
+                  </>
+                )}
+              </div>
+            </div>
+          </li>
+        ))}
+      </ul>
+      <p class="m-none" data-none hidden>
+        {m.none}
+      </p>
+      <button type="button" class="m-more" data-more hidden>
+        <span data-more-label>{fill(m.showAll, { n: String(rows.length) })}</span>
+        <Icon name="chevron-down" size={16} stroke={2} />
+      </button>
+      {stores.length > 0 && <p class="m-note">{m.missing}</p>}
+    </section>
+  )
+}
+
+<style>
+  .models {
+    display: grid;
+    gap: 1rem;
+    margin-top: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+    scroll-margin-top: calc(var(--header-h) + 1rem);
+  }
+  .m-head {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .m-head h2 {
+    font-size: clamp(1.3rem, 1.1rem + 0.9vw, 1.75rem);
+    text-wrap: balance;
+  }
+  .m-lede,
+  .m-note {
+    color: var(--text-2);
+    max-width: 48rem;
+  }
+  .m-note {
+    font-size: 0.88rem;
+    color: var(--text-3);
+  }
+  .m-tools {
+    display: grid;
+    gap: 0.7rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+  }
+  .m-tools[hidden] {
+    display: none;
+  }
+  .m-group {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr);
+    align-items: start;
+    gap: 0.6rem;
+  }
+  .m-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.3rem;
+    color: var(--text-2);
+    font-size: 0.88rem;
+    font-weight: 650;
+  }
+  .chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    padding: 0.25rem 0.85rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    font: 600 0.88rem/1.2 var(--f-text);
+    cursor: pointer;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out),
+      color var(--d-2) var(--ease-out);
+  }
+  .chip:hover {
+    border-color: var(--text);
+  }
+  .chip[aria-pressed='true'] {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--paper);
+  }
+  .chip:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  .chip .n {
+    font-size: 0.78rem;
+    opacity: 0.7;
+  }
+  /* "6 of 24 models" and the way back to all of them. */
+  .m-count {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    color: var(--text-2);
+    font-size: 0.92rem;
+    font-weight: 600;
+  }
+  .m-count[hidden] {
+    display: none;
+  }
+  .m-reset {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.3rem;
+    padding: 0.2rem 0.85rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    font: 650 0.88rem/1.2 var(--f-text);
+    cursor: pointer;
+  }
+  .m-reset:hover {
+    border-color: var(--text);
+  }
+  .m-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .m {
+    border-bottom: 1px solid var(--line);
+  }
+  .m[hidden] {
+    display: none;
+  }
+  .m-top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.6rem 0.9rem;
+    padding: 0.4rem 0;
+  }
+  /* The row itself opens the model: name, results and price in one wide target. */
+  .m-open {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto auto;
+    align-items: center;
+    gap: 0.4rem 1rem;
+    width: 100%;
+    min-height: 3.6rem;
+    padding: 0.45rem 0.55rem;
+    border: 0;
+    border-radius: var(--r-md);
+    background: none;
+    color: var(--text);
+    font: inherit;
+    text-align: left;
+    cursor: pointer;
+    transition: background-color var(--d-2) var(--ease-out);
+  }
+  .m-open:hover,
+  .m-open[aria-expanded='true'] {
+    background: var(--card);
+  }
+  .m-open:has(.m-pic) {
+    grid-template-columns: auto minmax(0, 1fr) auto auto;
+  }
+  .m-page {
+    justify-self: start;
+    font-weight: 650;
+  }
+  .m-pic {
+    width: 3.25rem;
+    height: 3.25rem;
+    padding: 0.15rem;
+    border-radius: var(--r-sm);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+    object-fit: contain;
+  }
+  .m-main {
+    display: grid;
+    gap: 0.35rem;
+    min-width: 0;
+  }
+  .m-name {
+    font-weight: 650;
+    line-height: 1.3;
+    overflow-wrap: anywhere;
+  }
+  .m-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem;
+  }
+  .tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.12rem 0.55rem;
+    border-radius: 999px;
+    font-size: 0.8rem;
+    font-weight: 600;
+    line-height: 1.4;
+  }
+  .tag.pick {
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+  }
+  .tag.test {
+    border: 1px solid color-mix(in srgb, var(--good) 45%, transparent);
+    color: var(--good);
+  }
+  .tag.spec {
+    border: 1px solid var(--line);
+    color: var(--text-2);
+  }
+  .tag.off {
+    background: var(--good);
+    color: var(--paper);
+  }
+  .m-price {
+    display: grid;
+    justify-items: end;
+    line-height: 1.15;
+  }
+  .now {
+    font: 700 1.1rem/1.1 var(--f-display);
+  }
+  .was {
+    color: var(--text-3);
+    font-size: 0.85rem;
+  }
+  .m-chev {
+    display: grid;
+    place-items: center;
+    width: 2rem;
+    height: 2rem;
+    border-radius: 50%;
+    color: var(--text-2);
+    transition: transform var(--d-3) var(--ease-out);
+  }
+  .m-open[aria-expanded='true'] .m-chev {
+    transform: rotate(180deg);
+  }
+  .m-cta,
+  .m-go {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.5rem;
+    padding: 0.3rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+  .m-cta:hover,
+  .m-go:hover {
+    border-color: var(--text);
+    background: var(--card);
+  }
+  .m-go.main {
+    border-color: var(--ink);
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .m-go.main:hover {
+    background: var(--ink-2);
+  }
+
+  /* What we know about the model, opened in place. */
+  .m-det {
+    display: grid;
+    gap: 1rem;
+    margin: 0 0 0.9rem;
+    padding: 1rem 1.1rem 1.1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+    animation: det-in var(--d-3) var(--ease-out);
+  }
+  .m-det[hidden] {
+    display: none;
+  }
+  @keyframes det-in {
+    from {
+      opacity: 0;
+      transform: translateY(-6px);
+    }
+  }
+  .m-facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr));
+    gap: 0.8rem 1.2rem;
+    margin: 0;
+  }
+  .m-facts dt {
+    color: var(--text-3);
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .m-facts dd {
+    margin: 0.15rem 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0.25rem 0.45rem;
+  }
+  .m-facts b {
+    font: 700 1.05rem/1.2 var(--f-display);
+  }
+  .m-facts s {
+    color: var(--text-3);
+  }
+  .off {
+    color: var(--good);
+    font-weight: 700;
+  }
+  .where {
+    flex-basis: 100%;
+    color: var(--text-3);
+    font-size: 0.82rem;
+  }
+  .src {
+    display: inline-grid;
+    place-items: center;
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    color: var(--text-3);
+  }
+  .src:hover {
+    color: var(--accent-ink);
+  }
+  .m-block {
+    display: grid;
+    gap: 0.5rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+  }
+  .m-sub {
+    font-weight: 700;
+  }
+  .when {
+    color: var(--text-3);
+    font-weight: 500;
+  }
+  .m-tests {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.45rem;
+  }
+  .m-tests li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+  }
+  .m-tests .link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    font-weight: 600;
+  }
+  .m-why {
+    color: var(--text-2);
+    max-width: 46rem;
+  }
+  .m-lab {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.45rem;
+    color: var(--text-2);
+    font-size: 0.92rem;
+  }
+  .m-lab > :global(svg:first-child) {
+    flex: none;
+    margin-top: 0.25rem;
+    color: var(--good);
+  }
+  .m-hint {
+    color: var(--text-2);
+    font-size: 0.92rem;
+  }
+  .m-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .m-none {
+    padding: 0.8rem 0;
+    color: var(--text-2);
+  }
+  .m-none[hidden] {
+    display: none;
+  }
+  .m-more {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.8rem;
+    padding: 0.4rem 1.1rem;
+    border: 1px solid var(--text);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    font: 650 0.95rem/1.2 var(--f-text);
+    cursor: pointer;
+  }
+  .m-more[hidden] {
+    display: none;
+  }
+  @media (max-width: 40rem) {
+    .m-group {
+      grid-template-columns: 1fr;
+      gap: 0.35rem;
+    }
+    .m-label {
+      min-height: 0;
+    }
+    .m-top {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+      padding-bottom: 0.7rem;
+    }
+    .m-open {
+      grid-template-columns: minmax(0, 1fr) auto;
+    }
+    .m-price {
+      grid-column: 1;
+      justify-items: start;
+    }
+    .m-chev {
+      grid-column: 2;
+      grid-row: 1 / span 2;
+    }
+    .m-cta {
+      justify-self: start;
+      margin-left: 0.55rem;
+    }
+    .m-open:has(.m-pic) {
+      grid-template-columns: auto minmax(0, 1fr) auto;
+    }
+    .m-open:has(.m-pic) .m-pic {
+      grid-row: 1 / span 2;
+    }
+    .m-open:has(.m-pic) .m-price {
+      grid-column: 2;
+    }
+    .m-open:has(.m-pic) .m-chev {
+      grid-column: 3;
+    }
+    .m:has(.m-pic) .m-cta {
+      margin-left: calc(0.55rem + 3.25rem + 1rem);
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .m-det,
+    .m-chev {
+      animation: none;
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Sort and narrow the list in place (only the buttons above it do that), undo with one tap, and
+  // open a model's details by tapping its row.
+  document.addEventListener('astro:page-load', () => {
+    const found = document.querySelector<HTMLElement>('[data-models]:not([data-ready])');
+    if (!found) return;
+    const box: HTMLElement = found;
+    box.dataset.ready = '1';
+    const tools = box.querySelector<HTMLElement>('[data-tools]')!;
+    const list = box.querySelector<HTMLElement>('[data-list]')!;
+    const rows = [...list.querySelectorAll<HTMLElement>('[data-row]')];
+    const countLine = box.querySelector<HTMLElement>('[data-count-line]')!;
+    const count = box.querySelector<HTMLElement>('[data-count]')!;
+    const none = box.querySelector<HTMLElement>('[data-none]')!;
+    const more = box.querySelector<HTMLButtonElement>('[data-more]')!;
+    const moreLabel = more.querySelector<HTMLElement>('[data-more-label]')!;
+    const first = Number(box.dataset.first ?? 10);
+    const state = { sort: 'picks', tier: '', brand: '', open: false };
+    const num = (el: HTMLElement, key: string) => {
+      const v = el.dataset[key];
+      return v === undefined || v === '' ? undefined : Number(v);
+    };
+    const last = (v: number | undefined, dir: 1 | -1) => (v === undefined ? Infinity : dir * v);
+    const pick = (el: HTMLElement) => (num(el, 'pick')! < 0 ? undefined : num(el, 'pick'));
+    const order: Record<string, (a: HTMLElement, b: HTMLElement) => number> = {
+      picks: (a, b) => last(pick(a), 1) - last(pick(b), 1) || last(num(a, 'price'), 1) - last(num(b, 'price'), 1),
+      low: (a, b) => last(num(a, 'price'), 1) - last(num(b, 'price'), 1),
+      high: (a, b) => last(num(a, 'price'), -1) - last(num(b, 'price'), -1),
+      tested: (a, b) => last(num(a, 'test'), 1) - last(num(b, 'test'), 1) || last(num(a, 'price'), 1) - last(num(b, 'price'), 1),
+      deal: (a, b) => last(num(a, 'pct'), -1) - last(num(b, 'pct'), -1) || last(num(a, 'price'), 1) - last(num(b, 'price'), 1),
+      power: (a, b) => last(num(a, 'power'), -1) - last(num(b, 'power'), -1) || last(num(a, 'price'), 1) - last(num(b, 'price'), 1),
+    };
+
+    function press(attr: 'sort' | 'tier' | 'brand', value: string) {
+      tools.querySelectorAll<HTMLButtonElement>(`button[data-${attr}]`).forEach((x) => x.setAttribute('aria-pressed', String((x.dataset[attr] ?? '') === value)));
+    }
+
+    function apply() {
+      const shown = rows.filter((r) => (!state.tier || r.dataset.rowTier === state.tier) && (!state.brand || r.dataset.rowBrand === state.brand));
+      const sorted = [...rows].sort((a, b) => order[state.sort](a, b) || num(a, 'i')! - num(b, 'i')!);
+      sorted.forEach((r) => list.append(r));
+      let n = 0;
+      for (const r of sorted) {
+        const inside = shown.includes(r);
+        r.hidden = !inside || (!state.open && n >= first);
+        if (inside) n++;
+      }
+      none.hidden = shown.length > 0;
+      more.hidden = state.open || shown.length <= first;
+      moreLabel.textContent = (box.dataset.moreText ?? '').replace('{n}', String(shown.length));
+      countLine.hidden = !(state.tier || state.brand);
+      count.textContent = (box.dataset.countText ?? '').replace('{n}', String(shown.length)).replace('{total}', String(rows.length));
+    }
+
+    // Only the buttons above the list sort and narrow it.
+    (['sort', 'tier', 'brand'] as const).forEach((attr) =>
+      tools.querySelectorAll<HTMLButtonElement>(`button[data-${attr}]`).forEach((b) =>
+        b.addEventListener('click', () => {
+          state[attr] = b.dataset[attr] ?? '';
+          press(attr, state[attr]);
+          apply();
+        }),
+      ),
+    );
+    box.querySelector('[data-reset]')?.addEventListener('click', () => {
+      state.tier = '';
+      state.brand = '';
+      press('tier', '');
+      press('brand', '');
+      apply();
+    });
+    more.addEventListener('click', () => {
+      state.open = true;
+      apply();
+    });
+
+    // A tap on a row opens (or closes) what we know about that model.
+    rows.forEach((r) => {
+      const btn = r.querySelector<HTMLButtonElement>('[data-open]')!;
+      const det = r.querySelector<HTMLElement>('.m-det')!;
+      btn.addEventListener('click', () => {
+        const open = btn.getAttribute('aria-expanded') !== 'true';
+        btn.setAttribute('aria-expanded', String(open));
+        det.hidden = !open;
+      });
+    });
+
+    // Arriving from the quiz with a budget: the same range is chosen here, and can be undone.
+    const b = new URLSearchParams(location.search).get('b');
+    if (b && tools.querySelector(`button[data-tier="${b}"]:not(:disabled)`)) {
+      state.tier = b;
+      press('tier', b);
+    }
+    tools.hidden = false;
+    apply();
+  });
+</script>

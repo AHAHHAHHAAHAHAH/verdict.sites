@@ -1,0 +1,188 @@
+---
+// The address without an edition: sends each visitor to their country and language (the one they
+// chose last time, or the one their browser says: any language of the site in any country), and
+// lists each country in its own language and in English for crawlers and visitors without
+// JavaScript; every other pair is chosen from the country button on any page. Countries are named
+// in their own language.
+import '@fontsource-variable/bricolage-grotesque/wght.css';
+import '@fontsource-variable/instrument-sans/wght.css';
+import '@fontsource-variable/martian-mono/wght.css';
+import '../styles/global.css';
+import '@site/theme.css';
+import Logo from '@site/Logo.astro';
+import Icon from '../components/ui/Icon.astro';
+import { defaultEdition, editions, markets, tag } from '../i18n/editions';
+import { languageName } from '../i18n/locales';
+import { countryName, marketMeta } from '../i18n/markets';
+import { pathFor } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { site } from '@site/config';
+
+const abs = (href: string) => new URL(href, Astro.site).href;
+const ui = t(defaultEdition.lang);
+const countries = markets.map((m) => ({
+  market: m,
+  name: countryName(m, marketMeta[m].lang),
+  editions: editions.filter((e) => e.market === m && e.indexed),
+}));
+// What the redirect needs, and nothing else.
+const map = {
+  editions: editions.map((e) => ({ key: e.key, lang: e.lang, market: e.market, region: marketMeta[e.market].region, href: pathFor('home', e) })),
+  zones: Object.fromEntries(markets.map((m) => [m, marketMeta[m].timeZones])),
+  native: Object.fromEntries(markets.map((m) => [m, marketMeta[m].lang])),
+  fallback: pathFor('home', defaultEdition),
+};
+---
+
+<!doctype html>
+<html lang={defaultEdition.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{site.name} – {ui.tagline}</title>
+    <meta name="description" content={ui.home.metaDescription} />
+    <link rel="canonical" href={abs('/')} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content={site.themeColor} />
+    {editions.filter((e) => e.indexed).map((e) => <link rel="alternate" hreflang={tag(e)} href={abs(pathFor('home', e))} />)}
+    <link rel="alternate" hreflang="x-default" href={abs('/')} />
+    <script is:inline define:vars={{ map }}>
+      // 1. The edition chosen last time. 2. The country from the browser's languages ("it-IT"),
+      // then from its time zone, then from a bare language ("sv" → Sweden). 3. The language the
+      // browser prefers among the site's (every one is published in every country), else English,
+      // else the country's own.
+      var pick = null;
+      try {
+        var saved = localStorage.getItem('edition');
+        pick = map.editions.find(function (e) { return e.key === saved; }) || null;
+      } catch (err) {}
+      if (!pick) {
+        var prefs = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || '']).map(function (x) { return String(x).toLowerCase(); });
+        var markets = Object.keys(map.native);
+        var market = null;
+        for (var i = 0; i < prefs.length && !market; i++) {
+          var region = prefs[i].split('-')[1];
+          if (region) {
+            var hit = map.editions.find(function (e) { return e.region.toLowerCase() === region; });
+            if (hit) market = hit.market;
+          }
+        }
+        if (!market) {
+          var zone = '';
+          try { zone = Intl.DateTimeFormat().resolvedOptions().timeZone || ''; } catch (err) {}
+          market = markets.find(function (m) { return map.zones[m].indexOf(zone) !== -1; }) || null;
+        }
+        for (var j = 0; j < prefs.length && !market; j++) {
+          var code = prefs[j].slice(0, 2);
+          market = markets.find(function (m) { return map.native[m] === code; }) || null;
+        }
+        if (market) {
+          var here = map.editions.filter(function (e) { return e.market === market; });
+          for (var k = 0; k < prefs.length && !pick; k++) {
+            var lang = prefs[k].slice(0, 2);
+            pick = here.find(function (e) { return e.lang === lang; }) || null;
+          }
+          pick = pick || here.find(function (e) { return e.lang === 'en'; }) || here[0];
+        }
+      }
+      location.replace(pick ? pick.href : map.fallback);
+    </script>
+  </head>
+  <body>
+    <main class="chooser">
+      <Logo size={44} />
+      <h1>{ui.tagline}</h1>
+      <ul class="countries">
+        {
+          countries.map((c) => (
+            <li>
+              <span class="cn" lang={marketMeta[c.market].lang}>
+                <span class="code">{marketMeta[c.market].region}</span>
+                {c.name}
+              </span>
+              <span class="langs">
+                {c.editions.map((e) => (
+                  <a href={pathFor('home', e)} hreflang={tag(e)} lang={e.lang}>
+                    {languageName[e.lang]}
+                    <Icon name="arrow-right" size={15} />
+                  </a>
+                ))}
+              </span>
+            </li>
+          ))
+        }
+      </ul>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .chooser {
+    min-height: 100svh;
+    display: grid;
+    place-content: center;
+    justify-items: center;
+    gap: 2rem;
+    padding: 2rem 1rem;
+    text-align: center;
+  }
+  h1 {
+    font-size: clamp(2rem, 1.4rem + 3vw, 3.4rem);
+    max-width: 16ch;
+  }
+  .countries {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.5rem;
+    width: min(30rem, 100%);
+  }
+  .countries li {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.6rem 1rem;
+    padding: 0.8rem 0.9rem 0.8rem 1.1rem;
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-md);
+    text-align: left;
+  }
+  .cn {
+    display: flex;
+    align-items: center;
+    gap: 0.7rem;
+    font-weight: 600;
+  }
+  .code {
+    font: 500 0.75rem/1 var(--f-mono);
+    color: var(--accent);
+  }
+  .langs {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+  }
+  .langs a {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    min-height: 2.4rem;
+    padding: 0.2rem 0.85rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    color: var(--on-ink);
+    text-decoration: none;
+    font-size: 0.92rem;
+    font-weight: 600;
+    transition: border-color var(--d-2) var(--ease-out);
+  }
+  .langs a:hover {
+    border-color: var(--accent);
+  }
+</style>

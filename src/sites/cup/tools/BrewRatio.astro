@@ -1,0 +1,204 @@
+---
+import CalcShell from '../../../components/tools/CalcShell.astro';
+import Segmented from '../../../components/ui/Segmented.astro';
+import Stepper from '../../../components/ui/Stepper.astro';
+import Readout from '../../../components/ui/Readout.astro';
+import type { Edition } from '../../../i18n/editions';
+import { t } from '../ui';
+
+interface Props {
+  ed: Edition;
+}
+const { ed } = Astro.props;
+const { lang } = ed;
+const s = t(lang).brewRatio;
+// Filter: SCA Golden Cup ≈ 55 g/L → 1000 / 55 ≈ 18.
+const presets = { filter: 18, press: 15, espresso: 2, coldbrew: 8 };
+const strings = { notes: s.notes, result: s.result, resultEspresso: s.resultEspresso, water: s.water, yield: s.yield, inCup: s.inCup };
+const methods = Object.entries(s.methods).map(([value, label]) => ({ value, label }));
+---
+
+<CalcShell ed={ed} calc="brew-ratio" tool="tool-brew-ratio" next="tool-home-payback" data-strings={JSON.stringify(strings)} data-presets={JSON.stringify(presets)}>
+  <Fragment slot="inputs">
+    <Segmented name="method" legend={s.method} options={methods} selected="filter" />
+    <div class="grid">
+      <Stepper ed={ed} idPrefix="br" name="ratio" label={s.ratio} prefix="1 :" value={18} step={0.5} min={1} max={30} range={[1, 20]} />
+      <Stepper ed={ed} idPrefix="br" name="coffee" label={s.coffee} unit="g" value={20} step={0.5} min={0} max={2000} range={[5, 120]} />
+      <Stepper ed={ed} idPrefix="br" name="water" label={s.water} unit="g" value={360} step={5} min={0} max={30000} range={[20, 2000]} />
+    </div>
+    <p class="note" data-note>{s.notes.filter}</p>
+  </Fragment>
+
+  <Fragment slot="results">
+    <div class="pair">
+      <Readout label={s.coffee} out="coffee" unit="g" size="xl" />
+      <span class="sep" aria-hidden="true">:</span>
+      <Readout label={s.water} out="water" unit="g" size="xl" />
+    </div>
+    <div class="ratio" aria-hidden="true">
+      <div class="ratio-track">
+        <span class="seg-coffee" data-bar="coffee"></span>
+      </div>
+      <div class="ratio-legend">
+        <span><i class="sw sw-c"></i>{s.coffee}</span>
+        <span data-out="ratioText"></span>
+        <span><i class="sw sw-w"></i><span data-label-for="water2">{s.water}</span></span>
+      </div>
+    </div>
+    <p class="sentence" data-out="sentence"></p>
+    <p class="hint">{s.hint}</p>
+    <output class="visually-hidden" aria-hidden="true" data-out="pair" data-primary></output>
+  </Fragment>
+</CalcShell>
+
+<style>
+  .note {
+    font-size: 0.9rem;
+    color: var(--text-2);
+    padding: 0.8rem 1rem;
+    background: color-mix(in srgb, var(--accent) 10%, var(--card));
+    border-left: 2px solid var(--accent);
+    border-radius: 0 var(--r-sm) var(--r-sm) 0;
+  }
+  .pair {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+    align-items: end;
+    gap: 0.8rem;
+  }
+  .sep {
+    font: 600 2.4rem/1 var(--f-mono);
+    color: var(--on-ink-3);
+    padding-bottom: 0.2rem;
+  }
+  .ratio {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .ratio-track {
+    height: 12px;
+    border-radius: 6px;
+    background: repeating-linear-gradient(90deg, color-mix(in srgb, var(--on-ink) 16%, transparent) 0 2px, transparent 2px 6px);
+    overflow: hidden;
+  }
+  .seg-coffee {
+    display: block;
+    height: 100%;
+    width: var(--w, 5%);
+    background: var(--accent);
+    border-radius: 6px;
+    transition: width var(--d-3) var(--ease-out);
+  }
+  .ratio-legend {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    font: 500 0.72rem/1.2 var(--f-mono);
+    color: var(--on-ink-2);
+  }
+  .ratio-legend [data-out] {
+    color: var(--on-ink);
+    font-size: 0.85rem;
+  }
+  .sw {
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    margin-right: 0.4rem;
+    border-radius: 2px;
+    vertical-align: 0;
+  }
+  .sw-c {
+    background: var(--accent);
+  }
+  .sw-w {
+    background: color-mix(in srgb, var(--on-ink) 35%, transparent);
+  }
+  .sentence {
+    font-size: 1.02rem;
+    line-height: 1.45;
+    color: var(--on-ink);
+  }
+  .hint {
+    font-size: 0.82rem;
+    color: var(--on-ink-3);
+    margin-top: -0.6rem;
+  }
+</style>
+
+<script>
+  import { onCalc, num, allFinite, plain, tween, blank, out, bar, fill, announce } from '../../../scripts/calc';
+
+  onCalc('brew-ratio', (form) => {
+    const strings = JSON.parse(form.dataset.strings!);
+    const presets: Record<string, number> = JSON.parse(form.dataset.presets!);
+    const locale = form.dataset.locale!;
+    const field = (n: string) => form.elements.namedItem(n) as HTMLInputElement;
+    const method = () => form.querySelector<HTMLInputElement>('input[name="method"]:checked')?.value ?? 'custom';
+    const setValue = (n: string, v: number) => {
+      field(n).value = String(v);
+      // Local event only: repaints the stepper slider without re-entering the form handler.
+      field(n).dispatchEvent(new Event('input'));
+    };
+    const setMethod = (v: string) => {
+      const radio = form.querySelector<HTMLInputElement>(`input[name="method"][value="${v}"]`);
+      if (radio && !radio.checked) {
+        radio.checked = true;
+        radio.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    };
+    const snapshot = () => ({ method: method(), ratio: field('ratio').value, coffee: field('coffee').value, water: field('water').value });
+    let last = snapshot();
+
+    return () => {
+      const now = snapshot();
+      const m = now.method;
+      if (m !== last.method && presets[m]) {
+        setValue('ratio', presets[m]);
+      } else if (now.ratio !== last.ratio && presets[m] !== num(form, 'ratio')) {
+        setMethod('custom');
+      }
+
+      const ratio = num(form, 'ratio');
+      if (allFinite(ratio) && ratio > 0) {
+        if (now.water !== last.water && now.coffee === last.coffee && now.ratio === last.ratio && m === last.method) {
+          const water = num(form, 'water');
+          if (allFinite(water)) setValue('coffee', Math.round((water / ratio) * 10) / 10);
+        } else {
+          const coffee = num(form, 'coffee');
+          if (allFinite(coffee)) setValue('water', Math.round(coffee * ratio));
+        }
+      }
+      last = snapshot();
+
+      const isEspresso = method() === 'espresso';
+      form.querySelector('[data-note]')!.textContent = strings.notes[method()];
+      const waterLabel = isEspresso ? strings.yield : strings.water;
+      form.querySelectorAll('label[for="br-water"], [data-label-for="water"]').forEach((el) => (el.textContent = waterLabel));
+      const legend = form.querySelector('[data-label-for="water2"]');
+      if (legend) legend.textContent = isEspresso ? strings.inCup : strings.water;
+
+      const coffee = num(form, 'coffee');
+      const water = num(form, 'water');
+      const r = num(form, 'ratio');
+      if (!allFinite(coffee, water, r) || r <= 0) {
+        ['coffee', 'water'].forEach((k) => blank(out(form, k)));
+        out(form, 'sentence')!.textContent = '';
+        return;
+      }
+      tween(out(form, 'coffee'), coffee, (n) => plain(locale, n, 1));
+      tween(out(form, 'water'), water, (n) => plain(locale, n, 0));
+      out(form, 'ratioText')!.textContent = `1 : ${plain(locale, r, 1)}`;
+      bar(form, 'coffee', 100 / (1 + r));
+      const sentence = fill(isEspresso ? strings.resultEspresso : strings.result, {
+        coffee: plain(locale, coffee, 1),
+        water: plain(locale, water, 0),
+        ratio: plain(locale, r, 1),
+      });
+      out(form, 'sentence')!.textContent = sentence;
+      out(form, 'pair')!.textContent = `${plain(locale, coffee, 1)} g : ${plain(locale, water, 0)} g`;
+      announce(form, sentence);
+    };
+  });
+</script>

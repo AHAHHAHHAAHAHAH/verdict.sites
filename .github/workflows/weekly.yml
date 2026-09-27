@@ -1,0 +1,64 @@
+# Every Monday: re-read official prices, rebuild every site, run all tests, and publish only if
+# everything is green. Anything that needs a person (a price nobody can read, a failing test)
+# opens an issue instead of shipping.
+name: weekly
+
+on:
+  schedule:
+    - cron: '0 5 * * 1'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    timeout-minutes: 40
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chrome
+
+      - name: Prices from the brand stores
+        id: prices
+        run: |
+          status=0
+          for site in cup floor clima; do
+            node scripts/check-prices.mjs "$site" --write | tee -a prices.log || status=$?
+          done
+          node scripts/check-sources.mjs cup floor clima | tee -a prices.log || status=$?
+          echo "status=$status" >> "$GITHUB_OUTPUT"
+
+      - name: Build and test every site
+        run: |
+          for site in cup floor clima; do
+            node scripts/run.mjs "$site" check
+            node scripts/run.mjs "$site" build
+            node scripts/check-mobile.mjs "$site"
+            SITE="$site" npx playwright test --reporter=line
+          done
+
+      - name: Publish
+        if: success()
+        run: |
+          git config user.name "Webora Studio"
+          git config user.email "weboracode@gmail.com"
+          git add -A src
+          git diff --cached --quiet || git commit -m "Weekly refresh: official prices re-read"
+          git push
+
+      - name: Ask a person
+        if: failure() || steps.prices.outputs.status != '0'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh issue create --title "Weekly refresh needs a look ($(date +%F))" \
+            --body "Run: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}
+
+          $(tail -n 60 prices.log 2>/dev/null)"

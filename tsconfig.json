@@ -1,0 +1,9 @@
+{
+  "extends": "astro/tsconfigs/strict",
+  "include": [".astro/types.d.ts", "**/*"],
+  "exclude": ["dist"],
+  "compilerOptions": {
+    // Type checking resolves @site/* to the cup pack; every pack satisfies the same contract (src/lib/pack.ts).
+    "paths": { "@site/*": ["./src/sites/cup/*"] }
+  }
+}

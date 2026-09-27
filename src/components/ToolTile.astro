@@ -1,0 +1,151 @@
+---
+import Icon from './ui/Icon.astro';
+import type { Edition } from '../i18n/editions';
+import { pathFor, type ToolKey } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { tools as siteTools } from '@site/tools';
+
+const toolMeta = siteTools?.meta ?? {};
+
+interface Props {
+  ed: Edition;
+  tool: ToolKey;
+  index: number;
+}
+const { ed, tool, index } = Astro.props;
+const { lang } = ed;
+const ui = t(lang).tools!;
+const meta = toolMeta[tool];
+---
+
+<a class="tile" href={pathFor(tool, ed)} data-reveal style={`--i:${index}`}>
+  <div class="top">
+    <span class="idx">{String(index + 1).padStart(2, '0')}</span>
+    <span class="aud">{meta.audience === 'home' ? ui.tagHome : ui.tagBusiness}</span>
+  </div>
+  <span class="ic"><Icon name={meta.icon} size={30} stroke={1.5} /></span>
+  <h3>{ui.short[tool]}</h3>
+  <p class="blurb">{ui.blurbs[tool]}</p>
+  <div class="foot">
+    <span class="outp">→ {ui.outputs[tool]}</span>
+    <span class="go" aria-hidden="true"><Icon name="arrow-up-right" size={18} stroke={1.8} /></span>
+  </div>
+</a>
+
+<style>
+  .tile {
+    position: relative;
+    display: grid;
+    grid-template-rows: auto auto auto 1fr auto;
+    gap: 0.9rem;
+    min-height: 100%;
+    padding: 1.4rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    overflow: hidden;
+    isolation: isolate;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      transform var(--d-3) var(--ease-out);
+  }
+  .tile::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 0%), color-mix(in srgb, var(--accent) 14%, transparent), transparent 60%);
+    opacity: 0;
+    transition: opacity var(--d-3) var(--ease-out);
+  }
+  .tile:hover {
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+    transform: translateY(-3px);
+  }
+  .tile:hover::before {
+    opacity: 1;
+  }
+  .top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font: 600 var(--t-label) / 1 var(--f-text);
+    color: var(--text-3);
+  }
+  .idx {
+    color: var(--accent-ink);
+  }
+  .aud {
+    padding: 0.3rem 0.55rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 3.4rem;
+    height: 3.4rem;
+    border-radius: var(--r-md);
+    background: var(--ink);
+    color: var(--accent);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .tile:hover .ic {
+    transform: rotate(-6deg) scale(1.05);
+  }
+  h3 {
+    font-size: clamp(1.25rem, 1.1rem + 0.5vw, 1.5rem);
+  }
+  .blurb {
+    color: var(--text-2);
+    font-size: 0.97rem;
+  }
+  .foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--line);
+  }
+  .outp {
+    font: 500 0.8rem/1.3 var(--f-mono);
+    color: var(--text-3);
+  }
+  .go {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    flex: none;
+    border-radius: 50%;
+    border: 1px solid var(--line);
+    transition:
+      background-color var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out),
+      color var(--d-2) var(--ease-out),
+      transform var(--d-3) var(--ease-spring);
+  }
+  .tile:hover .go {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+    transform: rotate(45deg);
+  }
+</style>
+
+<script>
+  // Soft spotlight that follows the pointer across tool tiles.
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('.tile:not([data-spot])').forEach((tile) => {
+      tile.dataset.spot = '1';
+      tile.addEventListener('pointermove', (e) => {
+        const r = tile.getBoundingClientRect();
+        tile.style.setProperty('--mx', `${e.clientX - r.left}px`);
+        tile.style.setProperty('--my', `${e.clientY - r.top}px`);
+      });
+    });
+  });
+</script>

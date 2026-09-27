@@ -1,0 +1,84 @@
+/* CupVerdict theme: the coffee scale display. Dark "instrument" frames around light reading
+   surfaces, one signature colour (crema amber) used sparingly for data and primary actions. */
+
+/* Metric-matched fallbacks (values computed with Capsize) so text keeps its size and
+   line breaks while the web fonts load: no layout shift. */
+@font-face {
+  font-family: 'Bricolage Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 105.43%;
+  ascent-override: 88.21%;
+  descent-override: 25.61%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Instrument Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 102.74%;
+  ascent-override: 94.42%;
+  descent-override: 24.33%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Martian Fallback';
+  src: local('Courier New'), local('Courier'), local('Liberation Mono');
+  size-adjust: 116.65%;
+  ascent-override: 85.73%;
+  descent-override: 17.15%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Instrument (always dark) */
+  --ink: #0f0e0d;
+  --ink-2: #181614;
+  --ink-3: #221f1c;
+  --ink-line: #34302b;
+  --on-ink: #f2efe9;
+  --on-ink-2: #aca69c;
+  --on-ink-3: #8f897f;
+
+  /* Reading surfaces */
+  --paper: #f4f2ed;
+  --card: #fdfcfa;
+  --line: #dcd8cf;
+  --line-strong: #b9b4a8;
+  --text: #151412;
+  --text-2: #534f48;
+  --text-3: #6a655d;
+
+  /* Signal */
+  --accent: #f4a62a;
+  --accent-hot: #ffbb45;
+  --accent-ink: #8a4f00;
+  --accent-wash: #f8e6c4;
+  --good: #177a5e;
+  --good-lit: #3dd6a6;
+  --bad: #c4352f;
+  --bad-lit: #ff6b61;
+
+  --f-display: 'Bricolage Grotesque Variable', 'Bricolage Fallback', sans-serif;
+  --f-text: 'Instrument Sans Variable', 'Instrument Fallback', sans-serif;
+  --f-mono: 'Martian Mono Variable', 'Martian Fallback', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #100f0e;
+    --card: #181614;
+    --line: #2d2a26;
+    --line-strong: #4a453e;
+    --text: #f2efe9;
+    --text-2: #b3ada3;
+    --text-3: #8b857b;
+    --accent-ink: #f4a62a;
+    --accent-wash: #2c210f;
+    --good: #3dd6a6;
+    --bad: #ff6b61;
+    --ink-2: #1b1917;
+    --ink-3: #25221e;
+    color-scheme: dark;
+  }
+}

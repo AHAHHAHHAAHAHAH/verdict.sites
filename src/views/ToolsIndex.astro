@@ -1,0 +1,62 @@
+---
+import Base from '../layouts/Base.astro';
+import ToolTile from '../components/ToolTile.astro';
+import SectionHead from '../components/ui/SectionHead.astro';
+import type { Edition } from '../i18n/editions';
+import { toolKeys } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { tools as siteTools } from '@site/tools';
+
+const toolMeta = siteTools?.meta ?? {};
+import { site } from '@site/config';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+}
+const { ed, alternates } = Astro.props;
+const { lang } = ed;
+const ui = t(lang).tools!;
+const groups = [
+  { index: '01', tag: ui.tagHome, label: ui.groupHome, tools: toolKeys.filter((k) => toolMeta[k].audience === 'home') },
+  { index: '02', tag: ui.tagBusiness, label: ui.groupBusiness, tools: toolKeys.filter((k) => toolMeta[k].audience === 'business') },
+];
+---
+
+<Base ed={ed} title={`${ui.indexTitle} | ${site.name}`} description={ui.indexDescription} alternates={alternates} noindex>
+  <div class="wrap">
+    <header class="ph">
+      <h1 data-reveal>{ui.indexTitle}</h1>
+      <p class="lede" data-reveal style="--i:1">{ui.indexDescription}</p>
+    </header>
+    {
+      groups.map((g) => (
+        <section class="group">
+          <SectionHead index={g.index} label={g.tag} title={g.label} />
+          <div class="tiles">
+            {g.tools.map((tool) => (
+              <ToolTile ed={ed} tool={tool} index={toolKeys.indexOf(tool)} />
+            ))}
+          </div>
+        </section>
+      ))
+    }
+  </div>
+</Base>
+
+<style>
+  .ph {
+    padding: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) 0 1rem;
+    display: grid;
+    gap: 1.2rem;
+  }
+  .group {
+    padding-top: clamp(2.5rem, 2rem + 2vw, 3.5rem);
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 18rem), 1fr));
+    gap: 1rem;
+  }
+</style>

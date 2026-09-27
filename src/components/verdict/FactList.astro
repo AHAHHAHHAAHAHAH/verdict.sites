@@ -1,0 +1,93 @@
+---
+import Icon from '../ui/Icon.astro';
+import type { Locale } from '../../i18n/locales';
+import { t } from '../../i18n/ui';
+import { factLabels } from '../../lib/catalog';
+import { tx, type Fact } from '../../lib/pack';
+import { hostOf, localDecimal } from '../../lib/shop';
+
+interface Props {
+  lang: Locale;
+  facts: Fact[];
+  tone?: 'light' | 'dark';
+}
+const { lang, facts, tone = 'light' } = Astro.props;
+const sourceLabel = t(lang).verdict.source;
+// Plain values carry a dot decimal; translated values are already written the local way.
+const text = (v: Fact['value']) => (typeof v === 'string' ? localDecimal(v, lang) : tx(v, lang));
+---
+
+<dl class:list={['facts', `tone-${tone}`]}>
+  {
+    facts.map((f) => (
+      <div class="fact">
+        <dt>{factLabels[f.key][lang]}</dt>
+        <dd>
+          <span>{text(f.value)}</span>
+          <a class="src" href={f.source} target="_blank" rel="noopener" aria-label={`${sourceLabel}: ${hostOf(f.source)}`} title={`${sourceLabel}: ${hostOf(f.source)}`}>
+            <Icon name="external" size={12} stroke={2} />
+          </a>
+        </dd>
+      </div>
+    ))
+  }
+</dl>
+
+<style>
+  .facts {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(8.5rem, 1fr));
+    gap: 0.9rem 1rem;
+    margin: 0;
+  }
+  .fact {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+  dt {
+    font: 600 var(--t-label) / 1.3 var(--f-text);
+    color: var(--text-3);
+  }
+  dd {
+    margin: 0;
+    display: flex;
+    align-items: baseline;
+    gap: 0.35rem;
+    font: 600 0.98rem/1.3 var(--f-text);
+    color: var(--text);
+  }
+  .src {
+    display: inline-grid;
+    place-items: center;
+    width: 1.5rem;
+    height: 1.5rem;
+    flex: none;
+    border-radius: 50%;
+    color: var(--text-3);
+    transform: translateY(2px);
+    transition:
+      color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+  .src:hover {
+    color: var(--accent-ink);
+    background: var(--accent-wash);
+  }
+  .tone-dark dt {
+    color: var(--on-ink-3);
+  }
+  .tone-dark dd {
+    color: var(--accent);
+    font-family: var(--f-mono);
+    font-size: 0.95rem;
+    letter-spacing: -0.02em;
+  }
+  .tone-dark .src {
+    color: var(--on-ink-3);
+  }
+  .tone-dark .src:hover {
+    color: var(--accent);
+    background: var(--ink-3);
+  }
+</style>

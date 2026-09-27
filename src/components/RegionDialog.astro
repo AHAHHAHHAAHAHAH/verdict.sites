@@ -1,0 +1,418 @@
+---
+// Country and language, as two plain questions: where do you shop (products, prices, currency and
+// shops follow the country) and which language do you want to read (only the words follow it).
+// Any language can be read in any country. One button goes to the same page in the chosen
+// edition, or to its home when that page does not exist there (a type not sold in that country).
+import Icon from './ui/Icon.astro';
+import { editions, languages, markets, type Edition } from '../i18n/editions';
+import { languageName } from '../i18n/locales';
+import { countryName, marketMeta } from '../i18n/markets';
+import { pathFor } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+}
+const { ed, alternates } = Astro.props;
+const { lang, market } = ed;
+const r = t(lang).region;
+const currency = new Intl.DisplayNames([lang], { type: 'currency' });
+const inWords = new Intl.DisplayNames([lang], { type: 'language' });
+const countries = markets.map((m) => {
+  const name = countryName(m, lang);
+  const own = countryName(m, marketMeta[m].lang);
+  return { market: m, name, own: own !== name ? own : undefined, money: currency.of(marketMeta[m].currency) ?? marketMeta[m].currency };
+});
+// Where each choice leads: the same page in that edition, or that edition's home (and then it says so).
+const hrefs = Object.fromEntries(editions.map((e) => [e.key, alternates.find((a) => a.ed.key === e.key)?.href ?? pathFor('home', e)]));
+const isHome = Astro.url.pathname === pathFor('home', ed);
+const homeOnly = isHome ? [] : editions.filter((e) => !alternates.some((a) => a.ed.key === e.key)).map((e) => e.key);
+const langs = languages.map((l) => {
+  const words = inWords.of(l) ?? l;
+  return { lang: l, name: languageName[l], words: words.toLowerCase() !== languageName[l].toLowerCase() ? words : undefined };
+});
+const names = {
+  countries: Object.fromEntries(countries.map((c) => [c.market, c.name])),
+  languages: Object.fromEntries(languages.map((l) => [l, languageName[l]])),
+};
+const now = fill(r.now, { country: countryName(market, lang), language: languageName[lang] });
+---
+
+<dialog class="region" aria-labelledby="region-title" data-region data-hrefs={JSON.stringify(hrefs)} data-home-only={JSON.stringify(homeOnly)} data-names={JSON.stringify(names)} data-go-text={r.go}>
+  <div class="r-top">
+    <p class="r-title" id="region-title">{r.title}</p>
+    <button type="button" class="r-x" data-region-close aria-label={r.close}>
+      <Icon name="cross" size={19} stroke={2} />
+    </button>
+  </div>
+  <p class="r-now">
+    <Icon name="pin" size={15} />
+    {now}
+  </p>
+
+  <fieldset class="r-step">
+    <legend>
+      <span class="r-n">1</span>
+      {r.q1}
+    </legend>
+    <p class="r-sub">{r.q1sub}</p>
+    <div class="r-grid">
+      {
+        countries.map((c) => (
+          <label class="r-opt">
+            <input type="radio" name="r-market" value={c.market} checked={c.market === market} />
+            <span class="cc">{marketMeta[c.market].region}</span>
+            <span class="r-txt">
+              <span class="r-name">{c.name}</span>
+              <span class="r-meta">{c.own ? `${c.own} · ${c.money}` : c.money}</span>
+            </span>
+            <span class="r-dot" aria-hidden="true" />
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <fieldset class="r-step">
+    <legend>
+      <span class="r-n">2</span>
+      {r.q2}
+    </legend>
+    <p class="r-sub">{r.q2sub}</p>
+    <div class="r-grid langs">
+      {
+        langs.map((l) => (
+          <label class="r-opt">
+            <input type="radio" name="r-lang" value={l.lang} checked={l.lang === lang} />
+            <span class="r-txt">
+              <span class="r-name" lang={l.lang}>
+                {l.name}
+              </span>
+              {l.words && <span class="r-meta">{l.words}</span>}
+            </span>
+            <span class="r-dot" aria-hidden="true" />
+          </label>
+        ))
+      }
+    </div>
+  </fieldset>
+
+  <div class="r-foot">
+    <p class="r-home" data-region-home hidden>{r.elsewhere}</p>
+    <a class="r-go" href={hrefs[ed.key]} data-region-go>
+      <span data-go-label>{fill(r.go, { country: countryName(market, lang), language: languageName[lang] })}</span>
+      <Icon name="arrow-right" size={18} stroke={2} />
+    </a>
+  </div>
+</dialog>
+
+<style>
+  .region {
+    width: min(40rem, calc(100vw - 2rem));
+    max-height: min(90dvh, 52rem);
+    margin: auto;
+    padding: 0;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--paper);
+    color: var(--text);
+    box-shadow: 0 40px 90px -30px rgb(0 0 0 / 45%);
+    overflow: auto;
+    overscroll-behavior: contain;
+    opacity: 0;
+    transform: translateY(10px) scale(0.985);
+    transition:
+      opacity 280ms var(--ease-out),
+      transform 380ms var(--ease-out),
+      overlay 380ms allow-discrete,
+      display 380ms allow-discrete;
+  }
+  .region[open] {
+    opacity: 1;
+    transform: none;
+  }
+  @starting-style {
+    .region[open] {
+      opacity: 0;
+      transform: translateY(10px) scale(0.985);
+    }
+  }
+  .region::backdrop {
+    background: rgb(4 8 10 / 0%);
+    transition:
+      background-color 380ms var(--ease-out),
+      overlay 380ms allow-discrete,
+      display 380ms allow-discrete;
+  }
+  .region[open]::backdrop {
+    background: rgb(4 8 10 / 55%);
+  }
+  @starting-style {
+    .region[open]::backdrop {
+      background: rgb(4 8 10 / 0%);
+    }
+  }
+  :global(html:has(.region[open])) {
+    overflow: hidden;
+  }
+  .r-top {
+    position: sticky;
+    top: 0;
+    z-index: 1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 1rem 0.6rem 1.4rem;
+    background: var(--paper);
+  }
+  .r-title {
+    font: 700 1.3rem/1.1 var(--f-display);
+    letter-spacing: -0.02em;
+  }
+  .r-x {
+    display: grid;
+    place-items: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 50%;
+    background: var(--card);
+    color: var(--text);
+    cursor: pointer;
+  }
+  .r-x:hover {
+    border-color: var(--text);
+  }
+  .r-now {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    margin: 0 1.4rem;
+    color: var(--text-2);
+    font-size: 0.92rem;
+  }
+  .r-now :global(svg) {
+    color: var(--accent-ink);
+  }
+  .r-step {
+    margin: 1.2rem 1.4rem 0;
+    padding: 0;
+    border: 0;
+    min-width: 0;
+  }
+  legend {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    padding: 0;
+    font: 700 1.08rem/1.3 var(--f-text);
+  }
+  .r-n {
+    display: grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--on-ink);
+    font: 700 0.85rem/1 var(--f-text);
+  }
+  .r-sub {
+    margin: 0.3rem 0 0.8rem 2.3rem;
+    color: var(--text-2);
+    font-size: 0.9rem;
+  }
+  .r-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 15rem), 1fr));
+    gap: 0.5rem;
+  }
+  .r-grid.langs {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 10rem), 1fr));
+  }
+  .r-opt {
+    position: relative;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 3.4rem;
+    padding: 0.55rem 0.8rem;
+    border: 1px solid var(--line-strong);
+    border-radius: var(--r-md);
+    background: var(--card);
+    cursor: pointer;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      box-shadow var(--d-2) var(--ease-out);
+  }
+  .langs .r-opt {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .r-opt:hover {
+    border-color: var(--text);
+  }
+  .r-opt:has(input:checked) {
+    border-color: var(--text);
+    box-shadow: inset 0 0 0 1px var(--text);
+  }
+  .r-opt:has(input:focus-visible) {
+    outline: 2px solid var(--accent-ink);
+    outline-offset: 2px;
+  }
+  .r-opt input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+  }
+  .cc {
+    display: grid;
+    place-items: center;
+    min-width: 2.2rem;
+    height: 1.6rem;
+    border-radius: 5px;
+    background: var(--ink);
+    color: var(--on-ink);
+    font: 600 0.7rem/1 var(--f-mono);
+    letter-spacing: 0.06em;
+  }
+  .r-txt {
+    display: grid;
+    gap: 0.1rem;
+    min-width: 0;
+  }
+  .r-name {
+    font-weight: 650;
+    line-height: 1.25;
+  }
+  .r-meta {
+    color: var(--text-3);
+    font-size: 0.8rem;
+    line-height: 1.3;
+  }
+  /* A plain round mark: empty, then filled when chosen. */
+  .r-dot {
+    width: 1.15rem;
+    height: 1.15rem;
+    border: 2px solid var(--line-strong);
+    border-radius: 50%;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      box-shadow var(--d-2) var(--ease-out);
+  }
+  .r-opt:has(input:checked) .r-dot {
+    border-color: var(--text);
+    box-shadow: inset 0 0 0 3px var(--card), inset 0 0 0 9px var(--text);
+  }
+  /* The answer stays in view while the lists scroll. */
+  .r-foot {
+    position: sticky;
+    bottom: 0;
+    margin-top: 1.3rem;
+    padding: 0.8rem 1.4rem 1.2rem;
+    border-top: 1px solid var(--line);
+    background: var(--paper);
+  }
+  .r-home {
+    margin: 0 0 0.6rem;
+    color: var(--text-2);
+    font-size: 0.88rem;
+    line-height: 1.4;
+    text-align: center;
+  }
+  .r-go {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    min-height: 3.2rem;
+    padding: 0.6rem 1.2rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--on-ink);
+    font: 700 1rem/1.2 var(--f-text);
+    text-align: center;
+    text-decoration: none;
+  }
+  .r-go:hover {
+    background: var(--ink-2);
+  }
+  @media (max-width: 36rem) {
+    .region {
+      width: 100vw;
+      max-width: 100vw;
+      max-height: 92dvh;
+      margin: auto 0 0;
+      border-radius: var(--r-lg) var(--r-lg) 0 0;
+      transform: translateY(100%);
+    }
+    .region[open] {
+      transform: none;
+    }
+    @starting-style {
+      .region[open] {
+        transform: translateY(100%);
+      }
+    }
+    .r-sub {
+      margin-left: 0;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .region,
+    .region::backdrop {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // Opens from the country button (and from the menu), follows the two answers, and remembers the
+  // choice for the site's address.
+  document.addEventListener('astro:page-load', () => {
+    const dialog = document.querySelector<HTMLDialogElement>('[data-region]:not([data-ready])');
+    if (!dialog) return;
+    dialog.dataset.ready = '1';
+    const hrefs: Record<string, string> = JSON.parse(dialog.dataset.hrefs ?? '{}');
+    const homeOnly: string[] = JSON.parse(dialog.dataset.homeOnly ?? '[]');
+    const goText = dialog.dataset.goText ?? '';
+    const note = dialog.querySelector<HTMLElement>('[data-region-home]')!;
+    const names: { countries: Record<string, string>; languages: Record<string, string> } = JSON.parse(dialog.dataset.names ?? '{}');
+    const go = dialog.querySelector<HTMLAnchorElement>('[data-region-go]')!;
+    const label = go.querySelector<HTMLElement>('[data-go-label]')!;
+    const chosen = (name: string) => dialog.querySelector<HTMLInputElement>(`input[name="${name}"]:checked`)?.value ?? '';
+
+    const update = () => {
+      const market = chosen('r-market');
+      const lang = chosen('r-lang');
+      const key = `${lang}-${market}`;
+      if (hrefs[key]) go.href = hrefs[key];
+      go.dataset.edition = key;
+      note.hidden = !homeOnly.includes(key);
+      label.textContent = goText.replace('{country}', names.countries[market] ?? market).replace('{language}', names.languages[lang] ?? lang);
+    };
+    dialog.querySelectorAll('input').forEach((i) => i.addEventListener('change', update));
+    update();
+
+    document.querySelectorAll<HTMLElement>('[data-region-open]').forEach((b) =>
+      b.addEventListener('click', () => {
+        document.querySelector<HTMLDialogElement>('dialog[data-menu][open]')?.close();
+        dialog.showModal();
+        dialog.querySelector<HTMLInputElement>('input[name="r-market"]:checked')?.focus();
+      }),
+    );
+    dialog.querySelector('[data-region-close]')?.addEventListener('click', () => dialog.close());
+    dialog.addEventListener('click', (e) => {
+      if (e.target === dialog) dialog.close();
+    });
+    go.addEventListener('click', () => {
+      try {
+        localStorage.setItem('edition', go.dataset.edition ?? '');
+      } catch {
+        /* private mode: nothing to remember */
+      }
+    });
+  });
+</script>

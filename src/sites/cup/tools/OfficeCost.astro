@@ -1,0 +1,293 @@
+---
+import CalcShell from '../../../components/tools/CalcShell.astro';
+import CurrencySwitch from './CurrencySwitch.astro';
+import Stepper from '../../../components/ui/Stepper.astro';
+import Readout from '../../../components/ui/Readout.astro';
+import Advanced from '../../../components/ui/Advanced.astro';
+import type { Edition } from '../../../i18n/editions';
+import type { PerMarket } from '../../../lib/pack';
+import { t } from '../ui';
+
+interface Props {
+  ed: Edition;
+}
+const { ed } = Astro.props;
+const { lang, market } = ed;
+const s = t(lang).officeCost;
+
+// Example values only (labelled as such in the UI), never presented as market data.
+const examples: PerMarket<{ a: [number, number]; b: [number, number] }> = {
+  us: { a: [0.65, 0], b: [0.3, 90] },
+  gb: { a: [0.65, 0], b: [0.3, 90] },
+  it: { a: [0.4, 0], b: [0.15, 60] },
+  de: { a: [0.45, 0], b: [0.2, 70] },
+  es: { a: [0.4, 0], b: [0.15, 60] },
+  pl: { a: [1.8, 0], b: [0.7, 300] },
+  se: { a: [5, 0], b: [2, 800] },
+};
+const ex = examples[market]!;
+const strings = { cheaper: s.cheaper, equal: s.equal, breakeven: s.breakeven };
+const options = [
+  { id: 'a', legend: s.optionA, name: s.defaultA, cpc: ex.a[0], fixed: ex.a[1] },
+  { id: 'b', legend: s.optionB, name: s.defaultB, cpc: ex.b[0], fixed: ex.b[1] },
+];
+---
+
+<CalcShell ed={ed} calc="office-cost" tool="tool-office-cost" next="tool-cafe-cost" data-strings={JSON.stringify(strings)}>
+  <Fragment slot="inputs">
+    <div class="grid">
+      <Stepper ed={ed} idPrefix="oc" name="employees" label={s.employees} value={20} step={1} min={1} max={100000} range={[1, 200]} />
+    </div>
+    <div class="options">
+      {
+        options.map((o) => (
+          <fieldset class={`opt opt-${o.id}`}>
+            <legend>
+              <span class="badge">{o.id.toUpperCase()}</span>
+              {o.legend}
+            </legend>
+            <label class="name">
+              <span>{s.optionName}</span>
+              <input name={`${o.id}Name`} type="text" value={o.name} maxlength="40" autocomplete="off" />
+            </label>
+            <Stepper ed={ed} idPrefix="oc" name={`${o.id}Cpc`} label={s.cpc} currency value={o.cpc} step={0.01} max={50} range={[0, 2]} />
+            <Stepper ed={ed} idPrefix="oc" name={`${o.id}Fixed`} label={s.fixed} currency value={o.fixed} step={5} max={100000} range={[0, 500]} />
+          </fieldset>
+        ))
+      }
+    </div>
+    <Advanced label={t(lang).advanced}>
+      <CurrencySwitch ed={ed} />
+      <Stepper ed={ed} idPrefix="oc" name="cupsPerson" label={s.cupsPerson} value={2} step={0.5} max={20} range={[0, 6]} />
+      <Stepper ed={ed} idPrefix="oc" name="workdays" label={s.workdays} value={21} step={1} min={1} max={31} range={[1, 31]} />
+    </Advanced>
+    <p class="hint">{s.beanHint}</p>
+  </Fragment>
+
+  <Fragment slot="results">
+    <Readout label={s.saves} out="saving" size="xl" primary />
+    <p class="sentence" data-out="sentence"></p>
+    <div class="bars" aria-hidden="true">
+      {
+        options.map((o) => (
+          <div class="row">
+            <span class="bl" data-out={`${o.id}Label`}>{o.name}</span>
+            <span class="track">
+              <span class={`fill fill-${o.id}`} data-bar={o.id} />
+            </span>
+            <span class="bv" data-out={`${o.id}YearBar`} />
+          </div>
+        ))
+      }
+    </div>
+    <div class="cols">
+      {
+        options.map((o) => (
+          <div class="col">
+            <p class="col-title">
+              <span class="badge">{o.id.toUpperCase()}</span>
+              <span data-out={`${o.id}Title`}>{o.name}</span>
+            </p>
+            <Readout label={s.monthly} out={`${o.id}Monthly`} size="md" />
+            <Readout label={s.perEmployee} out={`${o.id}PerEmployee`} size="md" />
+            <Readout label={s.yearly} out={`${o.id}Yearly`} size="md" />
+          </div>
+        ))
+      }
+    </div>
+    <p class="breakeven" data-out="breakeven"></p>
+  </Fragment>
+</CalcShell>
+
+<style>
+  .options {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem;
+  }
+  .opt {
+    display: grid;
+    gap: 1rem;
+    margin: 0;
+    padding: 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    min-width: 0;
+  }
+  legend {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0 0.35rem;
+    font-weight: 700;
+    font-family: var(--f-display);
+    letter-spacing: -0.01em;
+  }
+  .badge {
+    display: inline-grid;
+    place-items: center;
+    width: 1.35rem;
+    height: 1.35rem;
+    border-radius: 4px;
+    background: var(--ink);
+    color: var(--accent);
+    font: 600 0.75rem/1 var(--f-mono);
+  }
+  .name {
+    display: grid;
+    gap: 0.45rem;
+  }
+  .name span {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-2);
+  }
+  .name input {
+    height: 3rem;
+    padding: 0 0.9rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+    color: var(--text);
+    font: 500 1rem/1 var(--f-text);
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      box-shadow var(--d-2) var(--ease-out);
+  }
+  .name input:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+  .hint {
+    font-size: 0.85rem;
+    color: var(--text-3);
+  }
+  .sentence {
+    color: var(--on-ink);
+    line-height: 1.45;
+  }
+  .bars {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .row {
+    display: grid;
+    grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.75rem;
+    font: 500 0.75rem/1.2 var(--f-mono);
+    color: var(--on-ink-2);
+  }
+  .bl {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .track {
+    height: 10px;
+    border-radius: 5px;
+    background: color-mix(in srgb, var(--on-ink) 8%, transparent);
+    overflow: hidden;
+  }
+  .fill {
+    display: block;
+    height: 100%;
+    width: var(--w, 0%);
+    border-radius: 5px;
+    transition: width var(--d-3) var(--ease-out);
+  }
+  .fill-a {
+    background: color-mix(in srgb, var(--on-ink) 42%, transparent);
+  }
+  .fill-b {
+    background: var(--accent);
+  }
+  .bv {
+    color: var(--on-ink);
+    min-width: 4.5rem;
+    text-align: right;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    padding-top: 1.1rem;
+    border-top: 1px solid var(--ink-line);
+  }
+  .col {
+    display: grid;
+    gap: 0.9rem;
+    min-width: 0;
+  }
+  .col-title {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    color: var(--on-ink);
+    min-width: 0;
+  }
+  .col-title span:last-child {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .breakeven {
+    font-size: 0.88rem;
+    color: var(--on-ink-2);
+  }
+</style>
+
+<script>
+  import { onCalc, num, allFinite, money, plain, tween, blank, out, bar, currencyOf, fill, announce } from '../../../scripts/calc';
+
+  onCalc('office-cost', (form) => {
+    const strings = JSON.parse(form.dataset.strings!);
+    const locale = form.dataset.locale!;
+    const text = (name: string) => (form.elements.namedItem(name) as HTMLInputElement).value.trim();
+
+    return () => {
+      const m = (x: number) => money(locale, currencyOf(form), x);
+      const employees = num(form, 'employees');
+      const cupsPerson = num(form, 'cupsPerson');
+      const workdays = num(form, 'workdays');
+      const opts = ['a', 'b'].map((id) => ({ id, name: text(`${id}Name`) || id.toUpperCase(), cpc: num(form, `${id}Cpc`), fixed: num(form, `${id}Fixed`) }));
+      if (!allFinite(employees, cupsPerson, workdays, ...opts.flatMap((o) => [o.cpc, o.fixed])) || employees <= 0) {
+        blank(out(form, 'saving'));
+        out(form, 'sentence')!.textContent = '';
+        return;
+      }
+
+      const cupsMonth = employees * cupsPerson * workdays;
+      const yearly: Record<string, number> = {};
+      for (const o of opts) {
+        const monthly = cupsMonth * o.cpc + o.fixed;
+        yearly[o.id] = monthly * 12;
+        out(form, `${o.id}Title`)!.textContent = o.name;
+        out(form, `${o.id}Label`)!.textContent = o.name;
+        tween(out(form, `${o.id}Monthly`), monthly, m);
+        tween(out(form, `${o.id}PerEmployee`), monthly / employees, m);
+        tween(out(form, `${o.id}Yearly`), yearly[o.id], m);
+        out(form, `${o.id}YearBar`)!.textContent = m(yearly[o.id]);
+      }
+      const top = Math.max(yearly.a, yearly.b, 0.0001);
+      bar(form, 'a', (yearly.a / top) * 100);
+      bar(form, 'b', (yearly.b / top) * 100);
+
+      const [a, b] = opts;
+      const diff = yearly.a - yearly.b;
+      tween(out(form, 'saving'), Math.abs(diff), m);
+      const sentence = Math.abs(diff) < 0.005
+        ? strings.equal
+        : fill(strings.cheaper, { name: diff > 0 ? b.name : a.name, diff: m(Math.abs(diff)) });
+      out(form, 'sentence')!.textContent = sentence;
+
+      // Monthly volume at which both cost the same: fixedA + x·cpcA = fixedB + x·cpcB.
+      const breakeven = a.cpc !== b.cpc ? (b.fixed - a.fixed) / (a.cpc - b.cpc) : NaN;
+      out(form, 'breakeven')!.textContent =
+        Number.isFinite(breakeven) && breakeven > 0 ? fill(strings.breakeven, { cups: plain(locale, Math.round(breakeven), 0) }) : '';
+      announce(form, sentence);
+    };
+  });
+</script>

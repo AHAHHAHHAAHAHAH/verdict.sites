@@ -1,0 +1,36 @@
+---
+import type { CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import ArticleList from '../components/ArticleList.astro';
+import type { Edition } from '../i18n/editions';
+import { t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  articles: CollectionEntry<'articles'>[];
+}
+const { ed, alternates, articles } = Astro.props;
+const { lang } = ed;
+const ui = t(lang).guides;
+---
+
+<Base ed={ed} title={`${ui.indexTitle} | ${site.name}`} description={ui.indexDescription} alternates={alternates} noindex={articles.length === 0}>
+  <div class="wrap">
+    <header class="ph">
+      <h1 data-reveal>{ui.indexTitle}</h1>
+      <p class="lede" data-reveal style="--i:1">{ui.indexDescription}</p>
+    </header>
+    <ArticleList ed={ed} articles={articles} />
+  </div>
+</Base>
+
+<style>
+  .ph {
+    display: grid;
+    gap: 1.2rem;
+    padding: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) 0 2.5rem;
+  }
+</style>

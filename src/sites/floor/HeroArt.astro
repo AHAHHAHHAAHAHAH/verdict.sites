@@ -1,0 +1,93 @@
+---
+// Behind the home hero: a flat's floor plan as a robot's app draws it, rooms tinted, and the robot
+// working through the living room line by line. Once drawn it stays; with reduced motion it is
+// shown finished. Kept faint so the headline and the quiz always read first.
+const run =
+  'M64 72H276V94H64V116H276V138H64V160H276V182H64V204H200';
+---
+
+<div class="plan" aria-hidden="true">
+  <svg viewBox="0 0 600 420" preserveAspectRatio="xMaxYMid slice">
+    <g class="rooms">
+      <rect x="44" y="52" width="252" height="176" fill="var(--room-a)"></rect>
+      <rect x="314" y="52" width="242" height="120" fill="var(--room-b)"></rect>
+      <rect x="314" y="190" width="242" height="178" fill="var(--room-c)"></rect>
+      <rect x="44" y="246" width="252" height="122" fill="var(--room-d)"></rect>
+    </g>
+    <path
+      class="walls"
+      d="M40 48H560V372H40Z M305 48V150 M305 190V372 M305 181H560 M40 237H130 M170 237H305 M420 172V190"
+      fill="none"
+    ></path>
+    <path class="run" d={run} fill="none" pathLength="1"></path>
+    <circle class="bot" r="9" style={`offset-path: path('${run}')`}></circle>
+  </svg>
+</div>
+
+<style>
+  .plan {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    mask-image: linear-gradient(90deg, transparent 0%, #000 55%);
+    opacity: 0.55;
+  }
+  svg {
+    width: 100%;
+    height: 100%;
+  }
+  .rooms rect {
+    opacity: 0.12;
+  }
+  .walls {
+    stroke: var(--on-ink);
+    stroke-opacity: 0.35;
+    stroke-width: 3;
+    stroke-linejoin: round;
+  }
+  .run {
+    stroke: var(--accent);
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-opacity: 0.85;
+  }
+  .bot {
+    fill: var(--accent);
+    stroke: var(--ink);
+    stroke-width: 3;
+    offset-distance: 100%;
+    offset-rotate: 0deg;
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .run {
+      stroke-dasharray: 1;
+      animation: draw 7s cubic-bezier(0.45, 0, 0.3, 1) 0.3s both;
+    }
+    .bot {
+      animation: drive 7s cubic-bezier(0.45, 0, 0.3, 1) 0.3s both;
+    }
+  }
+  @keyframes draw {
+    from {
+      stroke-dashoffset: 1;
+    }
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  @keyframes drive {
+    from {
+      offset-distance: 0%;
+    }
+    to {
+      offset-distance: 100%;
+    }
+  }
+  @media (max-width: 58rem) {
+    .plan {
+      opacity: 0.35;
+      mask-image: linear-gradient(180deg, transparent 0%, #000 60%);
+    }
+  }
+</style>

@@ -1,0 +1,62 @@
+{
+ "products": [
+  "kitchenaid-grinder",
+  "wilfa-svart-aroma",
+  "essenza-mini",
+  "magnifica-start",
+  "rivelia",
+  "eletta-explore",
+  "lattissima-one",
+  "bambino-plus",
+  "moka-express",
+  "brikka",
+  "venus",
+  "moccamaster",
+  "braun-purshine",
+  "v60",
+  "chambord",
+  "chemex"
+ ],
+ "forms": {
+  "capsule": [
+   "original",
+   "vertuo",
+   "pod"
+  ],
+  "superautomatic": [
+   "plain",
+   "milk"
+  ],
+  "manual-espresso": [
+   "plain",
+   "grinder"
+  ],
+  "moka": [
+   "plain"
+  ],
+  "drip": [
+   "glass",
+   "thermo"
+  ],
+  "grinder": [
+   "plain"
+  ]
+ },
+ "colours": [
+  "black",
+  "white",
+  "grey",
+  "silver",
+  "titanium",
+  "beige",
+  "cream",
+  "red",
+  "blue",
+  "green",
+  "pink",
+  "yellow",
+  "gold",
+  "copper",
+  "plain"
+ ]
+}

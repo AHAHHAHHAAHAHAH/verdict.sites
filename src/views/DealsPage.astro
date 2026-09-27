@@ -1,0 +1,470 @@
+---
+// One product type's discounts today, read on the brands' own stores: name, store, today's price,
+// the crossed-out price the store itself shows, and the button. "How much do you want to spend?"
+// filters them with the same ranges as the quiz (?b= from the quiz arrives preselected). Our pick
+// is marked when it is among them. People search for deals ("offerte macchina caffè", "robot vacuum
+// deals"), so the page is indexed with a text built from the day's data; with fewer than three
+// discounts it stays out of search engines.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import { numberLocale, type Edition } from '../i18n/editions';
+import { verdictPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { budgetLines, categories } from '../lib/catalog';
+import { budgetLabel, tiers } from '../lib/budget';
+import { dealTier, dealsFor, dealsSeen, percentOff } from '../lib/deals';
+import { pickOf } from '../lib/tests';
+import { tx } from '../lib/pack';
+import { brandUrl, formatPrice } from '../lib/shop';
+import { tag } from '../i18n/editions';
+import { pathFor } from '../i18n/routes';
+import { DESC_CHARS, TITLE_PX, titleWidth } from '../lib/seo-measure';
+import { testBadge, testsFor } from '../lib/tests';
+import { publisher } from '../lib/webora';
+import { modelPicture } from '../lib/pictures';
+import { modelPageOf } from '../lib/modelpages';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  category: string;
+}
+const { ed, alternates, category } = Astro.props;
+const { lang, market } = ed;
+const c = categories[category];
+const ui = t(lang);
+const d = ui.deals;
+const name = tx(c.name, lang);
+const deals = dealsFor(category, market);
+const lines = budgetLines(category, market);
+const counts = Object.fromEntries(tiers.map((tier) => [tier, deals.filter((x) => dealTier(x) === tier).length]));
+const nf = numberLocale(ed);
+const seen = dealsSeen(category, market);
+const checked = seen ? new Date(seen) : undefined;
+const day = checked ? new Intl.DateTimeFormat(nf, { day: 'numeric', month: 'long' }).format(checked) : '';
+const time = checked ? new Intl.DateTimeFormat(nf, { hour: '2-digit', minute: '2-digit', timeZone: 'Europe/Rome' }).format(checked) : '';
+const back = verdictPath(ed, tx(c.slug, lang));
+
+// The words people search deals by, from the type's own keyphrase ("offerte robot lavapavimenti").
+const kp = fill(d.seoKp, { kp: c.seo[lang]!.keyphrase });
+const Kp = kp.charAt(0).toUpperCase() + kp.slice(1);
+const best = deals.length ? percentOff(deals[0]) : 0;
+const storesToday = [...new Set(deals.map((x) => x.store))];
+const listFmt = new Intl.ListFormat(lang, { type: 'conjunction' });
+const storeList = listFmt.format(storesToday);
+const byStore = listFmt.format(storesToday.map((st) => `${st} (${deals.filter((x) => x.store === st).length})`));
+const vars = { Kp, kp, n: String(deals.length), p: String(best), stores: storeList };
+// With no discount today the titles that promise one are not used ("up to −0%").
+const title = (best > 0 ? d.seoTitles : []).map((x) => fill(x, vars)).find((x) => titleWidth(x) >= TITLE_PX[0] + 5 && titleWidth(x) <= TITLE_PX[1] - 5) ?? `${fill(d.title, { name })} | ${site.name}`;
+const descs = (best > 0 ? d.seoDescs : []).map((x) => fill(x, vars));
+// Longest first; a variant that runs short gets the tail, and one that runs long loses its last clause.
+const description = [...descs, ...descs.map((x) => x + d.seoDescTail), ...descs.map((x) => x.replace(/,[^,]*\.$/, '.') + d.seoDescTail)].find((x) => x.length >= DESC_CHARS[0] && x.length <= DESC_CHARS[1]) ?? fill(d.meta, { name });
+// The stores the prices come from, as sources anyone can check.
+const storeHomes = [...new Map(deals.map((x) => [new URL(x.url).host, x.store])).entries()];
+// Worth a look: the biggest discount on a model the tests rate well (or one of ours), else the biggest.
+const testedDeal = deals.find((x) => testsFor(category, x.name).length || pickOf(category, market, x));
+const star = testedDeal ?? deals[0];
+const starTest = star ? testsFor(category, star.name)[0] : undefined;
+const starText = star
+  ? fill(testedDeal && starTest ? d.seoBestTested : d.seoBestAny, {
+      name: star.name,
+      price: formatPrice(star.price, ed),
+      was: formatPrice(star.was, ed),
+      pct: String(percentOff(star)),
+      badge: starTest ? testBadge(starTest, lang) : '',
+    }) + (pickOf(category, market, star) ? ` ${d.seoBestPick}` : '')
+  : '';
+const url = (x: string) => new URL(x, site.url).href;
+const pageUrl = url(Astro.url.pathname);
+const og = { src: `/og/${market}/${category}.png`, alt: fill(d.seoImgAlt, { Kp, drawing: ui.verdict.drawing }) };
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: title,
+    description,
+    inLanguage: tag(ed),
+    dateModified: seen ?? new Date().toISOString(),
+    primaryImageOfPage: { '@type': 'ImageObject', url: url(og.src), width: 1200, height: 630 },
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    publisher: { '@type': 'Organization', name: site.name, url: site.url, parentOrganization: { '@type': 'Organization', name: publisher.name, url: publisher.url } },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: site.name, item: url(pathFor('home', ed)) },
+      { '@type': 'ListItem', position: 2, name, item: url(back) },
+      { '@type': 'ListItem', position: 3, name: fill(d.seoH1, vars), item: pageUrl },
+    ],
+  },
+];
+---
+
+<Base ed={ed} title={title} description={description} alternates={alternates} noindex={deals.length < 3} keyphrase={kp} jsonLd={jsonLd} image={og}>
+  <div class="wrap">
+    <header class="ph">
+      <a class="back" href={back}>
+        <Icon name="arrow-left" size={16} stroke={2} />
+        {d.back}
+      </a>
+      <h1>{deals.length ? fill(d.seoH1, vars) : fill(d.title, { name })}</h1>
+      {deals.length > 0 && <p class="lede">{fill(d.seoIntro, vars)}</p>}
+      {checked && <p class="lede small">{fill(d.lede, { d: day, t: time })}</p>}
+    </header>
+
+    {
+      deals.length > 0 && lines && (
+        <nav class="budget" aria-label={ui.budget.title} data-budget>
+          <p class="b-h">{ui.budget.title}</p>
+          <div class="b-row">
+            <button type="button" class="b" data-b="" aria-pressed="true">
+              {ui.budget.all} <span class="n">{deals.length}</span>
+            </button>
+            {tiers.map((tier) => (
+              <button type="button" class="b" data-b={tier} aria-pressed="false" disabled={counts[tier] === 0}>
+                {budgetLabel(lines, tier, ed)} <span class="n">{counts[tier]}</span>
+              </button>
+            ))}
+          </div>
+        </nav>
+      )
+    }
+
+    {
+      deals.length > 0 ? (
+        <ul class="deals" data-deals data-seo-skip>
+          {deals.map((x) => {
+            const pick = pickOf(category, market, x);
+            const link = brandUrl(x.store, market, x.url);
+            const pic = modelPicture(category, x, ed);
+            return (
+              <li class="deal" data-tier={dealTier(x)} data-deal>
+                <div class="top">
+                  <span class="store">{x.store}</span>
+                  {pick && <span class="ours">{d.ours}</span>}
+                  <span class="pct">−{percentOff(x)}%</span>
+                </div>
+                <div class="mid">
+                  {pic && <img class="dpic" data-pic src={pic.src} alt="" loading="lazy" decoding="async" width="64" height="64" />}
+                  <p class="nm">{modelPageOf(ed, x) ? <a href={modelPageOf(ed, x)}>{x.name}</a> : x.name}</p>
+                </div>
+                <div class="act">
+                  <span class="now">{formatPrice(x.price, ed)}</span>
+                  <s class="was">{formatPrice(x.was, ed)}</s>
+                  <a class="buy" href={link.href} target="_blank" rel={link.sponsored ? 'sponsored nofollow noopener' : 'nofollow noopener'}>
+                    {fill(d.cta, { store: x.store })}
+                    <Icon name="arrow-up-right" size={15} stroke={2} />
+                  </a>
+                </div>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <p class="none">{d.none}</p>
+      )
+    }
+    <p class="none" data-empty hidden>{d.noneBudget}</p>
+
+    <p class="more">
+      <a class="link" href={back}>{d.back} →</a>
+    </p>
+
+    {
+      deals.length > 0 && (
+        <div class="about">
+          <section>
+            <h2>{fill(d.seoHHow, vars)}</h2>
+            <img class="type" src={`/img/${category}.svg`} alt={og.alt} width="160" height="160" loading="lazy" decoding="async" />
+            <p>{d.seoHow}</p>
+            <p>
+              {d.seoChange} {fill(d.seoByStore, { list: byStore })}
+            </p>
+            <p class="small">
+              {storeHomes.map(([host], i) => (
+                <>
+                  {i > 0 && ' · '}
+                  <a class="link" href={`https://${host}/`} target="_blank" rel="noopener">
+                    {host}
+                  </a>
+                </>
+              ))}
+            </p>
+          </section>
+          {starText && (
+            <section>
+              <h2>{d.seoHBest}</h2>
+              <p>{starText}</p>
+            </section>
+          )}
+          <section>
+            <h2>{fill(d.seoHFaq, vars)}</h2>
+            <h3>{d.seoQ1}</h3>
+            <p>{d.seoA1}</p>
+            <h3>{fill(d.seoQ2, vars)}</h3>
+            <p>{d.seoA2}</p>
+            <h3>{d.seoQ3}</h3>
+            <p>
+              {d.seoA3} <a class="link" href={back}>{d.back}</a>
+            </p>
+          </section>
+        </div>
+      )
+    }
+  </div>
+</Base>
+
+<style>
+  .about {
+    display: grid;
+    gap: 1.6rem;
+    max-width: 48rem;
+    margin: 2.5rem 0 1rem;
+  }
+  .about section {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .about h2 {
+    font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+    line-height: 1.2;
+  }
+  .about h3 {
+    font-size: 1.05rem;
+    margin-top: 0.3rem;
+  }
+  .about .type {
+    width: 6rem;
+    height: 6rem;
+  }
+  .small {
+    font-size: 0.9rem;
+    color: var(--text-3);
+  }
+  .ph {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1rem 0 1.2rem;
+  }
+  .back {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    color: var(--text-2);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  h1 {
+    font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.4rem);
+    text-wrap: balance;
+  }
+  .lede {
+    color: var(--text-2);
+    max-width: 44rem;
+  }
+  .budget {
+    display: grid;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+  }
+  .b-h {
+    font-weight: 650;
+  }
+  .b-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+  }
+  .b {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.6rem;
+    padding: 0.35rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    font: 600 0.95rem/1.2 var(--f-text);
+    cursor: pointer;
+  }
+  .b[aria-pressed='true'] {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--paper);
+  }
+  .b:disabled {
+    opacity: 0.45;
+    cursor: default;
+  }
+  .n {
+    font-size: 0.82rem;
+    opacity: 0.75;
+  }
+  .deals {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 0.7rem;
+  }
+  .deal {
+    display: grid;
+    gap: 0.5rem;
+    align-content: space-between;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+  }
+  .deal[hidden] {
+    display: none;
+  }
+  .top {
+    display: flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-size: 0.82rem;
+    font-weight: 600;
+  }
+  .store {
+    color: var(--text-2);
+  }
+  .ours {
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+  }
+  .pct {
+    margin-left: auto;
+    padding: 0.1rem 0.5rem;
+    border-radius: 999px;
+    background: var(--good);
+    color: var(--paper);
+  }
+  .mid {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    gap: 0.75rem;
+  }
+  .mid:not(:has(.dpic)) {
+    grid-template-columns: 1fr;
+  }
+  .dpic {
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 0.15rem;
+    border-radius: var(--r-sm);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+    object-fit: contain;
+  }
+  .nm a {
+    position: relative;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 3px;
+  }
+  .nm a:hover {
+    text-decoration-color: currentColor;
+  }
+  /* A thumb-sized tap on a name that reads as text. */
+  .nm a::after {
+    content: '';
+    position: absolute;
+    inset: -0.6rem -0.2rem;
+  }
+  .nm {
+    font-weight: 600;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .act {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+    gap: 0.35rem 0.6rem;
+  }
+  .now {
+    font: 700 1.25rem/1 var(--f-display);
+  }
+  .was {
+    color: var(--text-3);
+    font-size: 0.92rem;
+  }
+  .buy {
+    margin-left: auto;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.5rem;
+    padding: 0.3rem 0.9rem;
+    border-radius: 999px;
+    background: var(--ink);
+    color: var(--on-ink);
+    font-weight: 650;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+  .buy:hover {
+    background: var(--ink-2);
+  }
+  .none {
+    padding: 1rem 0;
+    color: var(--text-2);
+  }
+  .none[hidden] {
+    display: none;
+  }
+  .more {
+    margin: 1.4rem 0 2rem;
+    font-weight: 600;
+  }
+</style>
+
+<script>
+  // "How much do you want to spend?": one range at a time, preselected from the quiz (?b=).
+  document.addEventListener('astro:page-load', () => {
+    const nav = document.querySelector<HTMLElement>('[data-budget]:not([data-ready])');
+    if (!nav) return;
+    nav.dataset.ready = '1';
+    const buttons = [...nav.querySelectorAll<HTMLButtonElement>('[data-b]')];
+    const deals = [...document.querySelectorAll<HTMLElement>('[data-deal]')];
+    const empty = document.querySelector<HTMLElement>('[data-empty]');
+    const pick = (b: string) => {
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.b === b)));
+      let shown = 0;
+      deals.forEach((el) => {
+        el.hidden = Boolean(b) && el.dataset.tier !== b;
+        if (!el.hidden) shown++;
+      });
+      if (empty) empty.hidden = shown > 0;
+    };
+    buttons.forEach((x) =>
+      x.addEventListener('click', () => {
+        pick(x.dataset.b ?? '');
+        const url = new URL(location.href);
+        if (x.dataset.b) url.searchParams.set('b', x.dataset.b);
+        else url.searchParams.delete('b');
+        history.replaceState(history.state, '', url.pathname + url.search);
+      }),
+    );
+    const start = new URLSearchParams(location.search).get('b');
+    if (start && buttons.some((x) => x.dataset.b === start)) pick(start);
+  });
+</script>

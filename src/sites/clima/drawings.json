@@ -1,0 +1,52 @@
+{
+ "products": [
+  "bosch-air-4000",
+  "xiaomi-4-lite",
+  "delonghi-dragon-4",
+  "rowenta-intense-aqua",
+  "portasplit-heat",
+  "delonghi-ariadry-multi-16",
+  "duux-bora-smart",
+  "pro-breeze-omnidry-20",
+  "orbegozo-dh-1655",
+  "ecoair-dd1-mk6",
+  "bosch-cool-4000",
+  "ariston-mobis-plus-10",
+  "midea-portasplit"
+ ],
+ "forms": {
+  "dehum": [
+   "box",
+   "mini",
+   "desiccant"
+  ],
+  "heat": [
+   "oil",
+   "fan",
+   "convector"
+  ],
+  "purifier": [
+   "tower"
+  ],
+  "ac": [
+   "portable"
+  ]
+ },
+ "colours": [
+  "black",
+  "white",
+  "grey",
+  "silver",
+  "titanium",
+  "beige",
+  "cream",
+  "red",
+  "blue",
+  "green",
+  "pink",
+  "yellow",
+  "gold",
+  "copper",
+  "plain"
+ ]
+}

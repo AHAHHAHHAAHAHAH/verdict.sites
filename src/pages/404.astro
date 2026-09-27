@@ -1,0 +1,82 @@
+---
+import '@fontsource-variable/bricolage-grotesque/wght.css';
+import '@fontsource-variable/instrument-sans/wght.css';
+import '@fontsource-variable/martian-mono/wght.css';
+import '../styles/global.css';
+import '@site/theme.css';
+import Logo from '@site/Logo.astro';
+import { defaultEdition, editions, languages } from '../i18n/editions';
+import { pathFor } from '../i18n/routes';
+import { t } from '../i18n/ui';
+import { site } from '@site/config';
+---
+
+<!doctype html>
+<html lang={defaultEdition.lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content={site.themeColor} />
+    <title>404 | {site.name}</title>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body>
+    <main class="nf">
+      <a href="/" aria-label={site.name} class="home"><Logo size={36} /></a>
+      <p class="code" aria-hidden="true">404</p>
+      <div class="langs">
+        {
+          languages.map((l) => (
+            <section lang={l}>
+              <h1>{t(l).notFound.title}</h1>
+              <p>{t(l).notFound.text}</p>
+              <a class="link" href={pathFor('home', editions.find((e) => e.lang === l)!)}>{t(l).notFound.back} →</a>
+            </section>
+          ))
+        }
+      </div>
+    </main>
+  </body>
+</html>
+
+<style>
+  body {
+    background: var(--ink);
+    color: var(--on-ink);
+  }
+  .nf {
+    min-height: 100svh;
+    display: grid;
+    align-content: center;
+    gap: 2rem;
+    width: min(60rem, 100%);
+    margin: 0 auto;
+    padding: 2rem var(--gutter);
+  }
+  .home {
+    color: var(--on-ink);
+    text-decoration: none;
+  }
+  .code {
+    font: 600 clamp(5rem, 3rem + 10vw, 11rem) / 0.85 var(--f-mono);
+    letter-spacing: -0.06em;
+    color: var(--accent);
+    text-shadow: 0 0 60px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+  .langs {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+    gap: 2rem;
+  }
+  h1 {
+    font-size: 1.4rem;
+  }
+  section p {
+    margin: 0.5rem 0 0.9rem;
+    color: var(--on-ink-2);
+  }
+  .link {
+    color: var(--accent);
+  }
+</style>

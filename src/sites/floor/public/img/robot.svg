@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400"><rect width="400" height="400" rx="64" fill="#f1f9db"/><ellipse cx="200" cy="344" rx="128" ry="11" fill="#cfdab2"/>
+      <rect x="226" y="84" width="112" height="214" rx="24" fill="#ffffff" stroke="#0b1014" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="244" y="104" width="76" height="72" rx="12" fill="#eaf6c8" stroke="#0b1014" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M246 144q18-8 36 0t36 0v22a8 8 0 0 1-8 8h-56a8 8 0 0 1-8-8Z" fill="#c8f031"/>
+      <rect x="244" y="104" width="76" height="72" rx="12" fill="none" stroke="#0b1014" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="244" y="190" width="76" height="72" rx="12" fill="#e7e7e8" stroke="#0b1014" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="206" y="288" width="152" height="24" rx="12" fill="#e7e7e8" stroke="#0b1014" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M52 286v18a118 40 0 0 0 236 0v-18" fill="#e7e7e8" stroke="#0b1014" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <ellipse cx="170" cy="286" rx="118" ry="40" fill="#ffffff" stroke="#0b1014" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M72 300a110 34 0 0 0 196 0" fill="none" stroke="#0b1014" stroke-width="4" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M160 262v12a24 8 0 0 0 48 0v-12" fill="#0b1014"/>
+      <ellipse cx="184" cy="262" rx="24" ry="8" fill="#0b1014"/>
+      <ellipse cx="184" cy="261" rx="12" ry="3.5" fill="#c8f031"/></svg>

@@ -1,0 +1,143 @@
+---
+// Every page of every edition (a language read in a country: /it-it/, /en-it/, /sv-se/...).
+// A page exists only where it has something to say: a product type only in the countries where it
+// is sold, its deals page only where a brand store we read covers it, the guides only once there
+// are guides in that language.
+import { getCollection, type CollectionEntry } from 'astro:content';
+import { editions, type Edition } from '../../i18n/editions';
+import { routes, pageKeys, pathFor, articlePath, verdictPath, offersPath, toolKeys, type StaticKey, type ToolKey } from '../../i18n/routes';
+import { tx } from '../../lib/pack';
+import type { Alternate } from '../../lib/types';
+import { categories, categoryIds, publishedIn } from '../../lib/catalog';
+import { hasDealSource } from '../../lib/deals';
+import Home from '../../views/Home.astro';
+import ToolsIndex from '../../views/ToolsIndex.astro';
+import ToolPage from '../../views/ToolPage.astro';
+import GuidesIndex from '../../views/GuidesIndex.astro';
+import ProsePage from '../../views/ProsePage.astro';
+import ArticlePage from '../../views/ArticlePage.astro';
+import VerdictPage from '../../views/VerdictPage.astro';
+import AboutPage from '../../views/AboutPage.astro';
+import DealsPage from '../../views/DealsPage.astro';
+import ModelPageView from '../../views/ModelPage.astro';
+import { modelEditions, modelPagesIn, modelTwins, type ModelPage } from '../../lib/modelpages';
+import BrandPageView from '../../views/BrandPage.astro';
+import { brandPagesIn, brandPath, type BrandPage } from '../../lib/brandpages';
+
+type Props =
+  | { kind: 'static'; key: StaticKey; ed: Edition; alternates: Alternate[] }
+  | { kind: 'verdict'; category: string; ed: Edition; alternates: Alternate[] }
+  | { kind: 'deals'; category: string; ed: Edition; alternates: Alternate[] }
+  | { kind: 'article'; entry: CollectionEntry<'articles'>; ed: Edition; alternates: Alternate[] }
+  | { kind: 'model'; page: ModelPage; ed: Edition; alternates: Alternate[] }
+  | { kind: 'brand'; page: BrandPage; ed: Edition; alternates: Alternate[] };
+
+export async function getStaticPaths() {
+  const articles = (await getCollection('articles')).filter((a) => !a.data.draft);
+  const guideLangs = new Set(articles.map((a) => a.data.lang));
+  const paths = [];
+  const every = (keep: (e: Edition) => boolean, href: (e: Edition) => string): Alternate[] =>
+    editions.filter(keep).map((e) => ({ ed: e, href: href(e) }));
+
+  for (const ed of editions) {
+    const keys = [...pageKeys, ...(guideLangs.has(ed.lang) ? ['guides'] : [])];
+    for (const key of keys) {
+      const alternates = every((e) => key !== 'guides' || guideLangs.has(e.lang), (e) => pathFor(key, e));
+      paths.push({
+        params: { edition: ed.key, slug: routes[key][ed.lang] || undefined },
+        props: { kind: 'static' as const, key, ed, alternates },
+      });
+    }
+    for (const id of categoryIds) {
+      if (!publishedIn(id, ed.market)) continue;
+      const slug = categories[id].slug;
+      paths.push({
+        params: { edition: ed.key, slug: `${routes.verdicts[ed.lang]}/${tx(slug, ed.lang)}` },
+        props: { kind: 'verdict' as const, category: id, ed, alternates: every((e) => publishedIn(id, e.market), (e) => verdictPath(e, tx(slug, e.lang))) },
+      });
+      if (!hasDealSource(id, ed.market)) continue;
+      paths.push({
+        params: { edition: ed.key, slug: `${routes.offers[ed.lang]}/${tx(slug, ed.lang)}` },
+        props: { kind: 'deals' as const, category: id, ed, alternates: every((e) => hasDealSource(id, e.market), (e) => offersPath(e, tx(slug, e.lang))) },
+      });
+    }
+  }
+
+  // A page per model on sale, in each country's own language and English.
+  for (const ed of modelEditions()) {
+    for (const page of modelPagesIn(ed.market)) {
+      paths.push({
+        params: { edition: ed.key, slug: `${routes.models[ed.lang]}/${page.slug}` },
+        props: { kind: 'model' as const, page, ed, alternates: modelTwins(page) },
+      });
+    }
+  }
+
+  // A page per brand we read, in the same editions.
+  for (const ed of modelEditions()) {
+    for (const page of brandPagesIn(ed.market)) {
+      const alternates = modelEditions().flatMap((e) => {
+        const twin = brandPagesIn(e.market).find((b) => b.brand === page.brand);
+        return twin ? [{ ed: e, href: brandPath(e, twin.slug) }] : [];
+      });
+      paths.push({ params: { edition: ed.key, slug: `${routes.brands[ed.lang]}/${page.slug}` }, props: { kind: 'brand' as const, page, ed, alternates } });
+    }
+  }
+
+  // A guide is written in one language and shown in every country read in it.
+  for (const entry of articles) {
+    const siblings = articles.filter((a) => a.data.translationKey === entry.data.translationKey);
+    for (const ed of editions.filter((e) => e.lang === entry.data.lang)) {
+      paths.push({
+        params: { edition: ed.key, slug: `${routes.guides[ed.lang]}/${entry.data.slug}` },
+        props: {
+          kind: 'article' as const,
+          entry,
+          ed,
+          alternates: editions.flatMap((e) => siblings.filter((s) => s.data.lang === e.lang).map((s) => ({ ed: e, href: articlePath(e, s.data.slug) }))),
+        },
+      });
+    }
+  }
+
+  return paths;
+}
+
+const props = Astro.props as Props;
+const { ed, alternates } = props;
+const { lang } = ed;
+
+const articles = (await getCollection('articles', (a) => a.data.lang === lang && !a.data.draft)).sort(
+  (a, b) => b.data.updated.getTime() - a.data.updated.getTime(),
+);
+
+async function copyFor(key: StaticKey) {
+  const copy = (await getCollection('pages')).find((p) => p.data.key === key && p.data.lang === lang);
+  if (!copy) throw new Error(`Missing page copy: src/sites/<site>/content/pages/${lang}/${key}.md`);
+  return copy;
+}
+
+const isTool = (key: StaticKey): key is ToolKey => (toolKeys as readonly string[]).includes(key);
+const needsCopy = props.kind === 'static' && (isTool(props.key) || ['privacy', 'legal'].includes(props.key));
+const copy = needsCopy && props.kind === 'static' ? await copyFor(props.key) : null;
+---
+
+{props.kind === 'article' && <ArticlePage ed={ed} alternates={alternates} entry={props.entry} />}
+{props.kind === 'verdict' && <VerdictPage ed={ed} alternates={alternates} category={props.category} />}
+{props.kind === 'deals' && <DealsPage ed={ed} alternates={alternates} category={props.category} />}
+{props.kind === 'model' && <ModelPageView ed={ed} alternates={alternates} page={props.page} />}
+{props.kind === 'brand' && <BrandPageView ed={ed} alternates={alternates} page={props.page} />}
+{props.kind === 'static' && props.key === 'home' && <Home ed={ed} alternates={alternates} />}
+{props.kind === 'static' && props.key === 'tools' && <ToolsIndex ed={ed} alternates={alternates} />}
+{props.kind === 'static' && props.key === 'guides' && <GuidesIndex ed={ed} alternates={alternates} articles={articles} />}
+{
+  props.kind === 'static' && isTool(props.key) && copy && (
+    <ToolPage ed={ed} alternates={alternates} tool={props.key} copy={copy} related={articles.filter((a) => a.data.tools.includes(props.key))} />
+  )
+}
+{props.kind === 'static' && props.key === 'about' && <AboutPage ed={ed} alternates={alternates} />}
+{
+  props.kind === 'static' && ['privacy', 'legal'].includes(props.key) && copy && (
+    <ProsePage ed={ed} alternates={alternates} copy={copy} />
+  )
+}

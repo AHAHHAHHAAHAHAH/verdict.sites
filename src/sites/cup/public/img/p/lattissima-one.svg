@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <ellipse cx="200" cy="352" rx="110" ry="10" fill="#000" opacity="0.12"/>
+    <path d="M130 96q0-38 38-38h92q30 0 30 38v254h-160Z" fill="#f5f6f5" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="178" y="48" width="70" height="18" rx="9" fill="#dde1e2" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <circle cx="258" cy="126" r="9" fill="#dde1e2" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M176 152h100v150h-100Z" fill="#dde1e2" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="214" y="152" width="26" height="16" rx="4" fill="#c6ccd2" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M204 222h48v66a12 12 0 0 1-12 12h-24a12 12 0 0 1-12-12Z" fill="rgba(206, 226, 234, 0.55)" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M206 240h44v48a10 10 0 0 1-10 10h-24a10 10 0 0 1-10-10Z" fill="#c9a27a"/>
+    <path d="M206 240h44v12h-44Z" fill="#f6efe2"/>
+    <path d="M106 206h64v120a12 12 0 0 1-12 12h-40a12 12 0 0 1-12-12Z" fill="#f5f6f5" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="102" y="196" width="72" height="18" rx="7" fill="#dde1e2" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M170 204q20 0 26-28" fill="none" stroke="#c6ccd2" stroke-width="7" stroke-linecap="round"/>
+    <path d="M170 204q20 0 26-28" fill="none" stroke="#1f2328" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="170" y="302" width="112" height="16" rx="4" fill="#9fa7ae" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="136" y="110" width="8" height="200" rx="4" fill="#ffffff" opacity="0.22"/></svg>

@@ -1,0 +1,316 @@
+---
+// One brand in one country: every model of it on sale at its own store, by type, with today's
+// prices, discounts, the tested ones and our picks, each leading to its own page.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import { tag, type Edition } from '../i18n/editions';
+import { countryIn } from '../i18n/markets';
+import { pathFor, verdictPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { categories, needsIn, productName } from '../lib/catalog';
+import type { BrandPage } from '../lib/brandpages';
+import { modelPath } from '../lib/modelpages';
+import { tx } from '../lib/pack';
+import { modelPicture } from '../lib/pictures';
+import { DESC_CHARS, TITLE_PX, titleWidth } from '../lib/seo-measure';
+import { formatPrice } from '../lib/shop';
+import { pickOf, testBadge, testsFor } from '../lib/tests';
+import { publisher } from '../lib/webora';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  page: BrandPage;
+}
+const { ed, alternates, page } = Astro.props;
+const { lang, market } = ed;
+const { brand, byCategory, count } = page;
+const ui = t(lang);
+const bp = ui.brandPage;
+const where = countryIn(market, lang);
+const all = byCategory.flatMap((g) => g.pages);
+const prices = all.map((p) => p.model.price);
+const min = formatPrice(Math.min(...prices), ed);
+const max = formatPrice(Math.max(...prices), ed);
+const pctOf = (m: (typeof all)[number]['model']) => (m.was ? Math.floor((1 - m.price / m.was) * 100) : 0);
+const onSale = all.filter((p) => pctOf(p.model) > 0);
+const tested = all.filter((p) => testsFor(p.category, p.model.name).length || pickOf(p.category, market, p.model));
+// In the brand's own page its name goes without saying: "Q10 S5+", not "Roborock Q10 S5+".
+const short = (name: string) => name.replace(new RegExp(`^${brand.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\s+`, 'i'), '') || name;
+const listFmt = new Intl.ListFormat(lang, { type: 'conjunction' });
+// Type names inside a sentence start lower-case, except in German where nouns keep their capital.
+const inText = (x: string) => (lang === 'de' ? x : x.charAt(0).toLowerCase() + x.slice(1));
+const types = listFmt.format(byCategory.map((g) => `${inText(tx(categories[g.category].name, lang))} (${g.pages.length})`));
+const vars = { brand, n: String(count), where };
+// The brand with its main type first ("Tineco lavapavimenti senza fili"): how people search it.
+const mainType = [...byCategory].sort((a, b) => b.pages.length - a.pages.length)[0].category;
+const mainKp = categories[mainType].seo[lang]?.keyphrase;
+const title = [...(mainKp ? bp.titlesKind.map((x) => fill(x, { ...vars, kp: mainKp })) : []), ...bp.titles.map((x) => fill(x, vars))].find((x) => titleWidth(x) >= TITLE_PX[0] + 5 && titleWidth(x) <= TITLE_PX[1] - 5) ?? fill(bp.h1, vars);
+const description = bp.descs.map((x) => fill(x, vars)).find((x) => x.length >= DESC_CHARS[0] && x.length <= DESC_CHARS[1]);
+const cheapest = [...all].sort((a, b) => a.model.price - b.model.price)[0];
+const url = (x: string) => new URL(x, site.url).href;
+const pageUrl = url(Astro.url.pathname);
+// The brand's main type leads its picture and the buying advice.
+const first = mainType;
+const og = { src: `/og/${market}/${first}.png`, alt: `${fill(bp.h1, vars)} (${ui.verdict.drawing})` };
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: title,
+    description: description ?? title,
+    inLanguage: tag(ed),
+    dateModified: all.map((p) => p.model.seen).sort().at(-1),
+    primaryImageOfPage: { '@type': 'ImageObject', url: url(og.src), width: 1200, height: 630 },
+    about: { '@type': 'Brand', name: brand },
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    publisher: { '@type': 'Organization', name: site.name, url: site.url, parentOrganization: { '@type': 'Organization', name: publisher.name, url: publisher.url } },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: site.name, item: url(pathFor('home', ed)) },
+      { '@type': 'ListItem', position: 2, name: brand, item: pageUrl },
+    ],
+  },
+];
+---
+
+<Base ed={ed} title={title} description={description ?? title} alternates={alternates} jsonLd={jsonLd} keyphrase={brand} image={og} noindex={!description}>
+  <div class="wrap bp">
+    <header class="top">
+      <h1>{fill(bp.h1, vars)}</h1>
+      <p class="lead">
+        {fill(bp.intro, { ...vars, types })} {fill(bp.range, { min, max })}{' '}
+        {onSale.length ? fill(onSale.length === 1 ? bp.dealsOne : bp.dealsSome, { d: String(onSale.length), p: String(Math.max(...onSale.map((p) => pctOf(p.model)))) }) : bp.dealsNone}{' '}
+        {tested.length ? fill(tested.length === 1 ? bp.testedOne : bp.testedSome, { t: String(tested.length) }) : bp.testedNone}
+      </p>
+      <img class="type" src={`/img/${first}.svg`} alt={og.alt} width="160" height="160" decoding="async" />
+    </header>
+
+    {
+      byCategory.map((g) => {
+        const c = categories[g.category];
+        const cheap = g.pages[0];
+        const deal = [...g.pages].filter((p) => pctOf(p.model) > 0).sort((a, b) => pctOf(b.model) - pctOf(a.model))[0];
+        const needs = needsIn(g.category, market);
+        const picks = g.pages
+          .map((p) => ({ p, own: pickOf(g.category, market, p.model) }))
+          .filter((x) => x.own)
+          .map((x) => ({ ...x, need: needs.find((n) => n.picks.some((pk) => pk.product.id === x.own!.id)) }));
+        return (
+          <section class="type-block">
+            <h2>{tx(c.name, lang)}</h2>
+            <p>{tx(c.line, lang)}</p>
+            <p>
+              {fill(g.pages.length === 1 ? bp.typeOne : bp.typeLine, {
+                n: String(g.pages.length),
+                min: formatPrice(cheap.model.price, ed),
+                max: formatPrice(g.pages[g.pages.length - 1].model.price, ed),
+                cheapest: short(cheap.name),
+                price: formatPrice(cheap.model.price, ed),
+              })}
+              {deal && <> {fill(bp.typeDeal, { name: short(deal.name), pct: String(pctOf(deal.model)) })}</>}
+              {picks.map((x) => (
+                <> {fill(bp.typePick, { name: short(x.p.name), need: x.need ? tx(x.need.label, lang) : '' })}</>
+              ))}
+              {!picks.length && needs[0] && <> {fill(ui.modelPage.pickFor, { pick: productName(needs[0].picks[0].product, ed), why: tx(needs[0].picks[0].product.why, lang) })}</>}
+            </p>
+            <ul class="models" data-seo-skip>
+              {g.pages.map((p) => {
+                const pic = modelPicture(g.category, p.model, ed);
+                const test = testsFor(g.category, p.model.name)[0];
+                return (
+                  <li>
+                    {pic && <img data-pic src={pic.src} alt="" width="56" height="56" loading="lazy" decoding="async" />}
+                    <span class="mn">
+                      <a href={modelPath(ed, p.slug)}>{p.name}</a>
+                      {test && <span class="tag">{testBadge(test, lang)}</span>}
+                    </span>
+                    <span class="mp">
+                      <b>{formatPrice(p.model.price, ed)}</b>
+                      {pctOf(p.model) > 0 && <span class="off">−{pctOf(p.model)}%</span>}
+                    </span>
+                  </li>
+                );
+              })}
+            </ul>
+            <p>
+              <a class="link" href={verdictPath(ed, tx(c.slug, lang))}>
+                {bp.typeLink} →
+              </a>
+            </p>
+          </section>
+        );
+      })
+    }
+
+    {
+      (categories[first].criteria[lang] ?? []).length > 0 && (
+        <section class="type-block">
+          <h2>{ui.modelPage.hChoose}</h2>
+          <ol class="crit">
+            {(categories[first].criteria[lang] ?? []).map((k) => (
+              <li>
+                <b>{k.t}.</b> {k.d}
+              </li>
+            ))}
+          </ol>
+          {(categories[first].goodIf[lang] ?? []).length > 0 && (
+            <>
+              <p>
+                <b>{tx(categories[first].heads.good, lang)}:</b>
+              </p>
+              <ul class="crit">
+                {(categories[first].goodIf[lang] ?? []).map((g) => (
+                  <li>{g}</li>
+                ))}
+              </ul>
+            </>
+          )}
+        </section>
+      )
+    }
+
+    <section class="type-block">
+      <h2>{fill(bp.hHow, vars)}</h2>
+      <p>{bp.how}</p>
+      <p class="note">
+        <a class="link" href={`https://${new URL(all[0].model.url).host}/`} target="_blank" rel="noopener">
+          {new URL(all[0].model.url).host}
+        </a>
+      </p>
+    </section>
+
+    <section class="type-block">
+      {/* With few types, the brand in this heading too would overload the headings with its name. */}
+      <h2>{byCategory.length >= 2 ? fill(bp.hFaq, vars) : ui.modelPage.hFaq}</h2>
+      <h3>{fill(bp.q1, vars)}</h3>
+      <p>{fill(bp.a1, { cheapest: cheapest.name, price: formatPrice(cheapest.model.price, ed) })}</p>
+      <h3>{bp.q2}</h3>
+      <p>{bp.a2}</p>
+    </section>
+
+    <p class="note">
+      <Icon name="shield" size={14} />
+      <span>{ui.modelPage.note}</span>
+    </p>
+  </div>
+</Base>
+
+<style>
+  .bp {
+    padding-block: 1.2rem 3rem;
+    display: grid;
+    gap: 1.8rem;
+    max-width: 52rem;
+  }
+  .top {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 0.8rem 1.5rem;
+    align-items: start;
+  }
+  .top h1 {
+    grid-column: 1;
+    font-size: clamp(1.6rem, 1.2rem + 1.6vw, 2.5rem);
+    line-height: 1.08;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .top .lead {
+    grid-column: 1;
+    color: var(--text-2);
+  }
+  .top .type {
+    grid-column: 2;
+    grid-row: 1 / span 2;
+    width: clamp(4.5rem, 3rem + 6vw, 8rem);
+    height: auto;
+  }
+  .type-block {
+    display: grid;
+    gap: 0.7rem;
+  }
+  .type-block h2 {
+    font-size: clamp(1.2rem, 1.05rem + 0.6vw, 1.5rem);
+    line-height: 1.2;
+  }
+  .type-block h3 {
+    font-size: 1.05rem;
+    margin-top: 0.3rem;
+  }
+  .models {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .models li {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.8rem;
+    padding: 0.55rem 0;
+    border-bottom: 1px solid var(--line);
+  }
+  .models img {
+    width: 3.25rem;
+    height: 3.25rem;
+    padding: 0.15rem;
+    border-radius: var(--r-sm);
+    background: var(--card);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .mn {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.3rem 0.5rem;
+    font-weight: 650;
+  }
+  .mn a {
+    display: inline-flex;
+    align-items: center;
+    min-height: 2.5rem;
+    color: var(--text);
+  }
+  .tag {
+    padding: 0.1rem 0.5rem;
+    border: 1px solid color-mix(in srgb, var(--good) 45%, transparent);
+    border-radius: 999px;
+    color: var(--good);
+    font-size: 0.78rem;
+  }
+  .mp {
+    display: grid;
+    justify-items: end;
+    gap: 0.2rem;
+  }
+  .off {
+    padding: 0.05rem 0.45rem;
+    border-radius: 999px;
+    background: var(--good);
+    color: var(--paper);
+    font-size: 0.78rem;
+    font-weight: 700;
+  }
+  .crit {
+    margin: 0;
+    padding-left: 1.3rem;
+    display: grid;
+    gap: 0.5rem;
+  }
+  .note {
+    display: flex;
+    gap: 0.5rem;
+    color: var(--text-3);
+    font-size: 0.88rem;
+  }
+</style>

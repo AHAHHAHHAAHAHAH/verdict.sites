@@ -1,0 +1,404 @@
+---
+import Icon from './ui/Icon.astro';
+import { currencyOf, type Edition } from '../i18n/editions';
+import { verdictPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import { budgetLines, categories, categoryIdsIn, publishedIn, quizDef } from '../lib/catalog';
+import { budgetLabel } from '../lib/budget';
+import { tx } from '../lib/pack';
+
+interface Props {
+  ed: Edition;
+}
+const { ed } = Astro.props;
+const { lang, market } = ed;
+const q = t(lang).quiz;
+const steps = quizDef.steps;
+const byId = new Map(steps.map((s) => [s.id, s]));
+
+type Step = (typeof steps)[number];
+type Option = Step['options'][number];
+// A budget answer is written in this country's money, from its category's lines or the quiz's own.
+const linesOf = (o: Option) => (o.budget?.category ? budgetLines(o.budget.category, market) : quizDef.budget?.[currencyOf(ed)]);
+const labelOf = (o: Option) => (o.budget ? budgetLabel(linesOf(o)!, o.budget.tier, ed) : tx(o.label, lang));
+const visible = (step: Step) => step.options.filter((o) => (!o.markets || o.markets.includes(market)) && (!o.budget || linesOf(o)));
+const nextOf = (step: Step, o: Option) => (o.next !== undefined ? o.next : step.next) ?? null;
+// A question with a single answer in this language (e.g. only one type sold here) is answered
+// for the visitor and never shown.
+const auto = new Set(steps.filter((st) => visible(st).length === 1).map((st) => st.id));
+
+// Longest path through the questions actually asked, for "Question n of N".
+function depth(id: string, seen = new Set<string>()): number {
+  const step = byId.get(id);
+  if (!step || seen.has(id)) return 0;
+  seen.add(id);
+  const nexts = visible(step)
+    .map((o) => nextOf(step, o))
+    .filter((n): n is string => !!n);
+  return (auto.has(id) ? 0 : 1) + Math.max(0, ...nexts.map((n) => depth(n, new Set(seen))));
+}
+const pre: [string, string][] = [];
+let startId = steps[0].id;
+while (auto.has(startId)) {
+  const step = byId.get(startId)!;
+  const only = visible(step)[0];
+  const next = nextOf(step, only);
+  if (!next) break;
+  pre.push([step.id, only.value]);
+  startId = next;
+}
+const total = depth(steps[0].id);
+
+// Answers → finished URLs, computed here so the browser gets a tiny map instead of the catalogue.
+const map = Object.fromEntries(
+  Object.entries(quizDef.results).filter(([, [cat]]) => publishedIn(cat, market)).map(([key, [cat, need]]) => [key, `${verdictPath(ed, tx(categories[cat].slug, lang))}?need=${encodeURIComponent(need)}`]),
+);
+const nextAttr = (next: string | null | undefined) => (next === undefined ? undefined : (next ?? ''));
+---
+
+<div class="quiz" id="quiz" data-quiz data-map={JSON.stringify(map)} data-step={fill(q.step, { total: String(total) })} data-carry={quizDef.carry ? JSON.stringify(quizDef.carry) : undefined} data-auto={auto.size ? JSON.stringify([...auto]) : undefined} data-pre={pre.length ? JSON.stringify(pre) : undefined}>
+  <div class="q-head">
+    <span class="eyebrow" data-step-label>{fill(q.step, { n: '1', total: String(total) })}</span>
+    <button type="button" class="back" data-back hidden>
+      <Icon name="arrow-left" size={16} stroke={2} />
+      {q.back}
+    </button>
+  </div>
+  <div class="progress" data-progress aria-hidden="true" style={`--steps:${total}`}>{Array.from({ length: total }, () => <span />)}</div>
+
+  {
+    steps.map((step, i) => (
+      <div class="screen" role="group" data-q={step.id} data-next={step.next ?? ''} aria-labelledby={`q-${step.id}`} hidden={step.id !== startId}>
+        <p class="q-title" id={`q-${step.id}`} tabindex="-1">{tx(step.title, lang)}</p>
+        <div class:list={['opts', step.layout === 'grid' ? 'grid-2' : 'stack']}>
+          {visible(step).map((o) =>
+            step.layout === 'grid' ? (
+              <button type="button" class="opt" data-value={o.value} data-next={nextAttr(o.next)}>
+                {o.icon && (
+                  <span class="oi">
+                    <Icon name={o.icon} size={26} stroke={1.5} />
+                  </span>
+                )}
+                <span class="ol">{labelOf(o)}</span>
+              </button>
+            ) : (
+              <button type="button" class="opt row" data-value={o.value} data-next={nextAttr(o.next)}>
+                {o.level && (
+                  <span class="beans" aria-hidden="true">
+                    {[1, 2, 3].map((n) => (
+                      <i class:list={{ on: n <= (o.level ?? 0) }} />
+                    ))}
+                  </span>
+                )}
+                <span class="ol">{labelOf(o)}</span>
+                <Icon name="arrow-right" size={18} class="go" />
+              </button>
+            ),
+          )}
+        </div>
+      </div>
+    ))
+  }
+
+  <noscript>
+    <p class="fallback">{q.fallback}</p>
+    <ul class="fallback-list">
+      {
+        categoryIdsIn(market).map((id) => (
+          <li>
+            <a href={verdictPath(ed, tx(categories[id].slug, lang))}>{tx(categories[id].name, lang)}</a>
+          </li>
+        ))
+      }
+    </ul>
+  </noscript>
+</div>
+
+<style>
+  .quiz {
+    display: grid;
+    gap: 1.1rem;
+    padding: clamp(1.2rem, 0.9rem + 1.3vw, 1.9rem);
+    background:
+      linear-gradient(180deg, color-mix(in srgb, var(--on-ink) 4%, transparent), transparent 40%),
+      var(--ink-2);
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-lg);
+    box-shadow:
+      0 1px 0 color-mix(in srgb, var(--on-ink) 8%, transparent) inset,
+      0 40px 80px -40px rgb(0 0 0 / 70%);
+    min-height: 23rem;
+    align-content: start;
+  }
+  .q-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 2rem;
+  }
+  .q-head .eyebrow {
+    color: var(--accent);
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    padding: 0.35rem 0.7rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    background: none;
+    color: var(--on-ink-2);
+    font: 500 0.8rem/1 var(--f-text);
+    cursor: pointer;
+    transition:
+      color var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out);
+  }
+  .back[hidden] {
+    display: none;
+  }
+  .back:hover {
+    color: var(--on-ink);
+    border-color: var(--on-ink-3);
+  }
+  .progress {
+    --n: 1;
+    display: grid;
+    grid-template-columns: repeat(var(--steps, 3), 1fr);
+    gap: 6px;
+  }
+  .progress span {
+    height: 3px;
+    border-radius: 2px;
+    background: var(--ink-line);
+    position: relative;
+    overflow: hidden;
+  }
+  .progress span::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform var(--d-3) var(--ease-out);
+  }
+  .progress span:nth-child(1)::after,
+  .progress span.on::after {
+    transform: scaleX(1);
+  }
+  .screen {
+    display: grid;
+    gap: 1.1rem;
+  }
+  .screen[hidden] {
+    display: none;
+  }
+  .q-title {
+    margin: 0;
+    color: var(--on-ink);
+    font-family: var(--f-display);
+    font-optical-sizing: auto;
+    font-size: clamp(1.45rem, 1.2rem + 1vw, 1.9rem);
+    font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    outline: none;
+  }
+  .opts {
+    display: grid;
+    gap: 0.6rem;
+  }
+  .grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .opt {
+    display: grid;
+    justify-items: start;
+    align-content: space-between;
+    gap: 1rem;
+    min-height: 6.2rem;
+    padding: 0.95rem;
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-md);
+    background: var(--ink-3);
+    color: var(--on-ink);
+    text-align: left;
+    font: 600 1rem/1.25 var(--f-text);
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out),
+      transform var(--d-1) var(--ease-out);
+  }
+  .opt:hover {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 8%, var(--ink-3));
+  }
+  .opt:active {
+    transform: scale(0.97);
+  }
+  .opt:global(.picked) {
+    border-color: var(--accent);
+    background: color-mix(in srgb, var(--accent) 22%, var(--ink-3));
+  }
+  .oi {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--accent);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .opt:hover .oi {
+    transform: rotate(-8deg) scale(1.06);
+  }
+  .stack {
+    grid-template-columns: 1fr;
+  }
+  .opt.row {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    min-height: 3.7rem;
+  }
+  .opt.row .ol {
+    flex: 1;
+  }
+  .opt.row :global(.go) {
+    color: var(--on-ink-3);
+    transition:
+      transform var(--d-3) var(--ease-spring),
+      color var(--d-2) var(--ease-out);
+  }
+  .opt.row:hover :global(.go) {
+    color: var(--accent);
+    transform: translateX(3px);
+  }
+  .beans {
+    display: flex;
+    gap: 4px;
+  }
+  .beans i {
+    width: 9px;
+    height: 12px;
+    border-radius: 50%;
+    border: 1.5px solid var(--on-ink-3);
+    transform: rotate(35deg);
+  }
+  .beans i.on {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .fallback {
+    color: var(--on-ink-2);
+  }
+  .fallback-list a {
+    color: var(--accent);
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .screen:global(.enter) {
+      animation: q-in 420ms var(--ease-out) both;
+    }
+    .screen:global(.enter)[data-dir='-1'] {
+      animation-name: q-back;
+    }
+  }
+  @keyframes q-in {
+    from {
+      opacity: 0;
+      transform: translate3d(28px, 0, 0);
+    }
+  }
+  @keyframes q-back {
+    from {
+      opacity: 0;
+      transform: translate3d(-28px, 0, 0);
+    }
+  }
+</style>
+
+<script>
+  import { navigate } from 'astro:transitions/client';
+
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('[data-quiz]:not([data-ready])').forEach((quiz) => {
+      quiz.dataset.ready = '1';
+      const map: Record<string, string> = JSON.parse(quiz.dataset.map!);
+      const carry: { step: string | string[]; param: string } | null = quiz.dataset.carry ? JSON.parse(quiz.dataset.carry) : null;
+      const carrySteps = carry ? ([] as string[]).concat(carry.step) : [];
+      const stepTemplate = quiz.dataset.step!;
+      const screens = [...quiz.querySelectorAll<HTMLElement>('[data-q]')];
+      const back = quiz.querySelector<HTMLButtonElement>('[data-back]')!;
+      const label = quiz.querySelector<HTMLElement>('[data-step-label]')!;
+      const answers: Record<string, string> = {};
+      // Questions with one answer in this language are answered here and never shown.
+      const auto = new Set<string>(quiz.dataset.auto ? JSON.parse(quiz.dataset.auto) : []);
+      const pre: [string, string][] = quiz.dataset.pre ? JSON.parse(quiz.dataset.pre) : [];
+      const history: string[] = [];
+      for (const [id, value] of pre) {
+        answers[id] = value;
+        history.push(id);
+      }
+      history.push(screens.find((s) => !s.hidden)!.dataset.q!);
+      const asked = () => history.filter((id) => !auto.has(id)).length;
+
+      const show = (name: string, dir: 1 | -1) => {
+        screens.forEach((s) => {
+          s.hidden = s.dataset.q !== name;
+          s.querySelectorAll('.picked').forEach((b) => b.classList.remove('picked'));
+        });
+        const next = screens.find((s) => s.dataset.q === name)!;
+        next.dataset.dir = String(dir);
+        next.classList.remove('enter');
+        void next.offsetWidth;
+        next.classList.add('enter');
+        const n = asked();
+        quiz.dataset.at = String(n);
+        label.textContent = stepTemplate.replace('{n}', String(n));
+        quiz.querySelectorAll('[data-progress] span').forEach((bar, i) => bar.classList.toggle('on', i < n));
+        back.hidden = n === 1;
+        next.querySelector<HTMLElement>('.q-title')?.focus({ preventScroll: true });
+      };
+
+      const finish = () => {
+        const key = history.map((id) => answers[id]).join('|');
+        let url = map[key];
+        if (!url) return;
+        const carried = carrySteps.find((id) => history.includes(id) && answers[id]);
+        if (carry && carried) url += `&${carry.param}=${encodeURIComponent(answers[carried])}`;
+        url += '&from=quiz';
+        window.setTimeout(() => navigate(url), 160);
+      };
+
+      quiz.addEventListener('click', (e) => {
+        const btn = (e.target as HTMLElement).closest<HTMLButtonElement>('button[data-value]');
+        if (!btn) return;
+        const screen = btn.closest<HTMLElement>('[data-q]')!;
+        answers[screen.dataset.q!] = btn.dataset.value!;
+        btn.classList.add('picked');
+        let next = btn.dataset.next !== undefined ? btn.dataset.next : screen.dataset.next!;
+        while (next && auto.has(next)) {
+          const skipped = screens.find((s) => s.dataset.q === next)!;
+          const only = skipped.querySelector<HTMLButtonElement>('button[data-value]')!;
+          answers[next] = only.dataset.value!;
+          history.push(next);
+          next = only.dataset.next !== undefined ? only.dataset.next : skipped.dataset.next!;
+        }
+        if (!next) return finish();
+        history.push(next);
+        show(next, 1);
+      });
+
+      back.addEventListener('click', () => {
+        history.pop();
+        while (history.length > 1 && auto.has(history[history.length - 1])) history.pop();
+        show(history[history.length - 1], -1);
+      });
+    });
+  });
+</script>

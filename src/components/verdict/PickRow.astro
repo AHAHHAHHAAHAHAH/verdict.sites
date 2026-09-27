@@ -1,0 +1,148 @@
+---
+// Another good pick for the same situation, below our first choice: why it is here in a few
+// words, its reason, its price and its button. Calm and compact next to the dark card.
+import Icon from '../ui/Icon.astro';
+import type { Edition } from '../../i18n/editions';
+import { t } from '../../i18n/ui';
+import { tx, type Product, type T } from '../../lib/pack';
+import { hostOf, offerAttrs, offerCta, offersFor, officialPrice } from '../../lib/shop';
+import { productName, productSearch, tierIn } from '../../lib/catalog';
+import { productPicture } from '../../lib/pictures';
+
+interface Props {
+  ed: Edition;
+  product: Product;
+  tag?: T;
+  shops: string;
+  /** Heading level of the product name, one below the "also good" heading. */
+  level?: 3 | 4;
+}
+const { ed, product, tag, shops, level = 4 } = Astro.props;
+const { lang, market } = ed;
+const Name = `h${level}` as 'h3' | 'h4';
+const v = t(lang).verdict;
+const price = officialPrice(product, ed);
+const offer = offersFor(product, ed, productSearch(product, ed))[0];
+const link = offerAttrs(offer);
+const pic = productPicture(product, ed);
+---
+
+<article class="pr" data-pick-row data-tier={tierIn(product, market)}>
+  {pic && <img class="pic" data-pic src={pic.src} alt={pic.alt} loading="lazy" decoding="async" width="160" height="160" />}
+  <div class="body">
+    {tag?.[lang] && <span class="tag">{tx(tag, lang)}</span>}
+    <Name class="name">{productName(product, ed)}</Name>
+    <p class="why">{tx(product.why, lang)}</p>
+    <div class="act">
+      {
+        price && (
+          <span class="pv">
+            {price.text}
+            <a class="src" href={price.source} target="_blank" rel="nofollow noopener" aria-label={`${v.source}: ${hostOf(price.source)}`}>
+              <Icon name="external" size={12} stroke={2} />
+            </a>
+          </span>
+        )
+      }
+      <a class="buy" {...link} target="_blank">
+        <span data-cta-text>{offerCta(offer.kind, lang, offer.shop)}</span>
+        <Icon name="arrow-up-right" size={15} stroke={2} />
+      </a>
+      <a class="more" href={shops} data-open-shops>{v.otherShops}</a>
+    </div>
+  </div>
+</article>
+
+<style>
+  .pr {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 1rem;
+    padding: 1.1rem 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+  }
+  .pr:not(:has(.pic)) {
+    grid-template-columns: 1fr;
+  }
+  .pr[hidden] {
+    display: none;
+  }
+  .pic {
+    width: 5.5rem;
+    height: 5.5rem;
+    padding: 0.35rem;
+    object-fit: contain;
+    border-radius: var(--r-md);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+  }
+  .body {
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+  }
+  .tag {
+    justify-self: start;
+    padding: 0.2rem 0.6rem;
+    border-radius: 999px;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+    font: 650 var(--t-label) / 1.3 var(--f-text);
+  }
+  .name {
+    font-size: 1.15rem;
+  }
+  .why {
+    color: var(--text-2);
+    font-size: 0.97rem;
+  }
+  .act {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.6rem 1rem;
+    margin-top: 0.35rem;
+  }
+  .pv {
+    font: 650 1.05rem/1.2 var(--f-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .src {
+    display: inline-grid;
+    place-items: center;
+    padding: 0.15rem;
+    color: var(--text-3);
+    vertical-align: middle;
+  }
+  .buy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.05rem;
+    border-radius: 999px;
+    background: var(--text);
+    color: var(--paper);
+    font-weight: 650;
+    font-size: 0.95rem;
+    text-decoration: none;
+    transition: background-color var(--d-2) var(--ease-out);
+  }
+  .buy:hover {
+    background: var(--accent-ink);
+  }
+  .more {
+    position: relative;
+    color: var(--text-2);
+    font-size: 0.9rem;
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+  .more::after {
+    content: '';
+    position: absolute;
+    inset: -0.6rem -0.5rem;
+  }
+</style>

@@ -1,0 +1,79 @@
+---
+import { render, type CollectionEntry } from 'astro:content';
+import Base from '../layouts/Base.astro';
+import type { Edition } from '../i18n/editions';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { t } from '../i18n/ui';
+import { operator } from '../lib/webora';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  copy: CollectionEntry<'pages'>;
+}
+const { ed, alternates, copy } = Astro.props;
+const { lang } = ed;
+const { Content } = await render(copy);
+
+// Operator identity lives only in src/lib/webora.ts and is shown on the two legal pages.
+const showOperator = copy.data.key === 'legal' || copy.data.key === 'privacy';
+const labels = t(lang).legalBox;
+---
+
+<Base ed={ed} title={`${copy.data.title} | ${site.name}`} description={copy.data.description} alternates={alternates} noindex={copy.data.noindex}>
+  <div class="wrap">
+    <header class="ph">
+      <h1 data-reveal>{copy.data.title}</h1>
+      <p class="lede" data-reveal style="--i:1">{copy.data.description}</p>
+    </header>
+    {
+      showOperator && (
+        <dl class="operator" data-reveal>
+          <dt class="eyebrow">{labels.title}</dt>
+          <dd>
+            <span>{labels.name}</span>
+            <strong>{operator.name || '—'}</strong>
+          </dd>
+          <dd>
+            <span>{labels.contact}</span>
+            <a class="link" href={`mailto:${operator.contact}`}>{operator.contact}</a>
+          </dd>
+        </dl>
+      )
+    }
+    <article class="prose" data-reveal>
+      <Content />
+    </article>
+  </div>
+</Base>
+
+<style>
+  .ph {
+    display: grid;
+    gap: 1.2rem;
+    padding: clamp(2.5rem, 1.5rem + 4vw, 4.5rem) 0 2rem;
+    max-width: 48rem;
+  }
+  .operator {
+    display: grid;
+    gap: 0.6rem;
+    max-width: 42rem;
+    margin: 0 0 1rem;
+    padding: 1.2rem 1.4rem;
+    border: 1px solid var(--line);
+    border-left: 3px solid var(--accent);
+    border-radius: var(--r-md);
+    background: var(--card);
+  }
+  .operator dd {
+    margin: 0;
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+  .operator dd span {
+    min-width: 6rem;
+    color: var(--text-3);
+  }
+</style>

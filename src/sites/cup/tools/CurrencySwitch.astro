@@ -1,0 +1,16 @@
+---
+import Segmented from '../../../components/ui/Segmented.astro';
+import { currencyOf, type Edition } from '../../../i18n/editions';
+import { t } from '../ui';
+
+interface Props {
+  ed: Edition;
+  tone?: 'light' | 'dark';
+}
+const { ed, tone = 'light' } = Astro.props;
+const { lang } = ed;
+// The country's own currency first, then the common ones.
+const options = [...new Set([currencyOf(ed), 'EUR', 'USD', 'GBP'])].map((c) => ({ value: c, label: c }));
+---
+
+<Segmented name="currency" legend={t(lang).tools.currency} options={options} selected={currencyOf(ed)} tone={tone} compact />

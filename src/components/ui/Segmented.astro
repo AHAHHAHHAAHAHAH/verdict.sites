@@ -1,0 +1,135 @@
+---
+interface Props {
+  name: string;
+  legend: string;
+  options: { value: string; label: string }[];
+  selected: string;
+  tone?: 'light' | 'dark';
+  compact?: boolean;
+}
+const { name, legend, options, selected, tone = 'light', compact = false } = Astro.props;
+---
+
+<fieldset class:list={['seg', `tone-${tone}`, { compact }]} data-segmented>
+  <legend>{legend}</legend>
+  <div class="track">
+    <span class="thumb" aria-hidden="true"></span>
+    {
+      options.map((o) => (
+        <label>
+          <input type="radio" name={name} value={o.value} checked={o.value === selected} />
+          <span>{o.label}</span>
+        </label>
+      ))
+    }
+  </div>
+</fieldset>
+
+<style>
+  .seg {
+    border: 0;
+    margin: 0;
+    padding: 0;
+    min-width: 0;
+  }
+  legend {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-2);
+    margin-bottom: 0.45rem;
+    padding: 0;
+  }
+  .track {
+    position: relative;
+    display: flex;
+    gap: 2px;
+    padding: 3px;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--card);
+    overflow-x: auto;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+  }
+  .track::-webkit-scrollbar {
+    display: none;
+  }
+  .thumb {
+    position: absolute;
+    top: 3px;
+    bottom: 3px;
+    left: 0;
+    width: 0;
+    border-radius: 999px;
+    background: var(--ink);
+    transform: translateX(var(--x, 0));
+    width: var(--w, 0);
+    transition:
+      transform var(--d-3) var(--ease-out),
+      width var(--d-3) var(--ease-out);
+    pointer-events: none;
+  }
+  label {
+    position: relative;
+    flex: 1 0 auto;
+    scroll-snap-align: center;
+  }
+  input {
+    position: absolute;
+    opacity: 0;
+    inset: 0;
+    margin: 0;
+    cursor: pointer;
+  }
+  span:not(.thumb) {
+    display: block;
+    padding: 0.55rem 0.95rem;
+    border-radius: 999px;
+    text-align: center;
+    white-space: nowrap;
+    font-size: 0.92rem;
+    font-weight: 600;
+    color: var(--text-2);
+    transition: color var(--d-2) var(--ease-out);
+    pointer-events: none;
+  }
+  .compact span:not(.thumb) {
+    padding: 0.4rem 0.7rem;
+    font: 500 0.75rem/1.2 var(--f-mono);
+  }
+  input:checked + span {
+    color: var(--on-ink);
+  }
+  input:focus-visible + span {
+    outline: 2px solid var(--accent);
+    outline-offset: 1px;
+  }
+  /* Without script the checked option still reads as selected. */
+  .seg:not(.is-live) input:checked + span {
+    background: var(--ink);
+  }
+  label:hover input:not(:checked) + span {
+    color: var(--text);
+  }
+
+  .tone-dark legend {
+    color: var(--on-ink-2);
+  }
+  .tone-dark .track {
+    background: var(--ink-3);
+    border-color: var(--ink-line);
+  }
+  .tone-dark .thumb,
+  .tone-dark:not(.is-live) input:checked + span {
+    background: var(--accent);
+  }
+  .tone-dark span:not(.thumb) {
+    color: var(--on-ink-2);
+  }
+  .tone-dark input:checked + span {
+    color: var(--ink);
+  }
+  .tone-dark label:hover input:not(:checked) + span {
+    color: var(--on-ink);
+  }
+</style>

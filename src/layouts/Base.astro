@@ -1,0 +1,120 @@
+---
+import { ClientRouter } from 'astro:transitions';
+import { preloadFonts } from '@site/fonts';
+import '../styles/global.css';
+import '@site/theme.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import { defaultEdition, ogLocale, tag, type Edition } from '../i18n/editions';
+import { t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+
+interface Props {
+  ed: Edition;
+  title: string;
+  description: string;
+  alternates: Alternate[];
+  noindex?: boolean;
+  jsonLd?: Record<string, unknown>[];
+  ogType?: 'website' | 'article';
+  /** The words the page is found by; every indexable page has one (scripts/check-seo.mjs). */
+  keyphrase?: string;
+  /** The picture Google and social networks show (1200×630), from the site's public/og folder. */
+  image?: { src: string; alt: string };
+  /** The home pages point x-default at the country and language chooser; other pages at the first edition. */
+  home?: boolean;
+}
+
+const { ed, title, description, alternates: every, jsonLd = [], ogType = 'website', keyphrase, image, home = false } = Astro.props;
+// A language read in a country other than its own (and not English) is for visitors who choose it,
+// not for search engines: it is left out of their results, and the other pages never point to it.
+const noindex = Astro.props.noindex === true || !ed.indexed;
+const alternates = every.filter((a) => a.ed.indexed);
+const { lang } = ed;
+const ui = t(lang);
+const abs = (href: string) => new URL(href, Astro.site).href;
+const canonical = abs(Astro.url.pathname);
+const xDefault = home ? { href: '/' } : (alternates.find((a) => a.ed.key === defaultEdition.key) ?? alternates[0]);
+const og = image ?? { src: '/og/home.png', alt: `${site.name}: ${ui.tagline}` };
+// Structured data as text that cannot close its <script> element, whatever a name contains.
+const safeJson = (data: unknown) => JSON.stringify(data).replace(/</g, '\\u003c').replace(/>/g, '\\u003e').replace(/&/g, '\\u0026');
+// Read after the build by scripts/check-seo.mjs.
+const seoMark = keyphrase ? `<!--seo-keyphrase ${encodeURIComponent(keyphrase)}-->` : '';
+
+const pageMotion = {
+  forwards: {
+    old: { name: 'cv-page-out', duration: '160ms', easing: 'ease-in', fillMode: 'both' },
+    new: { name: 'cv-page-in', duration: '460ms', easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fillMode: 'both' },
+  },
+  backwards: {
+    old: { name: 'cv-page-out', duration: '160ms', easing: 'ease-in', fillMode: 'both' },
+    new: { name: 'cv-page-in', duration: '460ms', easing: 'cubic-bezier(0.22, 1, 0.36, 1)', fillMode: 'both' },
+  },
+};
+---
+
+<!doctype html>
+<html lang={lang} transition:animate="none" data-clicks={site.clickCount ? '' : undefined}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={canonical} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="theme-color" content={site.themeColor} />
+    {preloadFonts.map((href) => <link rel="preload" href={href} as="font" type="font/woff2" crossorigin />)}
+    {
+      noindex ? (
+        <meta name="robots" content="noindex, follow" />
+      ) : (
+        <>
+          <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1" />
+          {alternates.map((a) => (
+            <link rel="alternate" hreflang={tag(a.ed)} href={abs(a.href)} />
+          ))}
+          {xDefault && <link rel="alternate" hreflang="x-default" href={abs(xDefault.href)} />}
+        </>
+      )
+    }
+    <meta property="og:site_name" content={site.name} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:locale" content={ogLocale(ed)} />
+    <meta property="og:image" content={abs(og.src)} />
+    <meta property="og:image:type" content="image/png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content={og.alt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <Fragment set:html={seoMark} />
+    {jsonLd.map((data) => <script is:inline type="application/ld+json" set:html={safeJson(data)} />)}
+    <ClientRouter />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">{ui.skip}</a>
+    <Header ed={ed} alternates={every} />
+    <main id="main" transition:animate={pageMotion}>
+      <slot />
+    </main>
+    <Footer ed={ed} />
+    {
+      site.analytics && (
+        <script
+          is:inline
+          defer
+          src="https://static.cloudflareinsights.com/beacon.min.js"
+          data-cf-beacon={JSON.stringify({ token: site.analytics.cloudflareToken })}
+        />
+      )
+    }
+    {site.adsense && <script is:inline async src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${site.adsense.client}`} crossorigin="anonymous" />}
+    <script>
+      import '../scripts/ui.ts';
+      import '../scripts/clicks.ts';
+    </script>
+  </body>
+</html>

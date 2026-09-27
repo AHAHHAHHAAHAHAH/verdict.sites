@@ -1,0 +1,129 @@
+---
+import Icon from '../ui/Icon.astro';
+import type { Edition } from '../../i18n/editions';
+import { verdictPath } from '../../i18n/routes';
+import { fill, t } from '../../i18n/ui';
+import { categories, lineup } from '../../lib/catalog';
+import { tx } from '../../lib/pack';
+import { productPicture } from '../../lib/pictures';
+
+interface Props {
+  ed: Edition;
+  id: string;
+  index: number;
+}
+const { ed, id, index } = Astro.props;
+const { lang, market } = ed;
+const c = categories[id];
+const picks = lineup(id, market);
+const count = picks.length;
+// The machines we pick, side by side: the answer is already in sight from the home page.
+const faces = picks.map((p) => productPicture(p, ed)).filter((x) => x !== undefined).slice(0, 4);
+---
+
+<a class="ct" href={verdictPath(ed, tx(c.slug, lang))} data-reveal style={`--i:${index}`}>
+  <span class="ic"><Icon name={c.icon} size={26} stroke={1.5} /></span>
+  <span class="body">
+    <span class="name">{tx(c.name, lang)}</span>
+    <span class="line">{tx(c.line, lang)}</span>
+  </span>
+  <span class="meta">
+    {
+      faces.length > 0 && (
+        <span class="faces" aria-hidden="true">
+          {faces.map((f) => (
+            <img data-pic src={f.src} alt="" loading="lazy" decoding="async" width="44" height="44" />
+          ))}
+        </span>
+      )
+    }
+    <span class="count">{count === 1 ? t(lang).verdict.picksOne : fill(t(lang).verdict.picksCount, { n: String(count) })}</span>
+    <span class="go" aria-hidden="true"><Icon name="arrow-right" size={18} /></span>
+  </span>
+</a>
+
+<style>
+  .ct {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-rows: 1fr auto;
+    gap: 0.9rem 1rem;
+    padding: 1.2rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      transform var(--d-3) var(--ease-out);
+  }
+  .ct:hover {
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+    transform: translateY(-2px);
+  }
+  .ic {
+    display: grid;
+    place-items: center;
+    width: 3rem;
+    height: 3rem;
+    border-radius: var(--r-md);
+    background: var(--ink);
+    color: var(--accent);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .ct:hover .ic {
+    transform: rotate(-6deg) scale(1.05);
+  }
+  .body {
+    display: grid;
+    gap: 0.3rem;
+    align-content: start;
+  }
+  .name {
+    font: 700 1.15rem/1.2 var(--f-display);
+    letter-spacing: -0.02em;
+  }
+  .line {
+    color: var(--text-2);
+    font-size: 0.93rem;
+  }
+  .meta {
+    grid-column: 1 / -1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-top: 0.8rem;
+    border-top: 1px solid var(--line);
+  }
+  .faces {
+    display: flex;
+  }
+  .faces img {
+    width: 2.6rem;
+    height: 2.6rem;
+    padding: 0.15rem;
+    border-radius: 50%;
+    background: var(--paper);
+    box-shadow:
+      0 0 0 2px var(--card),
+      inset 0 0 0 1px var(--line);
+    object-fit: contain;
+  }
+  .faces img + img {
+    margin-left: -0.55rem;
+  }
+  .count {
+    margin-right: auto;
+    margin-left: 0.7rem;
+    font: 600 0.8rem/1.2 var(--f-text);
+    color: var(--text-2);
+  }
+  .go {
+    color: var(--accent-ink);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .ct:hover .go {
+    transform: translateX(4px);
+  }
+</style>

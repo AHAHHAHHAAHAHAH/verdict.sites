@@ -1,0 +1,234 @@
+---
+import Icon from './Icon.astro';
+import { currencyOf, type Edition } from '../../i18n/editions';
+import { t } from '../../i18n/ui';
+
+interface Props {
+  ed: Edition;
+  name: string;
+  label: string;
+  value: number;
+  step: number;
+  min?: number;
+  max?: number;
+  unit?: string;
+  prefix?: string;
+  currency?: boolean;
+  range?: [number, number];
+  tone?: 'light' | 'dark';
+  idPrefix?: string;
+}
+const { ed, name, label, value, min = 0, unit, prefix, currency = false, tone = 'light', idPrefix = 'f' } = Astro.props;
+const { lang } = ed;
+// Money fields are written for euros; in countries with a smaller unit (złoty, krona) the step,
+// the ceiling and the slider range grow with it, so the controls stay useful.
+const moneyScale: Record<string, number> = { PLN: 4, SEK: 10 };
+const k = currency ? (moneyScale[currencyOf(ed)] ?? 1) : 1;
+const step = Astro.props.step * k;
+const max = Astro.props.max === undefined ? undefined : Astro.props.max * k;
+const range = Astro.props.range ? (Astro.props.range.map((x) => x * k) as [number, number]) : undefined;
+const a = t(lang).a11y;
+const id = `${idPrefix}-${name}`;
+---
+
+<div class:list={['stepper', `tone-${tone}`]} data-stepper>
+  <label for={id}>{label}</label>
+  <div class="control">
+    <button type="button" class="step" data-dir="-1" aria-label={`${a.decrease}: ${label}`} tabindex="-1">
+      <Icon name="minus" size={18} stroke={2} />
+    </button>
+    <div class="field">
+      {prefix && <span class="affix">{prefix}</span>}
+      <input id={id} name={name} type="number" inputmode="decimal" min={min} max={max} step={step} value={value} autocomplete="off" />
+      {currency && <span class="affix" data-currency-symbol></span>}
+      {unit && <span class="affix">{unit}</span>}
+    </div>
+    <button type="button" class="step" data-dir="1" aria-label={`${a.increase}: ${label}`} tabindex="-1">
+      <Icon name="plus" size={18} stroke={2} />
+    </button>
+  </div>
+  {
+    range && (
+      <input class="range" type="range" min={range[0]} max={range[1]} step={step} value={value} aria-hidden="true" tabindex="-1" data-range-for={name} />
+    )
+  }
+</div>
+
+<style>
+  .stepper {
+    display: flex;
+    flex-direction: column;
+    gap: 0.45rem;
+    min-width: 0;
+  }
+  label {
+    font-size: 0.86rem;
+    font-weight: 600;
+    color: var(--text-2);
+    line-height: 1.3;
+  }
+  .control {
+    display: grid;
+    grid-template-columns: 2.75rem 1fr 2.75rem;
+    align-items: stretch;
+    height: 3rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      box-shadow var(--d-2) var(--ease-out);
+  }
+  .control:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 28%, transparent);
+  }
+  .step {
+    display: grid;
+    place-items: center;
+    border: 0;
+    background: none;
+    color: var(--text-2);
+    cursor: pointer;
+    border-radius: var(--r-md);
+    transition:
+      color var(--d-1) var(--ease-out),
+      background-color var(--d-1) var(--ease-out),
+      transform var(--d-1) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
+  .step:hover {
+    color: var(--text);
+    background: color-mix(in srgb, var(--accent) 14%, transparent);
+  }
+  .step:active {
+    transform: scale(0.88);
+  }
+  .field {
+    display: flex;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.3rem;
+    min-width: 0;
+    border-inline: 1px solid var(--line);
+    padding-inline: 0.4rem;
+  }
+  input[type='number'] {
+    width: 100%;
+    height: 100%;
+    min-width: 0;
+    max-width: 7.5ch;
+    border: 0;
+    background: none;
+    color: var(--text);
+    font: 600 1.05rem/1 var(--f-mono);
+    font-variant-numeric: tabular-nums;
+    text-align: center;
+    padding: 0;
+    appearance: textfield;
+    -moz-appearance: textfield;
+  }
+  input[type='number']::-webkit-inner-spin-button,
+  input[type='number']::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+  input[type='number']:focus {
+    outline: none;
+  }
+  .affix {
+    align-self: center;
+    font: 500 0.78rem/1 var(--f-mono);
+    color: var(--text-3);
+    white-space: nowrap;
+  }
+
+  /* Range: hand-styled track + thumb with a crema fill driven by --p (0–100). */
+  .range {
+    --p: 50;
+    appearance: none;
+    -webkit-appearance: none;
+    width: 100%;
+    /* The thumb is small to look at and the whole strip is easy to hit with a thumb. */
+    height: 2.5rem;
+    margin: -0.5rem 0 -0.4rem;
+    background: transparent;
+    cursor: pointer;
+  }
+  .range::-webkit-slider-runnable-track {
+    height: 4px;
+    border-radius: 2px;
+    background: linear-gradient(90deg, var(--accent) calc(var(--p) * 1%), var(--line) 0);
+  }
+  .range::-moz-range-track {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--line);
+  }
+  .range::-moz-range-progress {
+    height: 4px;
+    border-radius: 2px;
+    background: var(--accent);
+  }
+  .range::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 22px;
+    height: 22px;
+    margin-top: -9px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    box-shadow: 0 1px 3px rgb(0 0 0 / 25%);
+    transition: transform var(--d-2) var(--ease-spring);
+  }
+  .range::-moz-range-thumb {
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    background: var(--card);
+    border: 2px solid var(--accent);
+    transition: transform var(--d-2) var(--ease-spring);
+  }
+  .range:active::-webkit-slider-thumb {
+    transform: scale(1.25);
+  }
+  .range:active::-moz-range-thumb {
+    transform: scale(1.25);
+  }
+
+  .tone-dark label {
+    color: var(--on-ink-2);
+  }
+  .tone-dark .control {
+    background: var(--ink-3);
+    border-color: var(--ink-line);
+  }
+  .tone-dark .field {
+    border-color: var(--ink-line);
+  }
+  .tone-dark input[type='number'] {
+    color: var(--on-ink);
+  }
+  .tone-dark .step {
+    color: var(--on-ink-2);
+  }
+  .tone-dark .step:hover {
+    color: var(--on-ink);
+  }
+  .tone-dark .affix {
+    color: var(--on-ink-3);
+  }
+  .tone-dark .range::-webkit-slider-runnable-track {
+    background: linear-gradient(90deg, var(--accent) calc(var(--p) * 1%), var(--ink-line) 0);
+  }
+  .tone-dark .range::-moz-range-track {
+    background: var(--ink-line);
+  }
+  .tone-dark .range::-webkit-slider-thumb {
+    background: var(--ink);
+  }
+  .tone-dark .range::-moz-range-thumb {
+    background: var(--ink);
+  }
+</style>

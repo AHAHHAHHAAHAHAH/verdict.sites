@@ -1,0 +1,97 @@
+/* FloorVerdict theme: the robot's map at night. A blue-black "instrument" (like the map in a
+   robot's app) around cool, clean reading surfaces, and one laser-lime signal used sparingly
+   for the answer and the primary action. Headings run slightly wide, like a floor plan's labels. */
+
+/* Metric-matched fallbacks (measured on real text against Arial and Courier New with fontkit),
+   so text keeps its size and line breaks while the web fonts load: no layout shift. */
+@font-face {
+  font-family: 'Archivo Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 102.44%;
+  ascent-override: 85.71%;
+  descent-override: 20.5%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Onest Fallback';
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
+  size-adjust: 104.85%;
+  ascent-override: 92.51%;
+  descent-override: 29.09%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Azeret Fallback';
+  src: local('Courier New'), local('Courier'), local('Liberation Mono');
+  size-adjust: 108.32%;
+  ascent-override: 86.51%;
+  descent-override: 21.23%;
+  line-gap-override: 0%;
+}
+
+:root {
+  /* Instrument (always dark) */
+  --ink: #0b1014;
+  --ink-2: #121a20;
+  --ink-3: #1a242c;
+  --ink-line: #2a3742;
+  --on-ink: #edf3f5;
+  --on-ink-2: #a2b0ba;
+  --on-ink-3: #86949e;
+
+  /* Reading surfaces */
+  --paper: #f1f4f3;
+  --card: #ffffff;
+  --line: #d6dde0;
+  --line-strong: #aab6bc;
+  --text: #0e1418;
+  --text-2: #45515a;
+  --text-3: #58646e;
+
+  /* Signal */
+  --accent: #c8f031;
+  --accent-hot: #d9ff5a;
+  --accent-ink: #4a6100;
+  --accent-wash: #eaf6c8;
+  --good: #16794a;
+  --good-lit: #5fe39a;
+  --bad: #c1362c;
+  --bad-lit: #ff6f63;
+
+  /* Rooms on the map */
+  --room-a: #6fa8ff;
+  --room-b: #ffc56b;
+  --room-c: #b39bff;
+  --room-d: #5fd8bb;
+
+  --f-display: 'Archivo Variable', 'Archivo Fallback', sans-serif;
+  --f-text: 'Onest Variable', 'Onest Fallback', sans-serif;
+  --f-mono: 'Azeret Mono Variable', 'Azeret Fallback', monospace;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --paper: #0b1115;
+    --card: #121a20;
+    --line: #25313a;
+    --line-strong: #3d4a55;
+    --text: #edf3f5;
+    --text-2: #aab6bf;
+    --text-3: #8d9aa4;
+    --accent-ink: #c8f031;
+    --accent-wash: #1f2b0a;
+    --good: #5fe39a;
+    --bad: #ff6f63;
+    --ink-2: #10181e;
+    --ink-3: #18222a;
+    color-scheme: dark;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-stretch: 108%;
+}

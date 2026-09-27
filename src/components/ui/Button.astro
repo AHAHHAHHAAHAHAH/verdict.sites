@@ -1,0 +1,97 @@
+---
+import Icon, { type IconName } from './Icon.astro';
+
+interface Props {
+  href?: string;
+  variant?: 'primary' | 'ghost' | 'dark';
+  icon?: IconName | null;
+  type?: 'button' | 'submit';
+  class?: string;
+  [key: string]: unknown;
+}
+const { href, variant = 'primary', icon = 'arrow-right', type = 'button', class: className, ...rest } = Astro.props;
+const Tag = href ? 'a' : 'button';
+---
+
+<Tag class:list={['btn', `btn-${variant}`, className]} href={href} type={href ? undefined : type} {...rest}>
+  <span class="label"><slot /></span>
+  {
+    icon && (
+      <span class="dot" aria-hidden="true">
+        <Icon name={icon} size={16} stroke={2} />
+      </span>
+    )
+  }
+</Tag>
+
+<style>
+  .btn {
+    --bg: var(--accent);
+    --fg: var(--ink);
+    --dot-bg: var(--ink);
+    --dot-fg: var(--accent);
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3rem;
+    padding: 0.35rem 0.4rem 0.35rem 1.25rem;
+    border: 1px solid transparent;
+    border-radius: 999px;
+    background: var(--bg);
+    color: var(--fg);
+    font: 650 0.975rem/1.2 var(--f-text);
+    letter-spacing: -0.005em;
+    text-decoration: none;
+    cursor: pointer;
+    transition:
+      background-color var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out),
+      transform var(--d-1) var(--ease-out);
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:not(:has(.dot)) {
+    padding-right: 1.25rem;
+  }
+  .btn:hover {
+    --bg: var(--accent-hot);
+  }
+  .btn:active {
+    transform: scale(0.97);
+  }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    flex: none;
+    border-radius: 50%;
+    background: var(--dot-bg);
+    color: var(--dot-fg);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .btn:hover .dot {
+    transform: translateX(3px) rotate(-8deg);
+  }
+  .btn-ghost {
+    --bg: transparent;
+    --fg: var(--text);
+    --dot-bg: var(--text);
+    --dot-fg: var(--paper);
+    border-color: var(--line-strong);
+  }
+  .btn-ghost:hover {
+    --bg: transparent;
+    border-color: var(--text);
+  }
+  .btn-dark {
+    --bg: transparent;
+    --fg: var(--on-ink);
+    --dot-bg: var(--accent);
+    --dot-fg: var(--ink);
+    border-color: var(--ink-line);
+  }
+  .btn-dark:hover {
+    --bg: var(--ink-3);
+    border-color: var(--accent);
+  }
+</style>

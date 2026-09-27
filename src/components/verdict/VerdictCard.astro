@@ -1,0 +1,375 @@
+---
+// The answer, in a single dark card: the pick and its picture, one-line reason, the independent
+// test that backs it, the official price, the button.
+import FactList from './FactList.astro';
+import Icon from '../ui/Icon.astro';
+import type { Edition } from '../../i18n/editions';
+import { t } from '../../i18n/ui';
+import { tx, type Product } from '../../lib/pack';
+import { hostOf, offerAttrs, offerCta, offersFor, officialPrice, type Offer } from '../../lib/shop';
+import { productName, productSearch, tierIn } from '../../lib/catalog';
+import { productPicture } from '../../lib/pictures';
+
+interface Props {
+  ed: Edition;
+  product: Product;
+  showTier?: boolean;
+  /** Label shown while no answer from the visitor has changed it. */
+  label?: string;
+  /** Facts inside the card; off when the page has a comparison instead. */
+  withFacts?: boolean;
+  /** Link to this pick's list of shops. */
+  shops?: string;
+  /** Heading level of the product name: 3 under the page's situations heading, 2 without it. */
+  level?: 2 | 3;
+}
+const { ed, product, showTier = false, label, withFacts = true, shops, level = 3 } = Astro.props;
+const { lang, market } = ed;
+const Name = `h${level}` as 'h2' | 'h3';
+const v = t(lang).verdict;
+const ours = label ?? v.ourPick;
+const price = officialPrice(product, ed);
+const offer: Offer = offersFor(product, ed, productSearch(product, ed))[0];
+// The button says where it goes: the exact product on Amazon or on the brand's site, or a search.
+const ctaLabel = offerCta(offer.kind, lang, offer.shop);
+const link = offerAttrs(offer);
+const pic = productPicture(product, ed);
+---
+
+<article class="vc" data-verdict={product.id} data-tier={tierIn(product, market)} data-name={productName(product, ed)} data-href={link.href} data-cta={ctaLabel} data-rel={link.rel}>
+  <div class="vc-glow" aria-hidden="true"></div>
+  <div class="vc-top">
+    <span class="eyebrow label" data-verdict-label data-ours={ours} data-yours={v.yourVerdict}>{ours}</span>
+    {showTier && <span class="tier">{v.tiers[product.tier]}</span>}
+  </div>
+  <div class="vc-id">
+    <Name class="name">{productName(product, ed)}</Name>
+    {
+      pic && (
+        <span class="pic">
+          <img src={pic.src} alt={pic.alt} decoding="async" data-pic width="160" height="160" />
+        </span>
+      )
+    }
+  </div>
+  <p class="why">{tx(product.why, lang)}</p>
+  {
+    product.lab && (
+      <p class="lab">
+        <Icon name="check" size={14} stroke={2.4} />
+        <span>
+          <b>{v.lab}{lang === 'fr' ? ' :' : ':'}</b> {tx(product.lab.text, lang)}
+        </span>
+        <a class="src" href={product.lab.source} target="_blank" rel="noopener" aria-label={`${v.source}: ${hostOf(product.lab.source)}`}>
+          <Icon name="external" size={12} stroke={2} />
+        </a>
+      </p>
+    )
+  }
+  <p class="budget-note" data-budget-note hidden>{v.budgetNote}</p>
+  <div class="act">
+    {
+      price && (
+        <p class="price">
+          <span class="pl">{v.officialPrice}</span>
+          <span class="pv">
+            {price.text}
+            <a class="src" href={price.source} target="_blank" rel="nofollow noopener" aria-label={`${v.source}: ${hostOf(price.source)}`}>
+              <Icon name="external" size={12} stroke={2} />
+            </a>
+          </span>
+        </p>
+      )
+    }
+    <a class="buy" {...link} target="_blank">
+      <span data-cta-text>{ctaLabel}</span>
+      <span class="dot" aria-hidden="true"><Icon name="arrow-up-right" size={16} stroke={2} /></span>
+    </a>
+    {
+      shops && (
+        <a class="more" href={shops} data-open-shops>
+          {v.otherShops}
+          <Icon name="chevron-down" size={14} stroke={2} />
+        </a>
+      )
+    }
+  </div>
+  {withFacts && <FactList lang={lang} facts={product.facts} tone="dark" />}
+</article>
+
+<style>
+  .vc {
+    position: relative;
+    display: grid;
+    gap: 0.9rem;
+    padding: clamp(1.2rem, 1rem + 1.5vw, 2.2rem);
+    background: var(--ink);
+    color: var(--on-ink);
+    border: 1px solid var(--ink-line);
+    border-radius: var(--r-lg);
+    overflow: hidden;
+    isolation: isolate;
+    box-shadow: 0 30px 70px -35px rgb(0 0 0 / 55%);
+  }
+  .vc[hidden] {
+    display: none;
+  }
+  .buy {
+    position: relative;
+    overflow: hidden;
+    isolation: isolate;
+  }
+  /* The label stamps in when the card becomes "your verdict". */
+  .label:global(.stamp) {
+    display: inline-block;
+    animation: stamp 520ms var(--ease-spring) both;
+  }
+  @keyframes stamp {
+    from {
+      transform: scale(1.45) rotate(-4deg);
+      opacity: 0;
+    }
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    /* The card settles into place (movement only: the text is visible from the first frame). */
+    .vc:not([hidden]) {
+      animation: vc-in 620ms var(--ease-out) both;
+    }
+    /* One light sweep across the button, once, to show where the answer leads. */
+    .buy::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      z-index: -1;
+      background: linear-gradient(100deg, transparent 30%, rgb(255 255 255 / 55%) 50%, transparent 70%);
+      transform: translateX(-120%);
+      animation: sweep 1.1s var(--ease-in-out) 1.4s 1 both;
+    }
+  }
+  @keyframes vc-in {
+    from {
+      transform: translateY(16px) scale(0.985);
+    }
+  }
+  @keyframes sweep {
+    to {
+      transform: translateX(120%);
+    }
+  }
+  .vc-glow {
+    position: absolute;
+    inset: -40% -20% auto auto;
+    width: 70%;
+    aspect-ratio: 1;
+    z-index: -1;
+    background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 22%, transparent), transparent);
+  }
+  .vc-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+  }
+  .label {
+    color: var(--accent);
+  }
+  .tier {
+    padding: 0.3rem 0.65rem;
+    border: 1px solid var(--ink-line);
+    border-radius: 999px;
+    font: 600 0.75rem/1 var(--f-text);
+    color: var(--on-ink-2);
+  }
+  .name {
+    font-size: clamp(1.6rem, 1.3rem + 1.4vw, 2.3rem);
+    letter-spacing: -0.025em;
+    line-height: 1.1;
+  }
+  /* The name, and next to it the machine itself. */
+  .vc-id {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 1rem;
+  }
+  .pic {
+    display: grid;
+    place-items: center;
+    width: clamp(5.25rem, 3.5rem + 7vw, 9rem);
+    aspect-ratio: 1;
+    border-radius: var(--r-md);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 12%, transparent);
+  }
+  .pic img {
+    width: 88%;
+    height: 88%;
+    object-fit: contain;
+  }
+  .why {
+    font-size: clamp(1.02rem, 0.95rem + 0.35vw, 1.2rem);
+    color: var(--on-ink-2);
+    max-width: 38rem;
+  }
+  .budget-note {
+    font-size: 0.88rem;
+    color: var(--accent);
+    border-left: 2px solid var(--accent);
+    padding-left: 0.8rem;
+  }
+  .lab {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    font-size: 0.82rem;
+    line-height: 1.45;
+    color: var(--on-ink-2);
+  }
+  .lab > :global(svg) {
+    flex: none;
+    margin-top: 0.15rem;
+    color: var(--good-lit);
+  }
+  .lab b {
+    color: var(--on-ink);
+    font-weight: 650;
+  }
+  .src {
+    display: inline-grid;
+    place-items: center;
+    color: var(--on-ink-3);
+    padding: 0.15rem;
+    vertical-align: middle;
+  }
+  .src:hover {
+    color: var(--accent);
+  }
+  .ticks {
+    color: var(--on-ink-3);
+  }
+  .act {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 0.8rem 1.4rem;
+    margin-top: 0.2rem;
+  }
+  .price {
+    display: grid;
+    gap: 0.1rem;
+    line-height: 1.2;
+  }
+  .pl {
+    font: 600 var(--t-label) / 1.3 var(--f-text);
+    color: var(--on-ink-3);
+  }
+  .pv {
+    font: 650 1.15rem/1.2 var(--f-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .buy {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.85rem;
+    min-height: 3.2rem;
+    padding: 0.35rem 0.4rem 0.35rem 1.35rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--ink);
+    font: 700 1rem/1.2 var(--f-text);
+    text-decoration: none;
+    transition:
+      background-color var(--d-2) var(--ease-out),
+      transform var(--d-1) var(--ease-out);
+  }
+  .buy:hover {
+    background: var(--accent-hot);
+  }
+  .more {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2rem;
+    color: var(--on-ink-2);
+    font-size: 0.92rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .more:hover {
+    color: var(--accent);
+  }
+  /* The link reads small but takes a thumb-sized tap. */
+  .more::after {
+    content: '';
+    position: absolute;
+    inset: -0.5rem -0.6rem;
+  }
+  .buy:active {
+    transform: scale(0.97);
+  }
+  .dot {
+    display: grid;
+    place-items: center;
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--accent);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .buy:hover .dot {
+    transform: rotate(45deg);
+  }
+  @media (max-width: 30rem) {
+    .vc {
+      gap: 0.6rem;
+    }
+    .name {
+      font-size: 1.55rem;
+      line-height: 1.05;
+      text-wrap: balance;
+    }
+    .pic {
+      width: 4.75rem;
+    }
+    .why {
+      font-size: 1rem;
+      line-height: 1.45;
+    }
+    .lab {
+      font-size: 0.8rem;
+      line-height: 1.4;
+    }
+    .act {
+      display: grid;
+    }
+    .buy {
+      justify-content: space-between;
+    }
+    .price {
+      grid-auto-flow: column;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    /* With other shops listed below: the price and the link to them share one row above the button. */
+    .act:has(.more) {
+      grid-template-columns: 1fr auto;
+      align-items: end;
+    }
+    .act:has(.more) .price {
+      grid-auto-flow: row;
+      justify-content: start;
+    }
+    .act:has(.more) .buy {
+      grid-column: 1 / -1;
+      order: 1;
+    }
+    .more {
+      justify-self: end;
+    }
+    .act:not(:has(.price)) .more {
+      justify-self: start;
+    }
+  }
+</style>

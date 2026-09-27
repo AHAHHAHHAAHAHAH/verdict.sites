@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400"><rect width="400" height="400" rx="64" fill="#faefd9"/><ellipse cx="200" cy="324" rx="128" ry="11" fill="#dcccae"/>
+      <path d="M186 84c-8-12 6-18 0-30M214 84c-8-12 6-18 0-30" fill="none" stroke="#8a4f00" stroke-width="6" stroke-linecap="round"/>
+      <path d="M144 256q0-40 28-46h56q28 6 28 46v46q0 20-20 20h-72q-20 0-20-20z" fill="#f8e6c4" stroke="#0f0e0d" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M147 268h106v34q0 17-17 17h-72q-17 0-17-17z" fill="#8a4f00"/>
+      <path d="M144 256q0-40 28-46h56q28 6 28 46v46q0 20-20 20h-72q-20 0-20-20z" fill="none" stroke="#0f0e0d" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M200 214v14" stroke="#8a4f00" stroke-width="5" stroke-linecap="round"/>
+      <path d="M258 128c30 4 26 44 2 44" fill="none" stroke="#0f0e0d" stroke-width="9" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M136 126h128l-36 72h-56z" fill="#fdfcfa" stroke="#0f0e0d" stroke-width="6" stroke-linejoin="round" stroke-linecap="round"/>
+      <path d="M170 134l18 56M200 134v58M230 134l-18 56" stroke="#0f0e0d" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" opacity="0.45"/>
+      <rect x="126" y="116" width="148" height="14" rx="7" fill="#fdfcfa" stroke="#0f0e0d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/>
+      <rect x="164" y="196" width="72" height="12" rx="5" fill="#e5e4e2" stroke="#0f0e0d" stroke-width="5" stroke-linejoin="round" stroke-linecap="round"/></svg>

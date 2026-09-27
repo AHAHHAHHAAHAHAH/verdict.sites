@@ -1,0 +1,47 @@
+{
+ "products": [
+  "karcher-sc2-upright",
+  "karcher-sc1-upright",
+  "qrevo-curv-2-flow",
+  "ecovacs-t80s-omni",
+  "narwal-flow-2",
+  "dyson-v15",
+  "shark-powerdetect-ce",
+  "tineco-stretch-s6",
+  "f25-ultra"
+ ],
+ "forms": {
+  "robot": [
+   "none",
+   "empty",
+   "wash"
+  ],
+  "stick": [
+   "plain",
+   "dock"
+  ],
+  "wet": [
+   "plain"
+  ],
+  "steam": [
+   "plain"
+  ]
+ },
+ "colours": [
+  "black",
+  "white",
+  "grey",
+  "silver",
+  "titanium",
+  "beige",
+  "cream",
+  "red",
+  "blue",
+  "green",
+  "pink",
+  "yellow",
+  "gold",
+  "copper",
+  "plain"
+ ]
+}

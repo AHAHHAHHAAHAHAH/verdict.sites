@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 400" width="400" height="400">
+    <ellipse cx="200" cy="352" rx="96" ry="10" fill="#000" opacity="0.12"/>
+    <path d="M226 42q-24-6-28 18l-4 26" fill="none" stroke="#9aa1a8" stroke-width="12" stroke-linecap="round"/>
+    <path d="M226 42q-24-6-28 18l-4 26" fill="none" stroke="#1f2328" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="186" y="84" width="16" height="190" rx="8" fill="#f5f6f5" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="182" y="176" width="24" height="54" rx="8" fill="#f5f6f5" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <rect x="188" y="190" width="12" height="16" rx="3" fill="#f5c400" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M186 272h16l10 34h-36Z" fill="#dde1e2" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M110 318q0-16 16-16h148q16 0 16 16v16h-180Z" fill="#f5f6f5" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/>
+    <path d="M110 334h180v10h-180Z" fill="#2c3035" stroke="#1f2328" stroke-width="4.5" stroke-linejoin="round" stroke-linecap="round"/></svg>

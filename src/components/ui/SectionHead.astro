@@ -1,0 +1,24 @@
+---
+// A section title in plain words. (Index and label are kept in the props for the pages that pass
+// them, but no longer shown: numbered, capitalised captions made pages harder to read.)
+interface Props {
+  index?: string;
+  label: string;
+  title?: string;
+  id?: string;
+}
+const { label, title, id } = Astro.props;
+---
+
+<header class="sh" data-reveal>
+  <h2 id={id}>{title ?? label}</h2>
+  <slot />
+</header>
+
+<style>
+  .sh {
+    display: grid;
+    gap: 0.6rem;
+    margin-bottom: clamp(1.1rem, 0.9rem + 1vw, 1.75rem);
+  }
+</style>

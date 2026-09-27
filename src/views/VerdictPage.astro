@@ -1,0 +1,1089 @@
+---
+// A category page, built around situations ("needs"). The visitor picks the situation that is
+// theirs and sees our first choice for it, then the other good ones, each with why it is there.
+// Everything else (comparison, shops, what to check, FAQ) is one tap away, never in the way.
+import Base from '../layouts/Base.astro';
+import Icon from '../components/ui/Icon.astro';
+import SectionHead from '../components/ui/SectionHead.astro';
+import VerdictCard from '../components/verdict/VerdictCard.astro';
+import PickRow from '../components/verdict/PickRow.astro';
+import CompareTable from '../components/verdict/CompareTable.astro';
+import CategoryTile from '../components/verdict/CategoryTile.astro';
+import ModelList from '../components/verdict/ModelList.astro';
+import AdSlot from '../components/AdSlot.astro';
+import { numberLocale, tag, type Edition } from '../i18n/editions';
+import { offersPath, pathFor, verdictPath } from '../i18n/routes';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { categories, CHECKED, lineup, needsIn, productName, productSearch, publishedIn, tierIn, tierOfPrice } from '../lib/catalog';
+import { publisher } from '../lib/webora';
+import { dealTier, dealsFor, hasDealSource, percentOff } from '../lib/deals';
+import { tiers } from '../lib/budget';
+import { tx } from '../lib/pack';
+import { brandUrl, formatPrice, offerAttrs, offerCta, offerShopLabel, offersFor } from '../lib/shop';
+import { testBadge, testedFor } from '../lib/tests';
+import { modelPicture } from '../lib/pictures';
+import { modelPageOf } from '../lib/modelpages';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+  category: string;
+}
+const { ed, alternates, category } = Astro.props;
+const { lang, market } = ed;
+const c = categories[category];
+const needs = needsIn(category, market);
+const list = lineup(category, market);
+const ui = t(lang);
+const v = ui.verdict;
+const nf = numberLocale(ed);
+const date = new Date(CHECKED);
+const checked = new Intl.DateTimeFormat(nf, { dateStyle: 'long' }).format(date);
+const checkedShort = new Intl.DateTimeFormat(nf, { day: 'numeric', month: 'short', year: 'numeric' }).format(date);
+const dated = (s: string) =>
+  s.replace('{month}', new Intl.DateTimeFormat(nf, { month: 'long' }).format(date)).replace('{year}', String(date.getFullYear()));
+const seo = c.seo[lang]!;
+const title = dated(seo.title);
+const description = dated(seo.description);
+// The drawing is described with the category's name, or with the keyphrase when the name is a
+// shorter form ("Macchina a capsule" → "Macchina da caffè a capsule").
+const plain = (x: string) => x.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+const named = plain(seo.keyphrase).split(/[\s’'-]+/).every((w) => w.length < 3 || plain(tx(c.name, lang)).includes(w.slice(0, -1)));
+const typeName = named ? tx(c.name, lang) : seo.keyphrase.charAt(0).toUpperCase() + seo.keyphrase.slice(1);
+// The share picture shows the machines we pick in this country (scripts/make-images.mjs).
+const picture = { src: `/og/${market}/${c.id}.png`, alt: `${typeName}: ${list.slice(0, 3).map((p) => productName(p, ed)).join(', ')} (${v.drawing})` };
+const lead = needs[0].picks[0].product;
+// With several situations, their heading (H2) sits above the picks; with one, the picks are the H2s.
+const deep = needs.length > 1;
+const Others = deep ? 'h3' : 'h2';
+const leadOffer = offersFor(lead, ed, productSearch(lead, ed))[0];
+const faq = c.faq?.[lang] ?? [];
+// Today's deals on this product type, with the same numbers per price range for a visitor who
+// arrives from the quiz with a budget.
+const deals = hasDealSource(category, market) ? dealsFor(category, market) : [];
+const dealText = (list: typeof deals) => (list.length ? fill(ui.deals.link, { n: String(list.length), p: String(percentOff(list[0])) }) : '');
+const dealByTier = Object.fromEntries(tiers.map((tier) => [tier, dealText(deals.filter((x) => dealTier(x) === tier))]));
+const related = (c.related ?? []).filter((id) => publishedIn(id, market));
+const url = (p: string) => new URL(p, site.url).href;
+const pageUrl = url(verdictPath(ed, tx(c.slug, lang)));
+const jsonLd: Record<string, unknown>[] = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${pageUrl}#page`,
+    url: pageUrl,
+    name: title,
+    description,
+    inLanguage: tag(ed),
+    dateModified: CHECKED,
+    primaryImageOfPage: { '@type': 'ImageObject', url: url(picture.src), width: 1200, height: 630, caption: picture.alt },
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    publisher: { '@type': 'Organization', name: site.name, url: site.url, parentOrganization: { '@type': 'Organization', name: publisher.name, url: publisher.url } },
+    breadcrumb: { '@id': `${pageUrl}#breadcrumb` },
+    mainEntity: { '@id': `${pageUrl}#list` },
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'ItemList',
+    '@id': `${pageUrl}#list`,
+    name: tx(c.title, lang),
+    itemListElement: list.map((p, i) => ({ '@type': 'ListItem', position: i + 1, name: productName(p, ed) })),
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    '@id': `${pageUrl}#breadcrumb`,
+    itemListElement: [
+      { '@type': 'ListItem', position: 1, name: site.name, item: url(pathFor('home', ed)) },
+      { '@type': 'ListItem', position: 2, name: tx(c.name, lang), item: pageUrl },
+    ],
+  },
+];
+if (faq.length) {
+  jsonLd.push({
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faq.map((f) => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.a } })),
+  });
+}
+---
+
+<Base ed={ed} title={title} description={description} alternates={alternates} jsonLd={jsonLd} keyphrase={seo.keyphrase} image={picture}>
+  <div class="wrap">
+    <header class="ph">
+      <a class="back" href={pathFor('home', ed)} data-back>
+        <Icon name="arrow-left" size={16} stroke={2} />
+        {v.back}
+      </a>
+      <div class="ph-row">
+        <div class="ph-text">
+          <h1 class="qh1">{tx(c.title, lang)}</h1>
+          <p class="lede">{tx(c.line, lang)}</p>
+        </div>
+        <img class="type" src={`/img/${c.id}.svg`} alt={picture.alt} width="400" height="400" />
+      </div>
+    </header>
+
+    {
+      needs.length > 1 && (
+        <nav class="needs" aria-label={v.chooseNeed} data-needs>
+          <h2 class="needs-h">{tx(c.heads.choose, lang)}</h2>
+          <div class="needs-row">
+            {needs.map((n, i) => (
+              <a class="need" href={`?need=${encodeURIComponent(n.id)}`} data-need={n.id} aria-current={i === 0 ? 'true' : 'false'}>
+                <span class="ni">
+                  <Icon name={n.icon} size={20} />
+                </span>
+                <span class="nl">{tx(n.label, lang)}</span>
+              </a>
+            ))}
+          </div>
+        </nav>
+      )
+    }
+    <p class="seeall" data-seeall hidden>
+      <a class="link" href={verdictPath(ed, tx(c.slug, lang))}>{v.seeAll}</a>
+    </p>
+
+    <div class="panels" id="verdict" data-panels data-first={needs[0].id}>
+      {
+        needs.map((n, i) => {
+          const [first, ...others] = n.picks;
+          // Other models the tests rank well for this situation, as sold here today.
+          const firstPrice = first.product.price?.[market]?.value;
+          const tested = testedFor(category, market, n.id, n.id === 'save' ? firstPrice : undefined).slice(0, 4);
+          const compare = c.compare && n.picks.length > 1;
+          const shops = `#where-${n.id}`;
+          return (
+            <section class="panel" data-panel={n.id} hidden={i !== 0} aria-label={tx(n.label, lang)}>
+              <VerdictCard ed={ed} product={first.product} label={v.ourPick} withFacts={!compare} shops={shops} level={deep ? 3 : 2} />
+              {others.length > 0 && (
+                <div class="others">
+                  <Others class="others-h">{tx(c.heads.others, lang)}</Others>
+                  {others.map((o) => (
+                    <PickRow ed={ed} product={o.product} tag={o.tag} shops={shops} level={deep ? 4 : 3} />
+                  ))}
+                </div>
+              )}
+              {tested.length > 0 && (
+                <div class="tested">
+                  <p class="tested-h">{ui.tests.title}</p>
+                  <ul class="tested-list">
+                    {tested.map(({ model, test }) => {
+                      const link = brandUrl(model.store, market, model.url);
+                      const pic = modelPicture(category, model, ed);
+                      return (
+                        <li class="tr" data-pick-row data-tier={tierOfPrice(category, market, model.price) ?? ''}>
+                          {pic && <img class="tr-pic" data-pic src={pic.src} alt="" loading="lazy" decoding="async" width="64" height="64" />}
+                          <div class="tr-main">
+                            <p class="tr-name">
+                              {modelPageOf(ed, model) ? <a href={modelPageOf(ed, model)}>{model.name}</a> : model.name}
+                            </p>
+                            <a class="tr-test" href={test.source} target="_blank" rel="noopener">
+                              <Icon name="check" size={12} stroke={2.4} />
+                              {testBadge(test, lang)}
+                            </a>
+                          </div>
+                          <div class="tr-buy">
+                            <span class="tr-price">{formatPrice(model.price, ed)}</span>
+                            <a class="tr-cta" href={link.href} target="_blank" rel={link.sponsored ? 'sponsored nofollow noopener' : 'nofollow noopener'}>
+                              {fill(ui.models.cta, { store: model.store })}
+                              <Icon name="arrow-up-right" size={14} stroke={2} />
+                            </a>
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
+              {compare && (
+                <details class="more" data-compare>
+                  <summary>
+                    <span>{fill(v.compareMore, { n: String(n.picks.length) })}</span>
+                    <Icon name="chevron-down" size={20} stroke={2} class="chev" />
+                  </summary>
+                  <div class="more-body">
+                    <CompareTable
+                      ed={ed}
+                      products={n.picks.map((p) => p.product)}
+                      keys={c.compare!}
+                      heads={n.picks.map((p, j) => (j === 0 ? v.ourPick : (tx(p.tag, lang) ?? '')))}
+                    />
+                  </div>
+                </details>
+              )}
+              <details class="more" id={`where-${n.id}`} data-where>
+                <summary>
+                  <span>{v.where}</span>
+                  <Icon name="chevron-down" size={20} stroke={2} class="chev" />
+                </summary>
+                <div class="more-body">
+                  <ul class="shops">
+                    {n.picks.map((p) => (
+                      <li class="shop" data-shop={p.product.id} data-tier={tierIn(p.product, market)}>
+                        <b>{productName(p.product, ed)}</b>
+                        <div class="sl">
+                          {offersFor(p.product, ed, productSearch(p.product, ed)).map((o, j) => (
+                            <a class:list={['sb', { main: j === 0 }]} {...offerAttrs(o)} target="_blank">
+                              <span data-cta-text>{offerShopLabel(o.kind, lang, o.shop)}</span>
+                              <Icon name="arrow-up-right" size={15} stroke={2} />
+                            </a>
+                          ))}
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                  <p class="note">{v.whereNote}</p>
+                  {v.withdrawal && <p class="note">{v.withdrawal}</p>}
+                </div>
+              </details>
+            </section>
+          );
+        })
+      }
+    </div>
+
+    <p class="trustline">
+      <Icon name="shield" size={15} />
+      <span>{fill(v.trustLine, { d: checkedShort })}</span>
+    </p>
+
+    {
+      deals.length > 0 && (
+        <a
+          class="deals-link"
+          href={offersPath(ed, tx(c.slug, lang))}
+          data-deals-link
+          data-t-low={dealByTier.low}
+          data-t-mid={dealByTier.mid}
+          data-t-high={dealByTier.high}
+        >
+          <Icon name="tag" size={17} stroke={1.8} />
+          <span data-deals-text>{dealText(deals)}</span>
+          <Icon name="arrow-right" size={16} class="go" />
+        </a>
+      )
+    }
+
+    <ModelList ed={ed} category={category} typeName={typeName} />
+
+    <div class="fit">
+      <section class="fit-col fit-good" data-reveal>
+        <h2>{tx(c.heads.good, lang)}</h2>
+        <ul>
+          {
+            (c.goodIf[lang] ?? []).map((s) => (
+              <li>
+                <span class="mark">
+                  <Icon name="check" size={14} stroke={2.4} />
+                </span>
+                {s}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+      <section class="fit-col fit-skip" data-reveal style="--i:1">
+        <h2>{tx(c.heads.skip, lang)}</h2>
+        <ul>
+          {
+            (c.skipIf[lang] ?? []).map((s) => (
+              <li>
+                <span class="mark">
+                  <Icon name="cross" size={13} stroke={2.4} />
+                </span>
+                {s}
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+    </div>
+
+    <details class="more">
+      <summary>
+        <h2 class="sum-h">{tx(c.heads.how, lang)}</h2>
+        <Icon name="chevron-down" size={20} stroke={2} class="chev" />
+      </summary>
+      <ol class="criteria more-body">
+        {
+          (c.criteria[lang] ?? []).map((k) => (
+            <li>
+              <h3>{k.t}</h3>
+              <p>{k.d}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </details>
+
+    {
+      faq.length > 0 && (
+        <section class="block">
+          <SectionHead label={v.faq} title={tx(c.heads.faq, lang)} />
+          <div class="faq">
+            {faq.map((f) => (
+              <details>
+                <summary>
+                  <span>{f.q}</span>
+                  <Icon name="plus" size={18} stroke={2} class="fx" />
+                </summary>
+                <p>{f.a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    <AdSlot ed={ed} slot="afterFaq" />
+
+    {
+      related.length > 0 && (
+        <section class="block">
+          <SectionHead label={ui.menu.types} />
+          <div class="rel">
+            {related.map((id, i) => (
+              <CategoryTile ed={ed} id={id} index={i} />
+            ))}
+          </div>
+        </section>
+      )
+    }
+
+    {
+      site.verdictTool && v.calc && (
+        <p class="tool">
+          <a class="link" href={pathFor(site.verdictTool, ed)}>
+            {v.calc} →
+          </a>
+        </p>
+      )
+    }
+    <p class="checked">{fill(v.checked, { d: checked })}</p>
+  </div>
+
+  <div class="stick" data-stick hidden>
+    <span class="st-n" data-stick-name>{productName(lead, ed)}</span>
+    <a class="st-b" data-stick-href {...offerAttrs(leadOffer)} target="_blank">
+      <span data-stick-cta data-cta-text>{offerCta(leadOffer.kind, lang, leadOffer.shop)}</span>
+      <Icon name="arrow-up-right" size={15} stroke={2} />
+    </a>
+  </div>
+</Base>
+
+<style>
+  .ph {
+    display: grid;
+    gap: 0.6rem;
+    padding: 1rem 0 1.1rem;
+  }
+  .back {
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.5rem;
+    color: var(--text-2);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .back:hover {
+    color: var(--accent-ink);
+  }
+  /* On a phone the answer comes first: the browser's own back does the same job. */
+  @media (max-width: 40rem) {
+    .back {
+      display: none;
+    }
+  }
+  .ph-row {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: clamp(0.9rem, 0.5rem + 2vw, 2rem);
+  }
+  .ph-text {
+    display: grid;
+    gap: 0.6rem;
+  }
+  /* A drawing of the product type, so a visitor who does not know the name sees what it is. */
+  .type {
+    width: clamp(4.25rem, 3rem + 5vw, 8rem);
+    height: auto;
+  }
+  .qh1 {
+    font-size: clamp(1.5rem, 1.2rem + 1.4vw, 2.4rem);
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    text-wrap: balance;
+  }
+  .lede {
+    font-size: 1.02rem;
+  }
+  /* The situations, as a row of plain choices: the most familiar pattern there is. */
+  .needs {
+    display: grid;
+    gap: 0.55rem;
+    margin-bottom: 1rem;
+  }
+  .needs[hidden] {
+    display: none;
+  }
+  .needs-h {
+    font: 650 1.05rem/1.3 var(--f-text);
+    letter-spacing: normal;
+  }
+  .needs-row {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 12.5rem), 1fr));
+    gap: 0.5rem;
+  }
+  .need {
+    display: flex;
+    align-items: center;
+    gap: 0.65rem;
+    min-height: 3.1rem;
+    padding: 0.45rem 0.85rem 0.45rem 0.5rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    background: var(--card);
+    color: var(--text);
+    font-weight: 600;
+    line-height: 1.25;
+    text-decoration: none;
+    transition:
+      border-color var(--d-2) var(--ease-out),
+      background-color var(--d-2) var(--ease-out);
+  }
+  .need:hover {
+    border-color: var(--accent-ink);
+  }
+  .need[aria-current='true'] {
+    border-color: var(--text);
+    background: var(--text);
+    color: var(--paper);
+  }
+  .ni {
+    flex: none;
+    display: grid;
+    place-items: center;
+    width: 2.2rem;
+    height: 2.2rem;
+    border-radius: 50%;
+    background: var(--accent-wash);
+    color: var(--accent-ink);
+  }
+  .need[aria-current='true'] .ni {
+    background: var(--accent);
+    color: var(--ink);
+  }
+  .seeall {
+    margin-bottom: 1rem;
+    font-weight: 600;
+  }
+  .panels {
+    view-transition-name: verdict-card;
+  }
+  .panel {
+    display: grid;
+    gap: 1rem;
+  }
+  .panel[hidden] {
+    display: none;
+  }
+  .others {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 0.4rem;
+  }
+  .others-h {
+    font-size: 1.1rem;
+  }
+  details.more[hidden],
+  .shop[hidden] {
+    display: none;
+  }
+  /* Other models well placed in the tests for this situation: calm rows under our picks. */
+  .tested {
+    display: grid;
+    gap: 0.5rem;
+    margin-top: 0.4rem;
+  }
+  .tested-h {
+    font: 650 1.02rem/1.3 var(--f-text);
+  }
+  .tested-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .tr {
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 0.5rem 0.9rem;
+    padding: 0.75rem 0.15rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .tr:not(:has(.tr-pic)) {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+  .tr-pic {
+    width: 3.5rem;
+    height: 3.5rem;
+    padding: 0.2rem;
+    border-radius: var(--r-sm);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+    object-fit: contain;
+  }
+  .tr[hidden] {
+    display: none;
+  }
+  .tr-main {
+    display: grid;
+    gap: 0.3rem;
+    min-width: 0;
+  }
+  .tr-name {
+    font-weight: 650;
+    line-height: 1.3;
+  }
+  .tr-name a {
+    position: relative;
+    color: inherit;
+    text-decoration: underline;
+    text-decoration-color: var(--line-strong);
+    text-underline-offset: 3px;
+  }
+  .tr-name a:hover {
+    text-decoration-color: currentColor;
+  }
+  /* A thumb-sized tap on a name that reads as text. */
+  .tr-name a::after {
+    content: '';
+    position: absolute;
+    inset: -0.6rem -0.2rem;
+  }
+  .tr-test {
+    position: relative;
+    justify-self: start;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.12rem 0.55rem;
+    border: 1px solid color-mix(in srgb, var(--good) 45%, transparent);
+    border-radius: 999px;
+    color: var(--good);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .tr-buy {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem 0.9rem;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+  }
+  .tr-price {
+    font: 700 1.05rem/1.1 var(--f-display);
+  }
+  /* The small result reads as a label but takes a thumb-sized tap. */
+  .tr-test::after {
+    content: '';
+    position: absolute;
+    inset: -0.55rem -0.2rem;
+  }
+  .tr-cta {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.5rem;
+    padding: 0.3rem 0.9rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--text);
+    font-size: 0.88rem;
+    font-weight: 650;
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  .tr-cta:hover {
+    border-color: var(--text);
+  }
+  @media (max-width: 40rem) {
+    .tr,
+    .tr:not(:has(.tr-pic)) {
+      grid-template-columns: auto minmax(0, 1fr);
+    }
+    .tr:not(:has(.tr-pic)) .tr-main {
+      grid-column: 1 / -1;
+    }
+    .tr-buy {
+      grid-column: 1 / -1;
+      justify-content: space-between;
+    }
+  }
+  .trustline {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 1.1rem;
+    font-size: 0.85rem;
+    line-height: 1.45;
+    color: var(--text-3);
+  }
+  .deals-link {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    margin-top: 0.9rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-md);
+    background: var(--card);
+    color: var(--text);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .deals-link[hidden] {
+    display: none;
+  }
+  .deals-link > :global(svg:first-child) {
+    color: var(--good);
+  }
+  .deals-link :global(.go) {
+    margin-left: auto;
+    color: var(--accent-ink);
+  }
+  .deals-link:hover {
+    border-color: color-mix(in srgb, var(--accent) 60%, var(--line));
+  }
+  .trustline :global(svg) {
+    flex: none;
+    margin-top: 0.1rem;
+    color: var(--good);
+  }
+  .fit {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: clamp(2rem, 1.6rem + 2vw, 3.5rem);
+  }
+  .fit-col {
+    padding: 1.2rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+  }
+  .fit-col h2 {
+    font-size: 1.1rem;
+    margin-bottom: 0.9rem;
+  }
+  .fit-col ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.7rem;
+  }
+  .fit-col li {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0.7rem;
+    align-items: start;
+  }
+  .mark {
+    display: grid;
+    place-items: center;
+    width: 1.4rem;
+    height: 1.4rem;
+    border-radius: 50%;
+    margin-top: 0.1rem;
+  }
+  .fit-good .mark {
+    background: color-mix(in srgb, var(--good) 16%, transparent);
+    color: var(--good);
+  }
+  .fit-skip .mark {
+    background: color-mix(in srgb, var(--bad) 14%, transparent);
+    color: var(--bad);
+  }
+  .block {
+    padding-top: clamp(2.5rem, 2rem + 2.5vw, 4.5rem);
+  }
+  /* Details on request: one calm row, opened with a tap. */
+  details.more {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+  }
+  .fit + details.more {
+    margin-top: 1rem;
+  }
+  details.more > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem;
+    min-height: 3.4rem;
+    padding: 0.8rem 1.2rem;
+    font: 650 1.02rem/1.3 var(--f-text);
+    cursor: pointer;
+    list-style: none;
+  }
+  .sum-h {
+    font: inherit;
+    letter-spacing: normal;
+  }
+  details.more > summary::-webkit-details-marker {
+    display: none;
+  }
+  details.more > summary :global(.chev) {
+    flex: none;
+    color: var(--accent-ink);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  details.more[open] > summary :global(.chev) {
+    transform: rotate(180deg);
+  }
+  .more-body {
+    padding: 0.2rem 1.2rem 1.3rem;
+  }
+  .criteria {
+    list-style: none;
+    margin: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+    gap: 1.4rem;
+    counter-reset: c;
+  }
+  .criteria li {
+    counter-increment: c;
+    display: grid;
+    gap: 0.45rem;
+    align-content: start;
+  }
+  .criteria li::before {
+    content: counter(c);
+    display: grid;
+    place-items: center;
+    width: 1.7rem;
+    height: 1.7rem;
+    border-radius: 50%;
+    background: var(--accent-wash);
+    font: 700 0.85rem/1 var(--f-text);
+    color: var(--accent-ink);
+  }
+  .criteria p {
+    color: var(--text-2);
+  }
+  .faq {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .faq details {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.05rem 0;
+    font-weight: 650;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary :global(.fx) {
+    flex: none;
+    color: var(--accent-ink);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .faq details[open] summary :global(.fx) {
+    transform: rotate(45deg);
+  }
+  .faq details p {
+    padding: 0 0 1.15rem;
+    color: var(--text-2);
+    max-width: 44rem;
+  }
+  .shops {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 0.9rem;
+  }
+  .shop {
+    display: grid;
+    gap: 0.55rem;
+  }
+  .sl {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .sb {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1rem;
+    border: 1px solid var(--line-strong);
+    border-radius: 999px;
+    color: var(--text);
+    font-weight: 650;
+    font-size: 0.92rem;
+    text-decoration: none;
+    transition:
+      background-color var(--d-2) var(--ease-out),
+      border-color var(--d-2) var(--ease-out),
+      color var(--d-2) var(--ease-out);
+  }
+  .sb.main {
+    background: var(--text);
+    border-color: var(--text);
+    color: var(--paper);
+  }
+  .sb:hover {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: var(--ink);
+  }
+  .note {
+    margin-top: 0.8rem;
+    font-size: 0.85rem;
+    color: var(--text-3);
+  }
+  .rel {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 1rem;
+  }
+  .tool {
+    margin-top: 2rem;
+    font-weight: 600;
+  }
+  .checked {
+    margin-top: 1.5rem;
+    font-size: 0.85rem;
+    color: var(--text-3);
+  }
+  .stick {
+    position: fixed;
+    inset: auto 0 0 0;
+    z-index: 40;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.8rem;
+    padding: 0.6rem var(--gutter) calc(0.6rem + env(safe-area-inset-bottom));
+    background: color-mix(in srgb, var(--ink) 94%, transparent);
+    backdrop-filter: blur(10px);
+    color: var(--on-ink);
+    border-top: 1px solid var(--ink-line);
+    transition:
+      transform var(--d-3) var(--ease-out),
+      visibility 0s;
+  }
+  .stick[hidden] {
+    display: flex;
+    transform: translateY(110%);
+    visibility: hidden;
+    transition:
+      transform var(--d-3) var(--ease-out),
+      visibility 0s linear var(--d-3);
+  }
+  .st-n {
+    font: 650 0.95rem/1.2 var(--f-display);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .st-b {
+    flex: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 2.75rem;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    background: var(--accent);
+    color: var(--ink);
+    font-weight: 700;
+    font-size: 0.92rem;
+    text-decoration: none;
+  }
+  @media (min-width: 48rem) {
+    .stick {
+      display: none !important;
+    }
+  }
+  @media (max-width: 40rem) {
+    .ph {
+      padding-top: 0.6rem;
+    }
+    .lede {
+      display: none;
+    }
+    .needs-row {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+    .need {
+      border-radius: var(--r-md);
+      font-size: 0.93rem;
+    }
+    .fit {
+      grid-template-columns: 1fr;
+    }
+    .more-body {
+      padding-inline: 0.9rem;
+    }
+    /* The phone sheets run edge to edge inside the box. */
+    .more-body :global(.sheets) {
+      margin-inline: -0.9rem;
+    }
+    .more-body :global(.track) {
+      padding-inline: 0.9rem;
+      scroll-padding-inline: 0.9rem;
+    }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .stick,
+    .stick[hidden] {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  // One situation at a time: a tap on a need (or the quiz's ?need=) shows its picks in place.
+  document.addEventListener('astro:page-load', () => {
+    const box = document.querySelector<HTMLElement>('[data-panels]:not([data-ready])');
+    if (!box) return;
+    box.dataset.ready = '1';
+    const panels = [...box.querySelectorAll<HTMLElement>('[data-panel]')];
+    const chips = [...document.querySelectorAll<HTMLAnchorElement>('[data-needs] [data-need]')];
+    const stick = document.querySelector<HTMLElement>('[data-stick]');
+    const first = box.dataset.first ?? panels[0]?.dataset.panel;
+
+    function show(id: string, yours: boolean) {
+      const panel = panels.find((p) => p.dataset.panel === id);
+      if (!panel) return undefined;
+      panels.forEach((p) => (p.hidden = p !== panel));
+      chips.forEach((c) => c.setAttribute('aria-current', String(c.dataset.need === id)));
+      const card = panel.querySelector<HTMLElement>('[data-verdict]');
+      const label = card?.querySelector<HTMLElement>('[data-verdict-label]');
+      if (label) {
+        label.textContent = (yours ? label.dataset.yours : label.dataset.ours) ?? label.textContent;
+        label.classList.remove('stamp');
+        if (yours) {
+          void label.offsetWidth;
+          label.classList.add('stamp');
+        }
+      }
+      if (stick && card) {
+        stick.querySelector<HTMLElement>('[data-stick-name]')!.textContent = card.dataset.name ?? '';
+        const link = stick.querySelector<HTMLAnchorElement>('[data-stick-href]')!;
+        link.href = card.dataset.href ?? '';
+        link.rel = card.dataset.rel ?? link.rel;
+        stick.querySelector<HTMLElement>('[data-stick-cta]')!.textContent = card.dataset.cta ?? '';
+      }
+      return panel;
+    }
+
+    const params = new URLSearchParams(location.search);
+    const need = params.get('need');
+    const shown = need ? show(need, params.get('from') === 'quiz') : undefined;
+    // Straight from the quiz: only the answer to what was asked. No other situations, and with a
+    // budget, nothing above it. One link opens the full page.
+    if (shown && params.get('from') === 'quiz') {
+      document.querySelector<HTMLElement>('[data-needs]')?.setAttribute('hidden', '');
+      document.querySelector<HTMLElement>('[data-seeall]')?.removeAttribute('hidden');
+      const rank: Record<string, number> = { low: 0, mid: 1, high: 2 };
+      const budget = params.get('b');
+      if (budget && budget in rank) {
+        shown.querySelectorAll<HTMLElement>('[data-pick-row], [data-shop]').forEach((el) => {
+          if (el.dataset.tier && rank[el.dataset.tier] > rank[budget]) el.hidden = true;
+        });
+        const card = shown.querySelector<HTMLElement>('[data-verdict]');
+        const note = card?.querySelector<HTMLElement>('[data-budget-note]');
+        if (note && card?.dataset.tier && rank[card.dataset.tier] > rank[budget]) note.hidden = false;
+        // A comparison would bring back what was filtered out.
+        shown.querySelector<HTMLElement>('[data-compare]')?.setAttribute('hidden', '');
+        // Today's deals: only those in the same range, or none.
+        const deals = document.querySelector<HTMLAnchorElement>('[data-deals-link]');
+        if (deals) {
+          const text = deals.dataset[`t${budget[0].toUpperCase()}${budget.slice(1)}`];
+          if (text) {
+            deals.querySelector<HTMLElement>('[data-deals-text]')!.textContent = text;
+            deals.href += `?b=${budget}`;
+          } else deals.hidden = true;
+        }
+      }
+    }
+
+    const calm = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    chips.forEach((chip) =>
+      chip.addEventListener('click', (e) => {
+        e.preventDefault();
+        const id = chip.dataset.need!;
+        // The picks morph into the new situation where the browser supports view transitions.
+        const doc = document as Document & { startViewTransition?: (cb: () => void) => unknown };
+        if (doc.startViewTransition && !calm) doc.startViewTransition(() => show(id, false));
+        else show(id, false);
+        const next = new URL(location.href);
+        if (id === first) next.searchParams.delete('need');
+        else next.searchParams.set('need', id);
+        next.hash = '';
+        history.replaceState(history.state, '', next.pathname + next.search);
+      }),
+    );
+
+    // "Other shops" opens the shops list of that situation.
+    document.querySelectorAll<HTMLAnchorElement>('[data-open-shops]').forEach((a) =>
+      a.addEventListener('click', () => {
+        const target = document.querySelector<HTMLDetailsElement>(a.hash);
+        if (target) target.open = true;
+      }),
+    );
+
+    // Back goes where the visitor came from on this site; from outside, to all categories.
+    const back = document.querySelector<HTMLAnchorElement>('[data-back]');
+    back?.addEventListener('click', (e) => {
+      const internal = document.referrer && new URL(document.referrer).origin === location.origin;
+      if (internal && history.length > 1) {
+        e.preventDefault();
+        history.back();
+      }
+    });
+
+    // Sticky bar on phones: only while the answer is off screen and no shops list is in view.
+    if (stick) {
+      let cardOut = false;
+      const shopsIn = new Set<Element>();
+      const io = new IntersectionObserver((entries) => {
+        for (const e of entries) {
+          if (e.target === box) cardOut = !e.isIntersecting && e.boundingClientRect.top < 0;
+          else if (e.isIntersecting) shopsIn.add(e.target);
+          else shopsIn.delete(e.target);
+        }
+        stick.hidden = !(cardOut && shopsIn.size === 0);
+      });
+      io.observe(box);
+      document.querySelectorAll('[data-where]').forEach((w) => io.observe(w));
+      document.addEventListener('astro:before-swap', () => io.disconnect(), { once: true });
+    }
+  });
+</script>

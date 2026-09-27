@@ -1,0 +1,305 @@
+---
+// The home page does one thing first: a short question and the quiz that answers it. Quiet by
+// design (a modest title on a light page, the quiz as the only strong element). Below it, for
+// whoever wants to know more before answering: how the site chooses, in three points, and a few
+// questions people ask before they know which appliance they need.
+import Base from '../layouts/Base.astro';
+import Quiz from '../components/Quiz.astro';
+import DealsCards from '../components/DealsCards.astro';
+import Icon from '../components/ui/Icon.astro';
+import CategoryTile from '../components/verdict/CategoryTile.astro';
+import { tag, type Edition } from '../i18n/editions';
+import { pathFor, toolKeys, verdictPath } from '../i18n/routes';
+import { tools as siteTools } from '@site/tools';
+import { fill, t } from '../i18n/ui';
+import type { Alternate } from '../lib/types';
+import { site } from '@site/config';
+import { publisher } from '../lib/webora';
+import { CHECKED, categories, categoryIdsIn, publishedIn, testersCited } from '../lib/catalog';
+import { tx } from '../lib/pack';
+
+interface Props {
+  ed: Edition;
+  alternates: Alternate[];
+}
+const { ed, alternates } = Astro.props;
+const { lang, market } = ed;
+const ui = t(lang);
+const h = ui.home;
+const toolMeta = siteTools?.meta ?? {};
+const firstTool = toolKeys[0];
+const testers = testersCited(market);
+const faq = (h.faq ?? []).filter((f) => publishedIn(f.cat, market));
+const types = categoryIdsIn(market);
+const homeUrl = new URL(pathFor('home', ed), site.url).href;
+const picture = { src: '/og/home.png', alt: h.how.image };
+const org = { '@type': 'Organization', name: site.name, url: site.url, logo: `${site.url}/favicon.svg`, parentOrganization: { '@type': 'Organization', name: publisher.name, url: publisher.url } };
+const jsonLd = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'WebPage',
+    '@id': `${homeUrl}#page`,
+    url: homeUrl,
+    name: h.seo.title,
+    description: h.seo.description,
+    inLanguage: tag(ed),
+    dateModified: CHECKED,
+    primaryImageOfPage: { '@type': 'ImageObject', url: new URL(picture.src, site.url).href, width: 1200, height: 630, caption: picture.alt },
+    isPartOf: { '@type': 'WebSite', name: site.name, url: site.url },
+    publisher: org,
+  },
+  { '@context': 'https://schema.org', '@type': 'WebSite', name: site.name, url: homeUrl, inLanguage: tag(ed), publisher: org },
+  { '@context': 'https://schema.org', ...org },
+];
+---
+
+
+<Base ed={ed} title={h.seo.title} description={h.seo.description} alternates={alternates} jsonLd={jsonLd} keyphrase={h.seo.keyphrase} image={picture} home>
+  <section class="wrap hero">
+    <div class="copy">
+      <h1>{ui.quiz.title}</h1>
+      <p class="sub">{ui.quiz.sub}</p>
+    </div>
+    <Quiz ed={ed} />
+  </section>
+
+  <section class="wrap types" aria-labelledby="types-h">
+    <h2 id="types-h">{fill(ui.typesTitle, { site: site.name })}</h2>
+    <div class="tiles">
+      {types.map((id, i) => <CategoryTile ed={ed} id={id} index={i} />)}
+    </div>
+  </section>
+
+  {
+    firstTool && h.toolsStrip && (
+      <section class="wrap strip">
+        <a class="tools" href={pathFor('tools', ed)} data-reveal>
+          <span class="ti">
+            <Icon name={toolMeta[firstTool].icon} size={22} />
+          </span>
+          <span>{h.toolsStrip}</span>
+          <Icon name="arrow-right" size={18} class="arr" />
+        </a>
+      </section>
+    )
+  }
+
+  <div class="wrap deals">
+    <DealsCards ed={ed} />
+  </div>
+
+  <section class="wrap how" aria-labelledby="how-h">
+    <h2 id="how-h">{h.how.title}</h2>
+    <img class="covers" src="/img/home.svg" alt={h.how.image} width="1600" height="400" loading="lazy" decoding="async" />
+    <ul class="points">
+      {
+        h.how.points.map((p) => (
+          <li>
+            <strong>{p.t}</strong>
+            <p>{p.d}</p>
+          </li>
+        ))
+      }
+    </ul>
+    {
+      testers.length > 0 && (
+        <p class="testers">
+          {h.how.tests}{' '}
+          {testers.map((x, i) => (
+            <>
+              {i > 0 && ', '}
+              <a class="link" href={x.url} target="_blank" rel="noopener">
+                {x.name}
+              </a>
+            </>
+          ))}
+          .
+        </p>
+      )
+    }
+    <p class="more">
+      <a class="link" href={pathFor('about', ed)}>
+        {h.how.more} →
+      </a>
+    </p>
+  </section>
+
+  {
+    faq.length > 0 && (
+      <section class="wrap hfaq" aria-labelledby="hfaq-h">
+        <h2 id="hfaq-h">{ui.verdict.faq}</h2>
+        <div class="faq">
+          {faq.map((f) => (
+            <details>
+              <summary>
+                <span>{f.q}</span>
+                <Icon name="plus" size={18} stroke={2} class="fx" />
+              </summary>
+              <p>
+                {f.a}{' '}
+                <a class="link" href={verdictPath(ed, tx(categories[f.cat].slug, lang))}>
+                  {tx(categories[f.cat].name, lang)} →
+                </a>
+              </p>
+            </details>
+          ))}
+        </div>
+      </section>
+    )
+  }
+</Base>
+
+<style>
+  .hero {
+    display: grid;
+    grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+    gap: clamp(1.5rem, 1rem + 4vw, 5rem);
+    align-items: center;
+    padding-block: clamp(1.5rem, 1rem + 4vw, 5rem);
+  }
+  h1 {
+    font-size: clamp(1.8rem, 1.45rem + 1.5vw, 2.8rem);
+    font-weight: 700;
+    letter-spacing: -0.025em;
+    line-height: 1.12;
+    max-width: 17ch;
+  }
+  .sub {
+    margin-top: 0.8rem;
+    font-size: clamp(1.05rem, 1rem + 0.25vw, 1.2rem);
+    color: var(--text-2);
+    max-width: 30rem;
+  }
+  .strip {
+    padding-bottom: clamp(1rem, 0.5rem + 2vw, 3rem);
+  }
+  .tools {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.1rem 1.3rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: border-color var(--d-2) var(--ease-out);
+  }
+  .tools:hover {
+    border-color: var(--accent);
+  }
+  .ti {
+    display: grid;
+    place-items: center;
+    width: 2.6rem;
+    height: 2.6rem;
+    border-radius: 50%;
+    background: var(--ink);
+    color: var(--accent);
+  }
+  .tools :global(.arr) {
+    color: var(--accent-ink);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .tools:hover :global(.arr) {
+    transform: translateX(4px);
+  }
+  .types {
+    display: grid;
+    gap: 1.1rem;
+    padding-bottom: clamp(1rem, 0.5rem + 2vw, 2.5rem);
+  }
+  .types h2 {
+    font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.8rem);
+  }
+  .tiles {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 19rem), 1fr));
+    gap: 0.8rem;
+  }
+  .deals:has([data-deals-cards]) {
+    padding-top: clamp(1.5rem, 1rem + 2vw, 3rem);
+  }
+  .how,
+  .hfaq {
+    display: grid;
+    gap: 1.2rem;
+    padding-block: clamp(2rem, 1.2rem + 3vw, 4rem) 0;
+  }
+  .how h2,
+  .hfaq h2 {
+    font-size: clamp(1.35rem, 1.15rem + 0.9vw, 1.8rem);
+  }
+  .covers {
+    width: min(100%, 44rem);
+    height: auto;
+  }
+  .points {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr));
+    gap: 1rem 2rem;
+  }
+  .points li {
+    display: grid;
+    gap: 0.35rem;
+    align-content: start;
+    padding-top: 0.9rem;
+    border-top: 2px solid var(--accent);
+  }
+  .points strong {
+    font: 650 1.05rem/1.3 var(--f-text);
+  }
+  .points p,
+  .testers {
+    color: var(--text-2);
+  }
+  .more {
+    font-weight: 600;
+  }
+  .hfaq {
+    padding-bottom: clamp(2rem, 1.2rem + 3vw, 4rem);
+  }
+  .faq {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .faq details {
+    border-bottom: 1px solid var(--line);
+  }
+  .faq summary {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.05rem 0;
+    font-weight: 650;
+    cursor: pointer;
+    list-style: none;
+  }
+  .faq summary::-webkit-details-marker {
+    display: none;
+  }
+  .faq summary :global(.fx) {
+    flex: none;
+    color: var(--accent-ink);
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .faq details[open] summary :global(.fx) {
+    transform: rotate(45deg);
+  }
+  .faq details p {
+    padding: 0 0 1.15rem;
+    color: var(--text-2);
+    max-width: 44rem;
+  }
+  @media (max-width: 58rem) {
+    .hero {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

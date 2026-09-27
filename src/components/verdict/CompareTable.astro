@@ -1,0 +1,421 @@
+---
+// Side by side. Wide screens get a table read by columns; phones get one sheet per product,
+// swiped sideways with snap and dots, so nothing is squeezed into 110-pixel columns.
+// Every value links its source; below, the numbers are explained in plain words.
+import Icon from '../ui/Icon.astro';
+import type { Edition } from '../../i18n/editions';
+import { t } from '../../i18n/ui';
+import { factHelp, factLabels, productName } from '../../lib/catalog';
+import { tx, type Fact, type Product } from '../../lib/pack';
+import { hostOf, localDecimal, officialPrice } from '../../lib/shop';
+import { productPicture } from '../../lib/pictures';
+
+interface Props {
+  ed: Edition;
+  products: Product[];
+  keys: string[];
+  heads: string[];
+}
+const { ed, products, keys, heads } = Astro.props;
+const { lang, market } = ed;
+const v = t(lang).verdict;
+const text = (f: Fact) => (typeof f.value === 'string' ? localDecimal(f.value, lang) : tx(f.value, lang));
+const rows = keys.map((key) => ({ key, label: tx(factLabels[key], lang), cells: products.map((p) => p.facts.find((f) => f.key === key)) }));
+const prices = products.map((p) => officialPrice(p, ed));
+// Without a brand-store price, say why: sold out there, or buy it from the shops listed below.
+const noPrice = products.map((p) => (p.price?.[market]?.soldOut ? v.soldOutBrand : v.seeShops));
+const pics = products.map((p) => productPicture(p, ed));
+const help = keys.filter((k) => factHelp[k]?.[lang]).map((k) => ({ label: tx(factLabels[k], lang), text: tx(factHelp[k], lang) }));
+---
+
+<div class="cmp-wrap">
+  <table class="cmp" style={`--n:${products.length}`}>
+    <thead>
+      <tr>
+        {
+          products.map((p, i) => (
+            <th scope="col" data-col={p.id}>
+              {pics[i] && <img class="cpic" data-pic src={pics[i]!.src} alt="" loading="lazy" decoding="async" width="96" height="96" />}
+              <span class="h">{heads[i]}</span>
+              <span class="n">{productName(p, ed)}</span>
+            </th>
+          ))
+        }
+      </tr>
+    </thead>
+    {
+      rows.map((r) => (
+        <tbody>
+          <tr class="k">
+            <th scope="colgroup" colspan={products.length}>{r.label}</th>
+          </tr>
+          <tr>
+            {r.cells.map((f) => (
+              <td>
+                {f ? (
+                  <>
+                    <span>{text(f)}</span>
+                    <a class="src" href={f.source} target="_blank" rel="noopener" aria-label={`${v.source}: ${hostOf(f.source)}`}>
+                      <Icon name="external" size={11} stroke={2} />
+                    </a>
+                  </>
+                ) : (
+                  <span class="na">{v.notStated}</span>
+                )}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      ))
+    }
+    {
+      prices.some(Boolean) && (
+        <tbody>
+          <tr class="k">
+            <th scope="colgroup" colspan={products.length}>{v.officialPrice}</th>
+          </tr>
+          <tr>
+            {prices.map((p, i) => (
+              <td class="money">
+                {p ? (
+                  <>
+                    <span>{p.text}</span>
+                    <a class="src" href={p.source} target="_blank" rel="nofollow noopener" aria-label={`${v.source}: ${hostOf(p.source)}`}>
+                      <Icon name="external" size={11} stroke={2} />
+                    </a>
+                  </>
+                ) : (
+                  <a class="shops" href="#where">{noPrice[i]}</a>
+                )}
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      )
+    }
+  </table>
+
+  <div class="sheets" data-sheets>
+    <div class="track" data-track>
+      {
+        products.map((p, i) => (
+          <article class="sheet" data-sheet={i} aria-label={productName(p, ed)}>
+            {pics[i] && <img class="cpic" data-pic src={pics[i]!.src} alt="" loading="lazy" decoding="async" width="96" height="96" />}
+            <span class="h">{heads[i]}</span>
+            <p class="n">{productName(p, ed)}</p>
+            <dl>
+              {rows.map((r) => {
+                const f = r.cells[i];
+                return (
+                  <div class="row">
+                    <dt>{r.label}</dt>
+                    <dd>
+                      {f ? (
+                        <>
+                          <span>{text(f)}</span>
+                          <a class="src" href={f.source} target="_blank" rel="noopener" aria-label={`${v.source}: ${hostOf(f.source)}`}>
+                            <Icon name="external" size={12} stroke={2} />
+                          </a>
+                        </>
+                      ) : (
+                        <span class="na">{v.notStated}</span>
+                      )}
+                    </dd>
+                  </div>
+                );
+              })}
+              {prices.some(Boolean) && (
+                <div class="row money">
+                  <dt>{v.officialPrice}</dt>
+                  <dd>
+                    {prices[i] ? (
+                      <>
+                        <span>{prices[i]!.text}</span>
+                        <a class="src" href={prices[i]!.source} target="_blank" rel="nofollow noopener" aria-label={`${v.source}: ${hostOf(prices[i]!.source)}`}>
+                          <Icon name="external" size={12} stroke={2} />
+                        </a>
+                      </>
+                    ) : (
+                      <a class="shops" href="#where">{noPrice[i]}</a>
+                    )}
+                  </dd>
+                </div>
+              )}
+            </dl>
+          </article>
+        ))
+      }
+    </div>
+    <div class="dots" aria-hidden="true">
+      {products.map((_, i) => <span class:list={{ on: i === 0 }} data-dot={i} />)}
+    </div>
+  </div>
+
+  {
+    help.length > 0 && (
+      <details class="gloss">
+        <summary>
+          <Icon name="source" size={16} />
+          <span>{v.explain}</span>
+          <Icon name="chevron-down" size={16} stroke={2} class="chev" />
+        </summary>
+        <dl>
+          {help.map((h) => (
+            <div>
+              <dt>{h.label}</dt>
+              <dd>{h.text}</dd>
+            </div>
+          ))}
+        </dl>
+      </details>
+    )
+  }
+</div>
+
+<style>
+  .cmp-wrap {
+    display: grid;
+    gap: 0.9rem;
+  }
+  .cmp {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    table-layout: fixed;
+    font-size: 0.95rem;
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: var(--card);
+    overflow: hidden;
+  }
+  thead th {
+    text-align: left;
+    vertical-align: bottom;
+    padding: 1.1rem 1rem 0.95rem;
+    border-bottom: 1px solid var(--line);
+  }
+  thead th + th,
+  td + td {
+    border-left: 1px solid var(--line);
+  }
+  .h {
+    display: block;
+    font: 600 var(--t-label) / 1.35 var(--f-text);
+    color: var(--accent-ink);
+    margin-bottom: 0.3rem;
+  }
+  .cpic {
+    display: block;
+    width: 4.5rem;
+    height: 4.5rem;
+    margin-bottom: 0.5rem;
+    padding: 0.2rem;
+    border-radius: var(--r-sm);
+    background: var(--paper);
+    box-shadow: inset 0 0 0 1px var(--line);
+    object-fit: contain;
+  }
+  .n {
+    display: block;
+    font: 650 1.02em/1.2 var(--f-display);
+    color: var(--text);
+    overflow-wrap: anywhere;
+  }
+  .k th {
+    text-align: left;
+    padding: 0.8rem 1rem 0.1rem;
+    font: 600 var(--t-label) / 1.35 var(--f-text);
+    color: var(--text-3);
+  }
+  td {
+    padding: 0.2rem 1rem 0.85rem;
+    vertical-align: top;
+    color: var(--text);
+    overflow-wrap: anywhere;
+    line-height: 1.4;
+  }
+  tbody + tbody .k th {
+    border-top: 1px dashed var(--line);
+  }
+  .money span:first-child {
+    font: 650 1.05em/1.3 var(--f-display);
+    font-variant-numeric: tabular-nums;
+  }
+  .src {
+    display: inline-grid;
+    place-items: center;
+    margin-left: 0.25rem;
+    padding: 0.1rem;
+    color: var(--text-3);
+    vertical-align: middle;
+  }
+  .src:hover {
+    color: var(--accent-ink);
+  }
+  .na {
+    color: var(--text-3);
+    font-size: 0.9em;
+    font-style: italic;
+  }
+  .shops {
+    display: inline-block;
+    padding-block: 0.3rem;
+    color: var(--accent-ink);
+    font-size: 0.92em;
+    font-weight: 600;
+    text-underline-offset: 3px;
+  }
+
+  /* Phones: one sheet per product, swiped with snap. */
+  .sheets {
+    display: none;
+  }
+  @media (max-width: 40rem) {
+    .cmp {
+      display: none;
+    }
+    .sheets {
+      display: grid;
+      gap: 0.8rem;
+      margin-inline: calc(var(--gutter) * -1);
+    }
+    .track {
+      display: flex;
+      gap: 0.75rem;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-padding-inline: var(--gutter);
+      padding: 0.25rem var(--gutter) 0.5rem;
+      scrollbar-width: none;
+      overscroll-behavior-x: contain;
+    }
+    .track::-webkit-scrollbar {
+      display: none;
+    }
+    .sheet {
+      flex: 0 0 84%;
+      scroll-snap-align: start;
+      display: grid;
+      align-content: start;
+      gap: 0.35rem;
+      padding: 1.15rem 1.15rem 0.6rem;
+      border: 1px solid var(--line);
+      border-radius: var(--r-lg);
+      background: var(--card);
+      box-shadow: 0 14px 30px -24px rgb(0 0 0 / 40%);
+    }
+    .sheet:first-child {
+      border-color: color-mix(in srgb, var(--accent-ink) 45%, var(--line));
+    }
+    .sheet .n {
+      font-size: 1.2rem;
+      margin-bottom: 0.4rem;
+    }
+    .sheet dl {
+      margin: 0;
+      display: grid;
+    }
+    .row {
+      display: grid;
+      gap: 0.15rem;
+      padding: 0.7rem 0;
+      border-top: 1px dashed var(--line);
+    }
+    .row dt {
+      font: 600 var(--t-label) / 1.35 var(--f-text);
+      color: var(--text-3);
+    }
+    .row dd {
+      margin: 0;
+      font-size: 1rem;
+      line-height: 1.4;
+    }
+    .dots {
+      display: flex;
+      justify-content: center;
+      gap: 0.45rem;
+    }
+    .dots span {
+      width: 0.45rem;
+      height: 0.45rem;
+      border-radius: 999px;
+      background: var(--line-strong);
+      transition:
+        width var(--d-3) var(--ease-out),
+        background-color var(--d-2) var(--ease-out);
+    }
+    .dots span.on {
+      width: 1.4rem;
+      background: var(--accent-ink);
+    }
+  }
+
+  .gloss {
+    border: 1px solid var(--line);
+    border-radius: var(--r-lg);
+    background: color-mix(in srgb, var(--card) 70%, transparent);
+  }
+  .gloss summary {
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    min-height: 3.1rem;
+    padding: 0.6rem 1rem;
+    font-weight: 650;
+    cursor: pointer;
+    list-style: none;
+  }
+  .gloss summary::-webkit-details-marker {
+    display: none;
+  }
+  .gloss summary :global(svg:first-child) {
+    color: var(--accent-ink);
+  }
+  .gloss summary :global(.chev) {
+    margin-left: auto;
+    transition: transform var(--d-3) var(--ease-spring);
+  }
+  .gloss[open] summary :global(.chev) {
+    transform: rotate(180deg);
+  }
+  .gloss dl {
+    margin: 0;
+    padding: 0 1rem 0.6rem;
+    display: grid;
+  }
+  .gloss dl div {
+    display: grid;
+    gap: 0.2rem;
+    padding: 0.75rem 0;
+    border-top: 1px dashed var(--line);
+  }
+  .gloss dt {
+    font-weight: 650;
+  }
+  .gloss dd {
+    margin: 0;
+    color: var(--text-2);
+    max-width: 46rem;
+  }
+</style>
+
+<script>
+  // Dots follow the sheet in view.
+  document.addEventListener('astro:page-load', () => {
+    document.querySelectorAll<HTMLElement>('[data-sheets]:not([data-ready])').forEach((box) => {
+      box.dataset.ready = '1';
+      const dots = [...box.querySelectorAll<HTMLElement>('[data-dot]')];
+      const io = new IntersectionObserver(
+        (entries) => {
+          for (const e of entries) {
+            if (!e.isIntersecting) continue;
+            const i = Number((e.target as HTMLElement).dataset.sheet);
+            dots.forEach((d, j) => d.classList.toggle('on', i === j));
+          }
+        },
+        { root: box.querySelector('[data-track]'), threshold: 0.6 },
+      );
+      box.querySelectorAll('[data-sheet]').forEach((s) => io.observe(s));
+    });
+  });
+</script>
