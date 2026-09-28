@@ -5,7 +5,7 @@ import { addLanguages } from '../../lib/translate';
 import { extra } from './i18n-extra';
 import { more } from './i18n-more';
 
-const CHECKED = '2026-09-24';
+const CHECKED = '2026-09-28';
 
 const categoryIds = ['capsule', 'superautomatic', 'manual-espresso', 'moka', 'drip', 'manual-filter', 'grinder'] as const;
 

@@ -7,7 +7,7 @@ import { addLanguages } from '../../lib/translate';
 import { en } from './i18n-en';
 import { fromEn, fromIt } from './i18n-more';
 
-const CHECKED = '2026-09-25';
+const CHECKED = '2026-09-28';
 
 const categoryIds = ['heat', 'dehum', 'purifier', 'ac'] as const;
 const HEAT_ALT: Market[] = ['it', 'fr', 'es', 'de'];
@@ -1356,7 +1356,7 @@ const products: Product[] = [
     },
     asin: { it: 'B0CJFZMZS5', fr: 'B0CJFZMZS5', es: 'B0CJFZMZS5', de: 'B0CJFZMZS5' },
     price: {
-      it: { value: 349.9, source: DL.it },
+      it: { value: 279.9, source: DL.it },
       fr: { value: 349.99, source: DL.fr },
       es: { value: 299, source: DL.es },
       de: { value: 259, source: DL.de },

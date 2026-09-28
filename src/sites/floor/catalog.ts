@@ -8,7 +8,7 @@ import { addLanguages } from '../../lib/translate';
 import { en } from './i18n-en';
 import { more } from './i18n-more';
 
-const CHECKED = '2026-09-26';
+const CHECKED = '2026-09-28';
 
 const categoryIds = ['robot', 'stick', 'wet', 'steam'] as const;
 // Countries where no brand store sells the type are left out.
@@ -1183,7 +1183,7 @@ const products: Product[] = [
     search: { it: 'Ecovacs Deebot T80S Omni', fr: 'Ecovacs Deebot T80S Omni' },
     price: {
       it: { value: 549, source: T80S.it },
-      fr: { value: 399, source: T80S.fr },
+      fr: { value: 549, source: T80S.fr },
     },
   },
   {
@@ -1372,7 +1372,7 @@ const products: Product[] = [
       it: { value: 349, source: S6.it },
       fr: { value: 499, source: S6.fr },
       es: { value: 349, source: S6.es },
-      pl: { value: 1699, source: S6.pl },
+      pl: { value: 1699, source: S6.pl, soldOut: true },
     },
   },
   {
