@@ -1,18 +1,6 @@
 {
- "checkedAt": "2026-11-13T12:30:29.382Z",
+ "checkedAt": "2026-11-14T11:41:03.963Z",
  "models": [
-  {
-   "cat": "capsule",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Vertuo Pop Nespresso ENV90.BAE",
-   "url": "https://www.delonghi.com/de-de/p/nespresso-kapselmaschinen-vertuo-pop-nespresso-env90.y/ENV90.Y.html?pid=0132193777",
-   "price": 99,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/237186",
-   "key": "de|De'Longhi|env90",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
   {
    "cat": "capsule",
    "market": "de",
@@ -23,7 +11,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/72182",
    "key": "de|De'Longhi|en80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "capsule",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Vertuo Pop Nespresso ENV90.BAE",
+   "url": "https://www.delonghi.com/de-de/p/nespresso-kapselmaschinen-vertuo-pop-nespresso-env90.y/ENV90.Y.html?pid=0132193777",
+   "price": 99,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/237186",
+   "key": "de|De'Longhi|env90",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -35,19 +35,19 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/194903",
    "key": "de|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Citiz Nespresso EN167.W",
-   "url": "https://www.delonghi.com/de-de/p/citiz-en167.w-citiz-nespresso-kaffeemaschine/EN167.W.html?pid=0132194027",
+   "name": "De'Longhi Citiz Nespresso EN167.B",
+   "url": "https://www.delonghi.com/de-de/p/citiz-en167.b-citiz-nespresso-kaffeemaschinen/EN167.B.html?pid=0132194028",
    "price": 149,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/90932",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "de|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -59,19 +59,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/269676",
    "key": "de|De'Longhi|en127",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "de",
    "store": "De'Longhi",
    "name": "De'Longhi VertuoUP Nespresso ENV200.GY",
-   "url": "https://www.delonghi.com/de-de/p/vertuo-up-vertuoup-nespresso-kaffeemaschine-env200.w/ENV200.W.html?pid=0132194123",
+   "url": "https://www.delonghi.com/de-de/p/vertuo-up-vertuoup-nespresso-kaffeemaschine-env200.gy/ENV200.GY.html?pid=0132194124",
    "price": 179.9,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/336076",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/336083",
    "key": "de|De'Longhi|env200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -83,7 +83,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/213607",
    "key": "de|De'Longhi|en220",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -95,7 +95,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/207902",
    "key": "de|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -107,19 +107,19 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/249442",
    "key": "de|De'Longhi|en640",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi Capsule Desk HFX10B03.LB",
-   "url": "https://www.delonghi.com/es-es/p/capsule-desk-termoventilador-ceramico-personal-capsule-desk-hfx10b03.lb/HFX10B03.LB.html?pid=0114681000",
+   "name": "De'Longhi Capsule Desk HFX10B03.PK",
+   "url": "https://www.delonghi.com/es-es/p/capsule-desk-termoventilador-ceramico-personal-capsule-desk-hfx10b03.pk/HFX10B03.PK.html?pid=0114681001",
    "price": 40.9,
-   "color": "blue",
-   "img": "https://dam.delonghi.com/600x600/assets/219921",
+   "color": "pink",
+   "img": "https://dam.delonghi.com/600x600/assets/219982",
    "key": "es|De'Longhi|hfx10b03",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -131,19 +131,19 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/187396",
    "key": "es|De'Longhi|hfs30b24",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi EDG305.WR",
-   "url": "https://www.delonghi.com/es-es/p/cafeteras-nescafe-dolce-gusto-edg305.wr/EDG305.WR.html?pid=0132180823",
+   "name": "De'Longhi EDG305.WB",
+   "url": "https://www.delonghi.com/es-es/p/cafeteras-nescafe-dolce-gusto-edg305.wb-cafeteras-nescafe-dolce-gusto-minime/EDG305.WB.html?pid=0132180821",
    "price": 79,
-   "color": "red",
-   "img": "https://dam.delonghi.com/600x600/assets/114769",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/114764",
    "key": "es|De'Longhi|edg305",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -155,7 +155,7 @@
    "color": "red",
    "img": "https://dam.delonghi.com/600x600/assets/116511",
    "key": "es|De'Longhi|edg260",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -167,19 +167,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/281611",
    "key": "es|De'Longhi|edg226",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "capsule",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi Vertuo Pop Nespresso ENV90.BAE",
-   "url": "https://www.delonghi.com/es-es/p/cafeteras-nespresso-vertuo-pop-nespresso-env90.y/ENV90.Y.html?pid=0132193777",
-   "price": 99,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/237186",
-   "key": "es|De'Longhi|env90",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -191,7 +179,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/72182",
    "key": "es|De'Longhi|en80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "capsule",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi Vertuo Pop Nespresso ENV90.BAE",
+   "url": "https://www.delonghi.com/es-es/p/cafeteras-nespresso-vertuo-pop-nespresso-env90.y/ENV90.Y.html?pid=0132193777",
+   "price": 99,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/237186",
+   "key": "es|De'Longhi|env90",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -203,7 +203,7 @@
    "color": "red",
    "img": "https://dam.delonghi.com/600x600/assets/224506",
    "key": "es|De'Longhi|edg315",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -215,19 +215,19 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/194903",
    "key": "es|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi EN167.W",
-   "url": "https://www.delonghi.com/es-es/p/citiz-en167.w-cafeteras-nespresso-citiz/EN167.W.html?pid=0132194027",
+   "name": "De'Longhi EN167.B",
+   "url": "https://www.delonghi.com/es-es/p/citiz-en167.b-cafeteras-nespresso-citiz/EN167.B.html?pid=0132194028",
    "price": 149,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/90932",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "es|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -239,19 +239,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/269676",
    "key": "es|De'Longhi|en127",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "es",
    "store": "De'Longhi",
    "name": "De'Longhi Nespresso VertuoUP ENV200.GY",
-   "url": "https://www.delonghi.com/es-es/p/vertuo-up-cafetera-nespresso-vertuoup-env200.w/ENV200.W.html?pid=0132194123",
+   "url": "https://www.delonghi.com/es-es/p/vertuo-up-cafetera-nespresso-vertuoup-env200.gy/ENV200.GY.html?pid=0132194124",
    "price": 179.9,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/336076",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/336083",
    "key": "es|De'Longhi|env200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -263,7 +263,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/213607",
    "key": "es|De'Longhi|en220",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -275,7 +275,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/207902",
    "key": "es|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -287,7 +287,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/249442",
    "key": "es|De'Longhi|en640",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -299,31 +299,31 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/346608",
    "key": "gb|De'Longhi|edg335",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "gb",
    "store": "De'Longhi",
    "name": "De'Longhi Vertuo Pop Nespresso ENV90.BAE",
-   "url": "https://www.delonghi.com/en-gb/p/nespresso-coffee-machines-vertuo-pop-nespresso-env90.y/ENV90.Y.html?pid=0132193931",
+   "url": "https://www.delonghi.com/en-gb/p/nespresso-coffee-machines-vertuo-pop-nespresso-env90.p/ENV90.P.html?pid=0132193930",
    "price": 54,
    "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/237186",
+   "img": "https://dam.delonghi.com/600x600/assets/306595",
    "key": "gb|De'Longhi|env90",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Genio S Nescafé Dolce Gusto EDG226.A",
-   "url": "https://www.delonghi.com/en-gb/p/nescafe-dolce-gusto-coffee-machines-genio-s-nescafe-dolce-gusto-coffee-maker-edg226.a/EDG226.A.html?pid=0132180973",
+   "name": "De'Longhi Genio S Nescafé Dolce Gusto EDG226.W",
+   "url": "https://www.delonghi.com/en-gb/p/nescafe-dolce-gusto-coffee-machines-genio-s-nescafe-dolce-gusto-coffee-machine-in-white/EDG226.W.html?pid=0132180968",
    "price": 55,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/241394",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/193551",
    "key": "gb|De'Longhi|edg226",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -335,7 +335,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/265703",
    "key": "gb|De'Longhi|env95",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -347,19 +347,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/193561",
    "key": "gb|De'Longhi|edg315",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Citiz Nespresso EN167.W",
+   "name": "De'Longhi Citiz Nespresso EN167.B",
    "url": "https://www.delonghi.com/en-gb/p/citiz-en167.b-citiz-nespresso-coffee-machine/EN167.B.html?pid=0132193947",
    "price": 149,
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "gb|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -371,7 +371,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/194889",
    "key": "gb|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -383,19 +383,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/213596",
    "key": "gb|De'Longhi|en220",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "gb",
    "store": "De'Longhi",
    "name": "De'Longhi Lattissima One Nespresso EN510.GR",
-   "url": "https://www.delonghi.com/en-gb/p/lattissima-en510.b-lattissima-one-nespresso-coffee-machine/EN510.B.html?pid=0132193465",
+   "url": "https://www.delonghi.com/en-gb/p/lattissima-en510.w-lattissima-one-nespresso-coffee-machine/EN510.W.html?pid=0132193466",
    "price": 179,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/207902",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/207918",
    "key": "gb|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -407,19 +407,19 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/246833",
    "key": "gb|De'Longhi|env300",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Citiz Nespresso EN267.WAE",
-   "url": "https://www.delonghi.com/en-gb/p/citiz-en267.wae-citiz-nespresso-coffee-machine/EN267.WAE.html?pid=0132193943",
+   "name": "De'Longhi Citiz Nespresso EN267.BAE",
+   "url": "https://www.delonghi.com/en-gb/p/citiz-en267.bae-citiz-nespresso-coffee-machine/EN267.BAE.html?pid=0132193944",
    "price": 225,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/113899",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/113897",
    "key": "gb|De'Longhi|en267",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -431,19 +431,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/213619",
    "key": "gb|De'Longhi|en330",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "gb",
    "store": "De'Longhi",
    "name": "De'Longhi Gran Lattissima Nespresso EN640.B",
-   "url": "https://www.delonghi.com/en-gb/p/nespresso-coffee-machines-gran-lattissima-nespresso-coffee-machine-black/EN640.B.html?pid=0132193555",
+   "url": "https://www.delonghi.com/en-gb/p/nespresso-coffee-machines-granlattissima-nespresso-coffee-machine-en640.w/EN640.W.html?pid=0132193556",
    "price": 329.99,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/249426",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/249442",
    "key": "gb|De'Longhi|en640",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -455,7 +455,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/72182",
    "key": "it|De'Longhi|en80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -467,7 +467,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/237186",
    "key": "it|De'Longhi|env90",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -479,19 +479,19 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/194903",
    "key": "it|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "it",
    "store": "De'Longhi",
-   "name": "De'Longhi EN167.W",
-   "url": "https://www.delonghi.com/it-it/p/citiz-en167.w-macchine-da-caffe-nespresso-citiz/EN167.W.html?pid=0132194027",
+   "name": "De'Longhi EN167.B",
+   "url": "https://www.delonghi.com/it-it/p/citiz-en167.b-macchina-da-caffe-nespresso-citiz/EN167.B.html?pid=0132194028",
    "price": 149,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/90932",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "it|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -503,19 +503,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/269676",
    "key": "it|De'Longhi|en127",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "it",
    "store": "De'Longhi",
    "name": "De'Longhi Nespresso VertuoUP ENV200.GY",
-   "url": "https://www.delonghi.com/it-it/p/vertuo-up-macchina-da-caffe-nespresso-vertuoup-env200.w/ENV200.W.html?pid=0132194123",
+   "url": "https://www.delonghi.com/it-it/p/vertuo-up-macchina-da-caffe-nespresso-vertuoup-env200.gy/ENV200.GY.html?pid=0132194124",
    "price": 179.9,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/336076",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/336083",
    "key": "it|De'Longhi|env200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -527,7 +527,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/213607",
    "key": "it|De'Longhi|en220",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -539,7 +539,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/207902",
    "key": "it|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -551,7 +551,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/249442",
    "key": "it|De'Longhi|en640",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -563,7 +563,7 @@
    "color": "red",
    "img": "https://dam.delonghi.com/600x600/assets/114769",
    "key": "pl|De'Longhi|edg305",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -575,7 +575,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/237186",
    "key": "pl|De'Longhi|env90",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -587,7 +587,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/72182",
    "key": "pl|De'Longhi|en80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -598,7 +598,7 @@
    "price": 639,
    "img": "https://dam.delonghi.com/600x600/assets/202607",
    "key": "pl|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -610,31 +610,31 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/269676",
    "key": "pl|De'Longhi|en127",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "pl",
    "store": "De'Longhi",
    "name": "De'Longhi Nespresso VertuoUP ENV200.GY",
-   "url": "https://www.delonghi.com/pl-pl/p/vertuo-up-ekspres-do-kawy-nespresso-vertuoup-env200.w/ENV200.W.html?pid=0132194123",
+   "url": "https://www.delonghi.com/pl-pl/p/vertuo-up-ekspres-do-kawy-nespresso-vertuoup-env200.gy/ENV200.GY.html?pid=0132194124",
    "price": 759,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/336076",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/336083",
    "key": "pl|De'Longhi|env200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "pl",
    "store": "De'Longhi",
-   "name": "De'Longhi Nespresso Citiz EN167.W",
-   "url": "https://www.delonghi.com/pl-pl/p/citiz-ekspresy-do-kawy-nespresso-citiz-en167.w/EN167.W.html?pid=0132194027",
+   "name": "De'Longhi Nespresso Citiz EN167.B",
+   "url": "https://www.delonghi.com/pl-pl/p/citiz-ekspresy-do-kawy-nespresso-citiz-en167.b/EN167.B.html?pid=0132194028",
    "price": 799,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/90932",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "pl|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -646,7 +646,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/213607",
    "key": "pl|De'Longhi|en220",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -658,7 +658,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/207902",
    "key": "pl|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -670,7 +670,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/249442",
    "key": "pl|De'Longhi|en640",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -682,7 +682,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/237186",
    "key": "se|De'Longhi|env90",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -694,7 +694,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/72182",
    "key": "se|De'Longhi|en80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -706,7 +706,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/194903",
    "key": "se|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -718,31 +718,31 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/269676",
    "key": "se|De'Longhi|en124",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "se",
    "store": "De'Longhi",
    "name": "De'Longhi Nespresso ENV200.GY",
-   "url": "https://www.delonghi.com/sv-se/p/vertuo-up-nespresso-kaffemaskin-vertuoup-env200.w/ENV200.W.html?pid=0132194123",
+   "url": "https://www.delonghi.com/sv-se/p/vertuo-up-nespresso-kaffemaskin-vertuoup-env200.gy/ENV200.GY.html?pid=0132194124",
    "price": 1939,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/336076",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/336083",
    "key": "se|De'Longhi|env200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "se",
    "store": "De'Longhi",
-   "name": "De'Longhi Citiz Nespresso-kaffemaskiner EN167.W",
-   "url": "https://www.delonghi.com/sv-se/p/citiz-en167.w-citiz-nespresso-kaffemaskiner/EN167.W.html?pid=0132194027",
+   "name": "De'Longhi Citiz Nespresso-kaffemaskiner EN167.B",
+   "url": "https://www.delonghi.com/sv-se/p/citiz-en167.b-citiz-nespresso-kaffemaskiner/EN167.B.html?pid=0132194028",
    "price": 2199,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/90932",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "se|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -754,7 +754,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/351343",
    "key": "se|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -766,7 +766,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/249442",
    "key": "se|De'Longhi|en640",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -778,7 +778,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/194889",
    "key": "us|De'Longhi|env120",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -790,19 +790,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/237196",
    "key": "us|De'Longhi|de longhi nespresso vertuo pop env90b",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "capsule",
-   "market": "us",
-   "store": "De'Longhi",
-   "name": "De'Longhi Nespresso Vertuo Pop+ ENV92B",
-   "url": "https://www.delonghi.com/en-us/p/nespresso-machines-nespresso-vertuo-pop-coffee-and-espresso-machine-by-de-longhi--liquorice-black/ENV92B.html?pid=0132193889",
-   "price": 129,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/265664",
-   "key": "us|De'Longhi|de longhi nespresso vertuo pop env92b",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -814,19 +802,31 @@
    "color": "blue",
    "img": "https://dam.delonghi.com/600x600/assets/265651",
    "key": "us|De'Longhi|de longhi nespresso vertuo pop env92a",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "capsule",
+   "market": "us",
+   "store": "De'Longhi",
+   "name": "De'Longhi Nespresso Vertuo Pop+ ENV92B",
+   "url": "https://www.delonghi.com/en-us/p/nespresso-machines-nespresso-vertuo-pop-coffee-and-espresso-machine-by-de-longhi--liquorice-black/ENV92B.html?pid=0132193889",
+   "price": 129,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/265664",
+   "key": "us|De'Longhi|de longhi nespresso vertuo pop env92b",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
    "market": "us",
    "store": "De'Longhi",
    "name": "De'Longhi Nespresso Evoluo ENV135GY",
-   "url": "https://www.delonghi.com/en-us/p/nespresso-machines-nespresso-evoluo-coffee-and-espresso-machine-by-de-longhi--silver/ENV135S.html?pid=0132191528",
+   "url": "https://www.delonghi.com/en-us/p/nespresso-machines-nespresso-evoluo-coffee-and-espresso-machine-by-de-longhi--titan/ENV135T.html?pid=0132191529",
    "price": 131,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/132513",
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/223386",
    "key": "us|De'Longhi|env135",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -838,19 +838,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/265703",
    "key": "us|De'Longhi|env95",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "capsule",
-   "market": "us",
-   "store": "De'Longhi",
-   "name": "De'Longhi Nespresso Vertuo Pop+ ENV92BAE",
-   "url": "https://www.delonghi.com/en-us/p/nespresso-machines-nespresso-vertuo-pop-coffee-and-espresso-machine-by-de-longhi--black/ENV92BAE.html?pid=0132193716",
-   "price": 179,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/265665",
-   "key": "us|De'Longhi|de longhi nespresso vertuo pop env92bae",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -862,7 +850,19 @@
    "color": "blue",
    "img": "https://dam.delonghi.com/600x600/assets/265652",
    "key": "us|De'Longhi|de longhi nespresso vertuo pop env92aae",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "capsule",
+   "market": "us",
+   "store": "De'Longhi",
+   "name": "De'Longhi Nespresso Vertuo Pop+ ENV92BAE",
+   "url": "https://www.delonghi.com/en-us/p/nespresso-machines-nespresso-vertuo-pop-coffee-and-espresso-machine-by-de-longhi--black/ENV92BAE.html?pid=0132193716",
+   "price": 179,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/265665",
+   "key": "us|De'Longhi|de longhi nespresso vertuo pop env92bae",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -874,7 +874,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/113707",
    "key": "us|De'Longhi|de longhi nespresso essenza mini en85b",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -886,7 +886,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/72182",
    "key": "us|De'Longhi|de longhi nespresso inissia en80b",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -898,7 +898,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/194916",
    "key": "us|De'Longhi|env120c",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -910,7 +910,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/207902",
    "key": "us|De'Longhi|en510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -922,7 +922,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/90934",
    "key": "us|De'Longhi|en167",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -934,7 +934,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/246797",
    "key": "us|De'Longhi|env300",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "capsule",
@@ -946,7 +946,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/113897",
    "key": "us|De'Longhi|en267bae",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "drip",
@@ -957,7 +957,7 @@
    "price": 44,
    "img": "https://dam.delonghi.com/600x600/assets/73938",
    "key": "gb|De'Longhi|icm15210.1icm",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "drip",
@@ -968,7 +968,7 @@
    "price": 200,
    "img": "https://dam.delonghi.com/600x600/assets/288872",
    "key": "us|De'Longhi|ser0006",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "drip",
@@ -980,7 +980,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/258710",
    "key": "us|De'Longhi|cam51025",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -991,7 +991,7 @@
    "price": 42.9,
    "img": "https://dam.delonghi.com/600x600/assets/133191",
    "key": "de|De'Longhi|kg200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1002,7 +1002,7 @@
    "price": 52.99,
    "img": "https://dam.delonghi.com/600x600/assets/74591",
    "key": "de|De'Longhi|de longhi kg79",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1013,7 +1013,7 @@
    "price": 53.9,
    "img": "https://dam.delonghi.com/600x600/assets/133196",
    "key": "de|De'Longhi|kg210",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1025,7 +1025,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/90998",
    "key": "de|De'Longhi|kg520",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1036,7 +1036,7 @@
    "price": 46.9,
    "img": "https://dam.delonghi.com/600x600/assets/133196",
    "key": "es|De'Longhi|kg210",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1048,7 +1048,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/90998",
    "key": "es|De'Longhi|kg520",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1059,7 +1059,7 @@
    "price": 39,
    "img": "https://dam.delonghi.com/600x600/assets/133191",
    "key": "gb|De'Longhi|kg200",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1070,7 +1070,7 @@
    "price": 56.99,
    "img": "https://dam.delonghi.com/600x600/assets/133196",
    "key": "gb|De'Longhi|kg210",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1081,7 +1081,7 @@
    "price": 59,
    "img": "https://dam.delonghi.com/600x600/assets/74591",
    "key": "gb|De'Longhi|de longhi kg79 kg",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1092,7 +1092,7 @@
    "price": 49.9,
    "img": "https://dam.delonghi.com/600x600/assets/133196",
    "key": "it|De'Longhi|kg210",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1104,7 +1104,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/90998",
    "key": "it|De'Longhi|kg520",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1115,7 +1115,7 @@
    "price": 209,
    "img": "https://dam.delonghi.com/600x600/assets/133196",
    "key": "pl|De'Longhi|kg210",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1127,7 +1127,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/90998",
    "key": "pl|De'Longhi|kg520",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1138,7 +1138,7 @@
    "price": 599,
    "img": "https://dam.delonghi.com/600x600/assets/133196",
    "key": "se|De'Longhi|kg210",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1150,7 +1150,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/90998",
    "key": "se|De'Longhi|kg520",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "grinder",
@@ -1161,7 +1161,7 @@
    "price": 99.99,
    "img": "https://dam.delonghi.com/600x600/assets/74593",
    "key": "us|De'Longhi|de longhi kg89",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1173,31 +1173,31 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/229632",
    "key": "de|De'Longhi|ec260",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Dedica Style EC685.BL",
+   "name": "De'Longhi Dedica Style EC685.BK",
    "url": "https://www.delonghi.com/de-de/p/dedica-siebtragermaschinen-dedica-style-manual-coffee-maker-ec685.gr-ex4/EC685.GR+EX%3A4.html?pid=0132106381",
    "price": 129.99,
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/377833",
    "key": "de|De'Longhi|ec685",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Icona Vintage ECOV311.BK",
-   "url": "https://www.delonghi.com/de-de/p/icona-vintage-siebtragermaschinen-ecov311.bk-icona-vintage-siebtrager/ECOV311.BK.html?pid=0132106083",
+   "name": "De'Longhi Icona Vintage ECOV311.GR",
+   "url": "https://www.delonghi.com/de-de/p/icona-vintage-siebtragermaschinen-ecov311.gr-icona-vintage-siebtrager/ECOV311.GR.html?pid=0132106086",
    "price": 139.99,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/209404",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/209405",
    "key": "de|De'Longhi|ecov311",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1209,31 +1209,42 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/318086",
    "key": "de|De'Longhi|em450",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Dedica Duo EC890.GR",
-   "url": "https://www.delonghi.com/de-de/p/dedica-duo-dedica-duo-siebtragermaschine-ec890.m/EC890.M.html?pid=0132106349",
+   "name": "De'Longhi Dedica Duo EC890.WI",
+   "url": "https://www.delonghi.com/de-de/p/dedica-duo-dedica-duo-siebtragermaschine-ec890.wi/EC890.WI.html?pid=0132106346",
    "price": 199.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/304549",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/304558",
    "key": "de|De'Longhi|ec890",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi La Specialista Arte EC9155.YE",
-   "url": "https://www.delonghi.com/de-de/p/la-specialista-arte-la-specialista-arte-siebtragermaschine-ec9155.ye-ex2/EC9155.YE+EX%3A2.html?pid=0132126136",
+   "name": "De'Longhi La Specialista Arte EC9155.GR",
+   "url": "https://www.delonghi.com/de-de/p/la-specialista-arte-la-specialista-arte-siebtragermaschine-ec9155.gr-ex2/EC9155.GR+EX%3A2.html?pid=0132126137",
    "price": 379.99,
-   "color": "yellow",
-   "img": "https://dam.delonghi.com/600x600/assets/362327",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/362313",
    "key": "de|De'Longhi|ec9155",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "manual-espresso",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi La Specialista Arte Evo",
+   "url": "https://www.delonghi.com/de-de/p/la-specialista-arte-la-specialista-arte-evo-manual-coffee-makerec9255.t-ex2/EC9255.T+EX%3A2.html?pid=0132126132",
+   "price": 429.99,
+   "img": "https://dam.delonghi.com/600x600/assets/363206",
+   "key": "de|De'Longhi|de longhi la specialista arte evo",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1245,30 +1256,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363196",
    "key": "de|De'Longhi|ec9255",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "manual-espresso",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi La Specialista Arte Evo",
-   "url": "https://www.delonghi.com/de-de/p/la-specialista-arte-la-specialista-arte-evo-manual-coffee-makerec9255.t-ex2/EC9255.T+EX%3A2.html?pid=0132126132",
-   "price": 429.99,
-   "img": "https://dam.delonghi.com/600x600/assets/363206",
-   "key": "de|De'Longhi|de longhi la specialista arte evo",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "de",
    "store": "De'Longhi",
    "name": "De'Longhi La Specialista Opera EC9555.BK",
-   "url": "https://www.delonghi.com/de-de/p/la-specialista-opera-siebtragermaschine-la-specialista-opera-ec9555.m/EC9555.M.html?pid=0132126080",
+   "url": "https://www.delonghi.com/de-de/p/la-specialista-opera-siebtragermaschine-la-specialista-opera-ec9555.bk/EC9555.BK.html?pid=0132126097",
    "price": 699.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/310677",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/289564",
    "key": "de|De'Longhi|ec9555",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1280,7 +1280,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/310681",
    "key": "de|De'Longhi|ec9885",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1292,19 +1292,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/186095",
    "key": "gb|De'Longhi|ec230",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Stilosa EC260.BK",
-   "url": "https://www.delonghi.com/en-gb/p/stilosa-ec260.bk-stilosa-manual-espresso-maker/EC260.BK.html?pid=0132104206",
+   "name": "De'Longhi Stilosa EC260.GR",
+   "url": "https://www.delonghi.com/en-gb/p/stilosa-stilosa-manual-espresso-maker-ec260.gr/EC260.GR.html?pid=0132104217",
    "price": 90,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/223689",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/229764",
    "key": "gb|De'Longhi|ec260",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1316,31 +1316,31 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/81778",
    "key": "gb|De'Longhi|ecov311",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Dedica Style EC685.BL",
+   "name": "De'Longhi Dedica Style EC685.BK",
    "url": "https://www.delonghi.com/en-gb/p/dedica-manual-espresso-makers-dedica-style-manual-coffee-maker-ec685.gr-ex4/EC685.GR+EX%3A4.html?pid=0132106383",
    "price": 129,
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/377833",
    "key": "gb|De'Longhi|ec685",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Dedica Duo EC890.GR",
+   "name": "De'Longhi Dedica Duo EC890.WI",
    "url": "https://www.delonghi.com/en-gb/p/dedica-duo-dedica-duo-manual-coffee-maker-ec890.pk/EC890.PK.html?pid=0132106352",
    "price": 199.99,
    "color": "pink",
    "img": "https://dam.delonghi.com/600x600/assets/311664",
    "key": "gb|De'Longhi|ec890",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1352,7 +1352,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/318086",
    "key": "gb|De'Longhi|em450",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1364,19 +1364,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/245807",
    "key": "gb|De'Longhi|ec950",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi La Specialista Arte EC9155.YE",
+   "name": "De'Longhi La Specialista Arte EC9155.BL",
    "url": "https://www.delonghi.com/en-gb/p/la-specialista-arte-la-specialista-arte-manual-espresso-maker-ec9155.bl-ex2/EC9155.BL+EX%3A2.html?pid=0132126184",
    "price": 339.99,
    "color": "blue",
    "img": "https://dam.delonghi.com/600x600/assets/373640",
    "key": "gb|De'Longhi|ec9155",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1388,7 +1388,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/318008",
    "key": "gb|De'Longhi|ec9455",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1400,7 +1400,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363196",
    "key": "gb|De'Longhi|ec9255",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1412,19 +1412,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/310677",
    "key": "gb|De'Longhi|ec9555",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "it",
    "store": "De'Longhi",
    "name": "De'Longhi Stilosa EC260.BK",
-   "url": "https://www.delonghi.com/it-it/p/stilosa-macchina-da-caffe-manuale-stilosa-ec260.bk/EC260.BK.html?pid=0132104205",
+   "url": "https://www.delonghi.com/it-it/p/stilosa-macchina-per-espresso-stilosa-manual-ec260.w/EC260.W.html?pid=0132104218",
    "price": 99.9,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/223689",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/229632",
    "key": "it|De'Longhi|ec260",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1436,19 +1436,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/318086",
    "key": "it|De'Longhi|em450",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "it",
    "store": "De'Longhi",
    "name": "De'Longhi Icona Vintage ECOV311.AZ",
-   "url": "https://www.delonghi.com/it-it/p/macchina-da-caffe-espresso-manuale-icona-vintage-macchina-da-caffe-espresso-manuale-icon-vintage-ecov311.bk/ECOV311.BK.html?pid=0132106083",
+   "url": "https://www.delonghi.com/it-it/p/macchina-da-caffe-espresso-manuale-icona-vintage-macchina-da-caffe-espresso-manuale-icon-vintage-ecov311.gr/ECOV311.GR.html?pid=0132106086",
    "price": 149.9,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/209404",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/209405",
    "key": "it|De'Longhi|ecov311",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1460,19 +1460,19 @@
    "color": "red",
    "img": "https://dam.delonghi.com/600x600/assets/223690",
    "key": "it|De'Longhi|ec685",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "it",
    "store": "De'Longhi",
-   "name": "De'Longhi Dedica Duo EC890.GR",
+   "name": "De'Longhi Dedica Duo EC890.WI",
    "url": "https://www.delonghi.com/it-it/p/dedica-duo-macchina-da-caffe-manuale-dedica-duo-ec890.pk/EC890.PK.html?pid=0132106350",
    "price": 209.9,
    "color": "pink",
    "img": "https://dam.delonghi.com/600x600/assets/311664",
    "key": "it|De'Longhi|ec890",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1484,19 +1484,30 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/245807",
    "key": "it|De'Longhi|ec950",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "it",
    "store": "De'Longhi",
    "name": "De'Longhi La Specialista Arte EC9155.MB",
-   "url": "https://www.delonghi.com/it-it/p/la-specialista-arte-macchina-da-caffe-espresso-manuale-la-specialista-arte-ec9155.ye-ex2/EC9155.YE+EX%3A2.html?pid=0132126136",
+   "url": "https://www.delonghi.com/it-it/p/la-specialista-arte-macchina-da-caffe-espresso-manuale-la-specialista-arte-ec9155.w-ex2/EC9155.W+EX%3A2.html?pid=0132126135",
    "price": 379.9,
-   "color": "yellow",
-   "img": "https://dam.delonghi.com/600x600/assets/362327",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/362312",
    "key": "it|De'Longhi|ec9155",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "manual-espresso",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi La Specialista Arte Evo",
+   "url": "https://www.delonghi.com/it-it/p/la-specialista-arte-la-specialista-arte-evo-manual-coffee-makerec9255.t-ex2/EC9255.T+EX%3A2.html?pid=0132126132",
+   "price": 429.9,
+   "img": "https://dam.delonghi.com/600x600/assets/363206",
+   "key": "it|De'Longhi|de longhi la specialista arte evo",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1508,30 +1519,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363196",
    "key": "it|De'Longhi|ec9255",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "manual-espresso",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi La Specialista Arte Evo",
-   "url": "https://www.delonghi.com/it-it/p/la-specialista-arte-la-specialista-arte-evo-manual-coffee-makerec9255.t-ex2/EC9255.T+EX%3A2.html?pid=0132126132",
-   "price": 429.9,
-   "img": "https://dam.delonghi.com/600x600/assets/363206",
-   "key": "it|De'Longhi|de longhi la specialista arte evo",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "it",
    "store": "De'Longhi",
    "name": "De'Longhi La Specialista Opera EC9555.BK",
-   "url": "https://www.delonghi.com/it-it/p/la-specialista-opera-macchina-da-caffe-manuale-la-specialista-opera-ec9555.m/EC9555.M.html?pid=0132126080",
+   "url": "https://www.delonghi.com/it-it/p/la-specialista-opera-macchina-da-caffe-manuale-la-specialista-opera-ec9555.bk/EC9555.BK.html?pid=0132126097",
    "price": 649.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/310677",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/289564",
    "key": "it|De'Longhi|ec9555",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1543,19 +1543,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/310681",
    "key": "it|De'Longhi|ec9885",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "manual-espresso",
-   "market": "us",
-   "store": "De'Longhi",
-   "name": "De'Longhi Classic EM450M",
-   "url": "https://www.delonghi.com/en-us/p/de-longhi-classic-de-longhi-classic-espresso-machine/EM450M.html?pid=0132105033",
-   "price": 149.95,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/318086",
-   "key": "us|De'Longhi|em450",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1567,7 +1555,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/223689",
    "key": "us|De'Longhi|ec260",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "manual-espresso",
+   "market": "us",
+   "store": "De'Longhi",
+   "name": "De'Longhi Classic EM450M",
+   "url": "https://www.delonghi.com/en-us/p/de-longhi-classic-de-longhi-classic-espresso-machine/EM450M.html?pid=0132105033",
+   "price": 149.95,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/318086",
+   "key": "us|De'Longhi|em450",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1579,7 +1579,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/361066",
    "key": "us|De'Longhi|em350",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1591,7 +1591,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/368271",
    "key": "us|De'Longhi|em400",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1602,7 +1602,7 @@
    "price": 199.95,
    "img": "https://dam.delonghi.com/600x600/assets/223695",
    "key": "us|De'Longhi|ecp3630",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1613,19 +1613,19 @@
    "price": 200,
    "img": "https://dam.delonghi.com/600x600/assets/277198",
    "key": "us|De'Longhi|ser0005",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
    "market": "us",
    "store": "De'Longhi",
    "name": "De'Longhi Dedica Duo EC890PK",
-   "url": "https://www.delonghi.com/en-us/p/dedica-duo-dedica-duo-espresso-machine--metal/EC890M.html?pid=0132106347",
+   "url": "https://www.delonghi.com/en-us/p/dedica-duo-dedica-duo-espresso-machine--rose/EC890PK.html?pid=0132106355",
    "price": 249.95,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/304549",
+   "color": "pink",
+   "img": "https://dam.delonghi.com/600x600/assets/311664",
    "key": "us|De'Longhi|ec890",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1637,7 +1637,7 @@
    "color": "green",
    "img": "https://dam.delonghi.com/600x600/assets/304548",
    "key": "us|De'Longhi|ec890gr",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1648,7 +1648,7 @@
    "price": 299.95,
    "img": "https://dam.delonghi.com/600x600/assets/189531",
    "key": "us|De'Longhi|com530",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1660,7 +1660,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/189537",
    "key": "us|De'Longhi|com532",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1671,7 +1671,7 @@
    "price": 349.95,
    "img": "https://dam.delonghi.com/600x600/assets/388539",
    "key": "us|De'Longhi|com630",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1683,7 +1683,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/318008",
    "key": "us|De'Longhi|ec9455",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1695,7 +1695,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/310677",
    "key": "us|De'Longhi|ec9555",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1707,7 +1707,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363196",
    "key": "us|De'Longhi|ec9255",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "manual-espresso",
@@ -1719,7 +1719,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/310681",
    "key": "us|De'Longhi|ec9885",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1731,7 +1731,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/252896",
    "key": "de|De'Longhi|ecam11.112",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1743,55 +1743,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/226528",
    "key": "de|De'Longhi|ecam22.110",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica S ECAM250.33.TB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-s-smart-ecam250.33.tb-magnifica-s-kaffeevollautomat/ECAM250.33.TB.html?pid=0132213163",
-   "price": 299.99,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/130766",
-   "key": "de|De'Longhi|ecam250.33",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica S ECAM250.23.SB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-s-smart-ecam250.23.sb-magnifica-s-kaffeevollautomat/ECAM250.23.SB.html?pid=0132213166",
-   "price": 299.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/130840",
-   "key": "de|De'Longhi|ecam250.23",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM220.20.W",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-start-magnifica-start-kaffeevollautomat-ecam220.20.w/ECAM220.20.W.html?pid=0132240033",
-   "price": 299.99,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/246473",
-   "key": "de|De'Longhi|ecam220.20",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM222.20.B",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-start-magnifica-start-ecam222.20.b-kaffeevollautomat/ECAM222.20.B.html?pid=0132240017",
-   "price": 299.99,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/246478",
-   "key": "de|De'Longhi|ecam222.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1803,7 +1755,55 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228161",
    "key": "de|De'Longhi|ecam290.21",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM222.20.B",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-start-magnifica-start-ecam222.20.b-kaffeevollautomat/ECAM222.20.B.html?pid=0132240017",
+   "price": 299.99,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/246478",
+   "key": "de|De'Longhi|ecam222.20",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica S ECAM250.33.TB",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-s-smart-ecam250.33.tb-magnifica-s-kaffeevollautomat/ECAM250.33.TB.html?pid=0132213163",
+   "price": 299.99,
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/130766",
+   "key": "de|De'Longhi|ecam250.33",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM220.20.W",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-start-magnifica-start-kaffeevollautomat-ecam220.20.w/ECAM220.20.W.html?pid=0132240033",
+   "price": 299.99,
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/246473",
+   "key": "de|De'Longhi|ecam220.20",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica S ECAM250.23.SB",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-s-smart-ecam250.23.sb-magnifica-s-kaffeevollautomat/ECAM250.23.SB.html?pid=0132213166",
+   "price": 299.99,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/130840",
+   "key": "de|De'Longhi|ecam250.23",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1815,7 +1815,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/83760",
    "key": "de|De'Longhi|etam29.510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1827,7 +1827,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/317005",
    "key": "de|De'Longhi|ecam292.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1839,7 +1839,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189478",
    "key": "de|De'Longhi|ecam230.13",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1851,19 +1851,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189471",
    "key": "de|De'Longhi|ecam350.15",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Evo ECAM292.33.SB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-evo-ecam292.33.sb-magnifica-evo-kaffeevollautomat/ECAM292.33.SB.html?pid=0132220049",
-   "price": 399.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/228156",
-   "key": "de|De'Longhi|ecam292.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1875,19 +1863,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/336348",
    "key": "de|De'Longhi|ecam220.61",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM220.80.SB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-start-magnifica-start-kaffeevollautomat-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
-   "price": 399.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/296739",
-   "key": "de|De'Longhi|ecam220.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1899,7 +1875,31 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/336428",
    "key": "de|De'Longhi|ecam222.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Evo ECAM292.33.SB",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-evo-ecam292.33.sb-magnifica-evo-kaffeevollautomat/ECAM292.33.SB.html?pid=0132220049",
+   "price": 399.99,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/228156",
+   "key": "de|De'Longhi|ecam292.33",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM220.80.SB",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-start-magnifica-start-kaffeevollautomat-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
+   "price": 399.99,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/296739",
+   "key": "de|De'Longhi|ecam220.80",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1911,7 +1911,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/317001",
    "key": "de|De'Longhi|ecam290.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1923,7 +1923,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/294642",
    "key": "de|De'Longhi|ecam312.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1935,31 +1935,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/323584",
    "key": "de|De'Longhi|ecam290.89",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "de",
    "store": "De'Longhi",
    "name": "De'Longhi Rivelia EXAM440.35.BG",
-   "url": "https://www.delonghi.com/de-de/p/rivelia-rivelia-kaffeevollautomat-exam440.35.w/EXAM440.35.W.html?pid=0132213209",
+   "url": "https://www.delonghi.com/de-de/p/rivelia-rivelia-kaffeevollautomat-exam440.35.b/EXAM440.35.B.html?pid=0132213208",
    "price": 539.99,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/268672",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/268661",
    "key": "de|De'Longhi|exam440.35",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Duo ECAM332.80.SXB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-duo-magnifica-duo-kaffeevollautomat-ecam332.80.sxb/ECAM332.80.SXB.html?pid=0132250270",
-   "price": 549,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/375518",
-   "key": "de|De'Longhi|ecam332.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1971,7 +1959,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/192118",
    "key": "de|De'Longhi|ecam46.860",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -1983,31 +1971,19 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/267447",
    "key": "de|De'Longhi|ecam380.95",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Plus ECAM320.70.TB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-plus-magnifica-plus-kaffeemaschine-ecam320.70.tb/ECAM320.70.TB.html?pid=0132250019",
+   "name": "De'Longhi Rivelia Start EXAM420.55.WXL",
+   "url": "https://www.delonghi.com/de-de/p/rivelia-start-rivelia-start-kaffeevollautomat-exam420.55.bw/EXAM420.55.BW.html?pid=0132250228",
    "price": 599.99,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/276202",
-   "key": "de|De'Longhi|ecam320.70",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Dinamica Plus ECAM380.85.SB",
-   "url": "https://www.delonghi.com/de-de/p/dinamica-plus-dinamica-plus-kaffeevollautomat-ecam380.85.sb/ECAM380.85.SB.html?pid=0132215485",
-   "price": 599.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/267440",
-   "key": "de|De'Longhi|ecam380.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/380698",
+   "key": "de|De'Longhi|exam420.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2019,31 +1995,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/276181",
    "key": "de|De'Longhi|ecam320.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia Start EXAM420.55.BXL",
-   "url": "https://www.delonghi.com/de-de/p/rivelia-start-rivelia-start-kaffeevollautomat-exam420.55.bw/EXAM420.55.BW.html?pid=0132250228",
+   "name": "De'Longhi Magnifica Plus ECAM320.70.TB",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-plus-magnifica-plus-kaffeemaschine-ecam320.70.tb/ECAM320.70.TB.html?pid=0132250019",
    "price": 599.99,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/380698",
-   "key": "de|De'Longhi|exam420.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Plus ECAM322.70.SB",
-   "url": "https://www.delonghi.com/de-de/p/magnifica-plus-magnifica-plus-kaffeemaschine-ecam322.70.sb/ECAM322.70.SB.html?pid=0132250020",
-   "price": 599.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/276226",
-   "key": "de|De'Longhi|ecam322.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/276202",
+   "key": "de|De'Longhi|ecam320.70",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2055,7 +2019,31 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/376144",
    "key": "de|De'Longhi|ecam330.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Dinamica Plus ECAM380.85.SB",
+   "url": "https://www.delonghi.com/de-de/p/dinamica-plus-dinamica-plus-kaffeevollautomat-ecam380.85.sb/ECAM380.85.SB.html?pid=0132215485",
+   "price": 599.99,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/267440",
+   "key": "de|De'Longhi|ecam380.85",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Plus ECAM322.70.SB",
+   "url": "https://www.delonghi.com/de-de/p/magnifica-plus-magnifica-plus-kaffeemaschine-ecam322.70.sb/ECAM322.70.SB.html?pid=0132250020",
+   "price": 599.99,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/276226",
+   "key": "de|De'Longhi|ecam322.70",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2067,7 +2055,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/191478",
    "key": "de|De'Longhi|ecam550.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2079,18 +2067,19 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/380686",
    "key": "de|De'Longhi|exam440.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "de",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM441.55.AMR",
-   "url": "https://www.delonghi.com/de-de/p/rivelia-rivelia-kaffeevollautomat-exam441.55.amr/EXAM441.55.AMR.html?pid=0132250308",
+   "name": "De'Longhi Rivelia EXAM441.55.GR",
+   "url": "https://www.delonghi.com/de-de/p/rivelia-rivelia-kaffeevollautomat-exam441.55.gr/EXAM441.55.GR.html?pid=0132250063",
    "price": 629.99,
-   "img": "https://dam.delonghi.com/600x600/assets/378856",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/380687",
    "key": "de|De'Longhi|exam441.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2102,7 +2091,7 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/380697",
    "key": "de|De'Longhi|exam422.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2114,7 +2103,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/267451",
    "key": "de|De'Longhi|ecam382.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2126,19 +2115,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "de|De'Longhi|ecam610.74",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
-   "url": "https://www.delonghi.com/de-de/p/primadonna-soul-ecam610.55.sb-primadonna-soul-kaffeevollautomat/ECAM610.55.SB.html?pid=0132217053",
-   "price": 799.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/191184",
-   "key": "de|De'Longhi|ecam610.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2150,7 +2127,19 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257455",
    "key": "de|De'Longhi|ecam450.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "de",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
+   "url": "https://www.delonghi.com/de-de/p/primadonna-soul-ecam610.55.sb-primadonna-soul-kaffeevollautomat/ECAM610.55.SB.html?pid=0132217053",
+   "price": 799.99,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/191184",
+   "key": "de|De'Longhi|ecam610.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2162,7 +2151,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "de|De'Longhi|ecam450.69",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2174,19 +2163,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "de|De'Longhi|ecam610.75",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi Automatische ECAM450.86.T",
-   "url": "https://www.delonghi.com/de-de/p/eletta-explore-automatische-kaffeemaschine-eletta-explore-ecam450.86.t-ex4/ECAM450.86.T+EX%3A4.html?pid=0132250116",
-   "price": 849.99,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/257457",
-   "key": "de|De'Longhi|ecam450.86",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2198,7 +2175,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/215516",
    "key": "de|De'Longhi|ecam612.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2210,7 +2187,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/378045",
    "key": "de|De'Longhi|ecam472.50",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2222,7 +2199,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363672",
    "key": "de|De'Longhi|ecam470.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2234,7 +2211,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/306817",
    "key": "de|De'Longhi|ecam630.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2246,19 +2223,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/378044",
    "key": "de|De'Longhi|ecam470.75",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "de",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Aromatic ECAM630.75.TSM",
-   "url": "https://www.delonghi.com/de-de/p/primadonna-aromatic-primadonna-aromatic-kaffeevollautomat-ecam630.75.tsm/ECAM630.75.TSM.html?pid=0132250179",
-   "price": 1299.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/306833",
-   "key": "de|De'Longhi|ecam630.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2270,7 +2235,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/252896",
    "key": "es|De'Longhi|ecam11.112",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2282,7 +2247,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/130766",
    "key": "es|De'Longhi|ecam250.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2294,7 +2259,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189478",
    "key": "es|De'Longhi|ecam230.13",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2306,7 +2271,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/226528",
    "key": "es|De'Longhi|ecam22.110",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2318,7 +2283,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/130840",
    "key": "es|De'Longhi|ecam250.23",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2330,7 +2295,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/246478",
    "key": "es|De'Longhi|ecam222.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2342,19 +2307,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/228156",
    "key": "es|De'Longhi|ecam292.33",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi ECAM220.20.W",
-   "url": "https://www.delonghi.com/es-es/p/magnifica-start-ecam220.20.w-cafetera-automatica-magnifica-start/ECAM220.20.W.html?pid=0132240033",
-   "price": 349.9,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/246473",
-   "key": "es|De'Longhi|ecam220.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2366,7 +2319,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228161",
    "key": "es|De'Longhi|ecam290.21",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi ECAM220.20.W",
+   "url": "https://www.delonghi.com/es-es/p/magnifica-start-ecam220.20.w-cafetera-automatica-magnifica-start/ECAM220.20.W.html?pid=0132240033",
+   "price": 349.9,
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/246473",
+   "key": "es|De'Longhi|ecam220.20",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2378,19 +2343,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/83760",
    "key": "es|De'Longhi|etam29.510",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM220.80.SB",
-   "url": "https://www.delonghi.com/es-es/p/magnifica-start-cafetera-superautomatica-magnifica-start-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
-   "price": 379.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/296739",
-   "key": "es|De'Longhi|ecam220.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2402,7 +2355,19 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/336428",
    "key": "es|De'Longhi|ecam222.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM220.80.SB",
+   "url": "https://www.delonghi.com/es-es/p/magnifica-start-cafetera-superautomatica-magnifica-start-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
+   "price": 379.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/296739",
+   "key": "es|De'Longhi|ecam220.80",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2414,7 +2379,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/317005",
    "key": "es|De'Longhi|ecam292.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2426,7 +2391,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/336348",
    "key": "es|De'Longhi|ecam220.61",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2438,7 +2403,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/323584",
    "key": "es|De'Longhi|ecam290.89",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2450,7 +2415,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189471",
    "key": "es|De'Longhi|ecam350.15",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2462,7 +2427,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/317001",
    "key": "es|De'Longhi|ecam290.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2474,31 +2439,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/268661",
    "key": "es|De'Longhi|exam440.35",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia Start EXAM420.55.BXL",
+   "name": "De'Longhi Rivelia Start EXAM420.55.WXL",
    "url": "https://www.delonghi.com/es-es/p/rivelia-start-cafetera-automatica-rivelia-start-exam420.55.bw/EXAM420.55.BW.html?pid=0132250228",
    "price": 529.9,
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/380698",
    "key": "es|De'Longhi|exam420.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi Eletta Cappuccino ECAM44.660.B",
-   "url": "https://www.delonghi.com/es-es/p/eletta-cafetera-automatica-eletta-cappuccino-ecam44.660.b/ECAM44.660.B.html?pid=0132215212",
-   "price": 549.9,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/223630",
-   "key": "es|De'Longhi|ecam44.660",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2510,7 +2463,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/276181",
    "key": "es|De'Longhi|ecam320.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi Eletta Cappuccino ECAM44.660.B",
+   "url": "https://www.delonghi.com/es-es/p/eletta-cafetera-automatica-eletta-cappuccino-ecam44.660.b/ECAM44.660.B.html?pid=0132215212",
+   "price": 549.9,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/223630",
+   "key": "es|De'Longhi|ecam44.660",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2522,7 +2487,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/192118",
    "key": "es|De'Longhi|ecam46.860",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2534,7 +2499,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/276202",
    "key": "es|De'Longhi|ecam320.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2546,19 +2511,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/376144",
    "key": "es|De'Longhi|ecam330.80",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi ECAM380.85.SB",
-   "url": "https://www.delonghi.com/es-es/p/dinamica-plus-ecam380.85.sb-cafetera-superautomatica-dinamica-plus/ECAM380.85.SB.html?pid=0132215485",
-   "price": 599.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/267440",
-   "key": "es|De'Longhi|ecam380.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2570,7 +2523,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/191478",
    "key": "es|De'Longhi|ecam550.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi ECAM380.85.SB",
+   "url": "https://www.delonghi.com/es-es/p/dinamica-plus-ecam380.85.sb-cafetera-superautomatica-dinamica-plus/ECAM380.85.SB.html?pid=0132215485",
+   "price": 599.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/267440",
+   "key": "es|De'Longhi|ecam380.85",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2582,18 +2547,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/380683",
    "key": "es|De'Longhi|exam440.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM441.55.AMR",
-   "url": "https://www.delonghi.com/es-es/p/rivelia-cafetera-superautomatica-rivelia-exam441.55.amr/EXAM441.55.AMR.html?pid=0132250308",
+   "name": "De'Longhi Rivelia EXAM441.55.GR",
+   "url": "https://www.delonghi.com/es-es/p/rivelia-cafetera-automatica-rivelia-exam441.55.gr/EXAM441.55.GR.html?pid=0132250063",
    "price": 609.9,
-   "img": "https://dam.delonghi.com/600x600/assets/378856",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/380687",
    "key": "es|De'Longhi|exam441.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2605,19 +2571,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/276226",
    "key": "es|De'Longhi|ecam322.70",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi ECAM380.95.TB",
-   "url": "https://www.delonghi.com/es-es/p/dinamica-plus-ecam380.95.tb-cafetera-superautomatica-dinamica-plus/ECAM380.95.TB.html?pid=0132215486",
-   "price": 649.9,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/267447",
-   "key": "es|De'Longhi|ecam380.95",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2629,19 +2583,19 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/380697",
    "key": "es|De'Longhi|exam422.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Evo Next ECAM312.80.TB",
-   "url": "https://www.delonghi.com/es-es/p/magnifica-evo-next-cafetera-superautomatica-magnifica-evo-next-ecam312.80.tb/ECAM312.80.TB.html?pid=0132250042",
-   "price": 699.9,
+   "name": "De'Longhi ECAM380.95.TB",
+   "url": "https://www.delonghi.com/es-es/p/dinamica-plus-ecam380.95.tb-cafetera-superautomatica-dinamica-plus/ECAM380.95.TB.html?pid=0132215486",
+   "price": 649.9,
    "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/294642",
-   "key": "es|De'Longhi|ecam312.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "img": "https://dam.delonghi.com/600x600/assets/267447",
+   "key": "es|De'Longhi|ecam380.95",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2653,19 +2607,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/267451",
    "key": "es|De'Longhi|ecam382.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "es",
    "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Duo ECAM332.80.SXB",
-   "url": "https://www.delonghi.com/es-es/p/magnifica-duo-cafetera-automatica-magnifica-duo-ecam332.80.sxb/ECAM332.80.SXB.html?pid=0132250270",
+   "name": "De'Longhi Magnifica Evo Next ECAM312.80.TB",
+   "url": "https://www.delonghi.com/es-es/p/magnifica-evo-next-cafetera-superautomatica-magnifica-evo-next-ecam312.80.tb/ECAM312.80.TB.html?pid=0132250042",
    "price": 699.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/375518",
-   "key": "es|De'Longhi|ecam332.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/294642",
+   "key": "es|De'Longhi|ecam312.80",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2677,7 +2631,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "es|De'Longhi|ecam450.69",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2689,7 +2643,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/257456",
    "key": "es|De'Longhi|ecam450.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2701,7 +2655,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/378045",
    "key": "es|De'Longhi|ecam472.50",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2713,31 +2667,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/257457",
    "key": "es|De'Longhi|ecam450.86",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
-   "url": "https://www.delonghi.com/es-es/p/primadonna-soul-cafetera-automatica-ecam610.55.sb-primadonna-soul/ECAM610.55.SB.html?pid=0132217053",
-   "price": 949.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/191184",
-   "key": "es|De'Longhi|ecam610.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.75.MB",
-   "url": "https://www.delonghi.com/es-es/p/primadonna-soul-cafetera-superautomatica-ecam610.75.mb-primadonna-soul/ECAM610.75.MB.html?pid=0132217055",
-   "price": 949.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/190115",
-   "key": "es|De'Longhi|ecam610.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2749,7 +2679,31 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "es|De'Longhi|ecam452.67",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.75.MB",
+   "url": "https://www.delonghi.com/es-es/p/primadonna-soul-cafetera-superautomatica-ecam610.75.mb-primadonna-soul/ECAM610.75.MB.html?pid=0132217055",
+   "price": 949.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/190115",
+   "key": "es|De'Longhi|ecam610.75",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "es",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
+   "url": "https://www.delonghi.com/es-es/p/primadonna-soul-cafetera-automatica-ecam610.55.sb-primadonna-soul/ECAM610.55.SB.html?pid=0132217053",
+   "price": 949.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/191184",
+   "key": "es|De'Longhi|ecam610.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2761,7 +2715,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/378044",
    "key": "es|De'Longhi|ecam470.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2773,7 +2727,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363672",
    "key": "es|De'Longhi|ecam472.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2785,7 +2739,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/215516",
    "key": "es|De'Longhi|ecam612.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2797,7 +2751,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/306817",
    "key": "es|De'Longhi|ecam630.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2809,19 +2763,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "es|De'Longhi|ecam610.74",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "es",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Aromatic ECAM630.75.TSM",
-   "url": "https://www.delonghi.com/es-es/p/primadonna-aromatic-cafetera-automatica-primadonna-aromatic-ecam630.75.tsm/ECAM630.75.TSM.html?pid=0132250179",
-   "price": 1599.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/306833",
-   "key": "es|De'Longhi|ecam630.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2833,7 +2775,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/223655",
    "key": "gb|De'Longhi|ecam22.110",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2845,7 +2787,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/244873",
    "key": "gb|De'Longhi|ecam220.22",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2857,7 +2799,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/228159",
    "key": "gb|De'Longhi|ecam290.31",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2869,7 +2811,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/228156",
    "key": "gb|De'Longhi|ecam292.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2881,7 +2823,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/336322",
    "key": "gb|De'Longhi|ecam220.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2893,7 +2835,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228161",
    "key": "gb|De'Longhi|ecam290.21",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2905,7 +2847,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/316998",
    "key": "gb|De'Longhi|ecam290.61",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2917,7 +2859,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228160",
    "key": "gb|De'Longhi|ecam290.22",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "gb",
+   "store": "De'Longhi",
+   "name": "De'Longhi Rivelia Start EXAM420.55.WXL",
+   "url": "https://www.delonghi.com/en-gb/p/rivelia-start-rivelia-start-automatic-coffee-maker-exam420.55.bw/EXAM420.55.BW.html?pid=0132250274",
+   "price": 499,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/380698",
+   "key": "gb|De'Longhi|exam420.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2929,19 +2883,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/276202",
    "key": "gb|De'Longhi|ecam320.70",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "gb",
-   "store": "De'Longhi",
-   "name": "De'Longhi Rivelia Start EXAM420.55.BXL",
-   "url": "https://www.delonghi.com/en-gb/p/rivelia-start-rivelia-start-automatic-coffee-maker-exam420.55.bw/EXAM420.55.BW.html?pid=0132250274",
-   "price": 499,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/380698",
-   "key": "gb|De'Longhi|exam420.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2953,7 +2895,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/268661",
    "key": "gb|De'Longhi|exam440.35",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2965,7 +2907,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/380686",
    "key": "gb|De'Longhi|exam440.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2977,7 +2919,7 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/380697",
    "key": "gb|De'Longhi|exam422.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -2989,7 +2931,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/380687",
    "key": "gb|De'Longhi|exam441.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3001,19 +2943,18 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/294628",
    "key": "gb|De'Longhi|ecam310.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Plus ECAM322.70.SB",
-   "url": "https://www.delonghi.com/en-gb/p/magnifica-plus-magnifica-plus-automatic-coffee-maker-ecam322.70.sb/ECAM322.70.SB.html?pid=0132250033",
+   "name": "De'Longhi Magnifica Duo ECAM330.80.BXB",
+   "url": "https://www.delonghi.com/en-gb/p/magnifica-duo-magnifica-duo-automatic-coffee-maker-ecam330.80.bxb/ECAM330.80.BXB.html?pid=0132250287",
    "price": 699.99,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/276226",
-   "key": "gb|De'Longhi|ecam322.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "img": "https://dam.delonghi.com/600x600/assets/376143",
+   "key": "gb|De'Longhi|ecam330.80",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3025,18 +2966,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/375518",
    "key": "gb|De'Longhi|ecam332.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "gb",
    "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Duo ECAM330.80.BXB",
-   "url": "https://www.delonghi.com/en-gb/p/magnifica-duo-magnifica-duo-automatic-coffee-maker-ecam330.80.bxb/ECAM330.80.BXB.html?pid=0132250287",
+   "name": "De'Longhi Magnifica Plus ECAM322.70.SB",
+   "url": "https://www.delonghi.com/en-gb/p/magnifica-plus-magnifica-plus-automatic-coffee-maker-ecam322.70.sb/ECAM322.70.SB.html?pid=0132250033",
    "price": 699.99,
-   "img": "https://dam.delonghi.com/600x600/assets/376143",
-   "key": "gb|De'Longhi|ecam330.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/276226",
+   "key": "gb|De'Longhi|ecam322.70",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3048,7 +2990,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363672",
    "key": "gb|De'Longhi|ecam472.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3060,7 +3002,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/226528",
    "key": "it|De'Longhi|ecam22.110",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3072,7 +3014,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/246473",
    "key": "it|De'Longhi|ecam220.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3084,7 +3026,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/130766",
    "key": "it|De'Longhi|ecam250.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3096,7 +3038,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/130840",
    "key": "it|De'Longhi|ecam250.23",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3108,7 +3050,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/252896",
    "key": "it|De'Longhi|ecam11.112",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3120,19 +3062,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228161",
    "key": "it|De'Longhi|ecam290.21",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Evo ECAM292.33.SB",
-   "url": "https://www.delonghi.com/it-it/p/magnifica-evo-macchina-automatica-per-caffe-in-chicchi-magnifica-evo-ecam292.33.sb/ECAM292.33.SB.html?pid=0132220049",
-   "price": 349.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/228156",
-   "key": "it|De'Longhi|ecam292.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3144,7 +3074,19 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/336428",
    "key": "it|De'Longhi|ecam222.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Evo ECAM292.33.SB",
+   "url": "https://www.delonghi.com/it-it/p/magnifica-evo-macchina-automatica-per-caffe-in-chicchi-magnifica-evo-ecam292.33.sb/ECAM292.33.SB.html?pid=0132220049",
+   "price": 349.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/228156",
+   "key": "it|De'Longhi|ecam292.33",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3156,7 +3098,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189478",
    "key": "it|De'Longhi|ecam230.13",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3168,7 +3110,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/317001",
    "key": "it|De'Longhi|ecam290.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3180,7 +3122,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189471",
    "key": "it|De'Longhi|ecam350.15",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3192,7 +3134,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/83760",
    "key": "it|De'Longhi|etam29.510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3204,31 +3146,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/317005",
    "key": "it|De'Longhi|ecam292.81",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM220.61.W",
-   "url": "https://www.delonghi.com/it-it/p/magnifica-start-macchina-automatica-per-caffe-in-chicchi-magnifica-start-ecam220.61.w-ex1/ECAM220.61.W+EX%3A1.html?pid=0132250211",
-   "price": 399.9,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/336348",
-   "key": "it|De'Longhi|ecam220.61",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM220.80.SB",
-   "url": "https://www.delonghi.com/it-it/p/magnifica-start-macchina-automatica-per-caffe-in-chicchi-magnifica-start-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
-   "price": 399.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/296739",
-   "key": "it|De'Longhi|ecam220.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3240,7 +3158,31 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/246478",
    "key": "it|De'Longhi|ecam222.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM220.61.W",
+   "url": "https://www.delonghi.com/it-it/p/magnifica-start-macchina-automatica-per-caffe-in-chicchi-magnifica-start-ecam220.61.w-ex1/ECAM220.61.W+EX%3A1.html?pid=0132250211",
+   "price": 399.9,
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/336348",
+   "key": "it|De'Longhi|ecam220.61",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM220.80.SB",
+   "url": "https://www.delonghi.com/it-it/p/magnifica-start-macchina-automatica-per-caffe-in-chicchi-magnifica-start-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
+   "price": 399.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/296739",
+   "key": "it|De'Longhi|ecam220.80",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3252,7 +3194,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/323584",
    "key": "it|De'Longhi|ecam290.89",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3264,7 +3206,7 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/268666",
    "key": "it|De'Longhi|exam440.35",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3276,7 +3218,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/192118",
    "key": "it|De'Longhi|ecam46.860",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3288,19 +3230,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/380698",
    "key": "it|De'Longhi|exam420.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi Eletta Cappuccino ECAM44.660.B",
-   "url": "https://www.delonghi.com/it-it/p/eletta-macchina-da-caffe-automatica-eletta-cappuccino-ecam44.660.b/ECAM44.660.B.html?pid=0132215212",
-   "price": 599.9,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/223630",
-   "key": "it|De'Longhi|ecam44.660",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3312,7 +3242,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/276181",
    "key": "it|De'Longhi|ecam320.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3324,7 +3254,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/191478",
    "key": "it|De'Longhi|ecam550.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi Eletta Cappuccino ECAM44.660.B",
+   "url": "https://www.delonghi.com/it-it/p/eletta-macchina-da-caffe-automatica-eletta-cappuccino-ecam44.660.b/ECAM44.660.B.html?pid=0132215212",
+   "price": 599.9,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/223630",
+   "key": "it|De'Longhi|ecam44.660",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3336,7 +3278,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/267440",
    "key": "it|De'Longhi|ecam380.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3348,7 +3290,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/276202",
    "key": "it|De'Longhi|ecam320.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3360,30 +3302,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/276226",
    "key": "it|De'Longhi|ecam322.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "it",
    "store": "De'Longhi",
    "name": "De'Longhi Rivelia EXAM440.55.BG",
-   "url": "https://www.delonghi.com/it-it/p/rivelia-macchina-automatica-per-caffe-in-chicchi-rivelia-exam440.55.w/EXAM440.55.W.html?pid=0132215473",
+   "url": "https://www.delonghi.com/it-it/p/rivelia-macchina-automatica-per-caffe-in-chicchi-rivelia-exam440.55.bg/EXAM440.55.BG.html?pid=0132215474",
    "price": 649.9,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/380686",
+   "color": "beige",
+   "img": "https://dam.delonghi.com/600x600/assets/380684",
    "key": "it|De'Longhi|exam440.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM441.55.AMR",
-   "url": "https://www.delonghi.com/it-it/p/rivelia-macchina-automatica-per-caffe-in-chicchi-rivelia-exam441.55.amr/EXAM441.55.AMR.html?pid=0132250308",
-   "price": 649.9,
-   "img": "https://dam.delonghi.com/600x600/assets/378856",
-   "key": "it|De'Longhi|exam441.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3395,7 +3326,19 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/380697",
    "key": "it|De'Longhi|exam422.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi Rivelia EXAM441.55.GR",
+   "url": "https://www.delonghi.com/it-it/p/rivelia-macchina-automatica-per-caffe-in-chicchi-rivelia-exam441.55.gr/EXAM441.55.GR.html?pid=0132250063",
+   "price": 649.9,
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/380687",
+   "key": "it|De'Longhi|exam441.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3407,7 +3350,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/267451",
    "key": "it|De'Longhi|ecam382.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3419,19 +3362,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/267447",
    "key": "it|De'Longhi|ecam380.95",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Duo ECAM332.80.SXB",
-   "url": "https://www.delonghi.com/it-it/p/magnifica-duo-macchina-automatica-per-caffe-in-chicchi-magnifica-duo-ecam332.80.sxb/ECAM332.80.SXB.html?pid=0132250270",
-   "price": 699.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/375518",
-   "key": "it|De'Longhi|ecam332.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3443,7 +3374,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/376144",
    "key": "it|De'Longhi|ecam330.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3455,7 +3386,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/294642",
    "key": "it|De'Longhi|ecam312.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3467,7 +3398,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "it|De'Longhi|ecam450.69",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3479,7 +3410,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257455",
    "key": "it|De'Longhi|ecam450.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3491,7 +3422,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/257457",
    "key": "it|De'Longhi|ecam450.86",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3503,7 +3434,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/378045",
    "key": "it|De'Longhi|ecam472.50",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3515,19 +3446,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "it|De'Longhi|ecam610.75",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
-   "url": "https://www.delonghi.com/it-it/p/primadonna-soul-macchina-da-caffe-automatica-primadonna-soul-ecam610.55.sb/ECAM610.55.SB.html?pid=0132217053",
-   "price": 999.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/191184",
-   "key": "it|De'Longhi|ecam610.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3539,7 +3458,19 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "it|De'Longhi|ecam452.67",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "it",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
+   "url": "https://www.delonghi.com/it-it/p/primadonna-soul-macchina-da-caffe-automatica-primadonna-soul-ecam610.55.sb/ECAM610.55.SB.html?pid=0132217053",
+   "price": 999.9,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/191184",
+   "key": "it|De'Longhi|ecam610.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3551,7 +3482,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/378044",
    "key": "it|De'Longhi|ecam470.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3563,7 +3494,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363672",
    "key": "it|De'Longhi|ecam472.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3575,7 +3506,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/306817",
    "key": "it|De'Longhi|ecam630.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3587,19 +3518,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/215516",
    "key": "it|De'Longhi|ecam612.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "it",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Aromatic ECAM630.75.TSM",
-   "url": "https://www.delonghi.com/it-it/p/primadonna-aromatic-macchina-automatica-per-caffe-in-chicchi-primadonna-aromatic-ecam630.75.tsm/ECAM630.75.TSM.html?pid=0132250179",
-   "price": 1399.9,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/306833",
-   "key": "it|De'Longhi|ecam630.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3611,7 +3530,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "it|De'Longhi|ecam610.74",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3623,7 +3542,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/226528",
    "key": "pl|De'Longhi|ecam22.110",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3635,19 +3554,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/252896",
    "key": "pl|De'Longhi|ecam11.112",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Start ECAM220.20.W",
-   "url": "https://www.delonghi.com/pl-pl/p/magnifica-start-automatyczny-ekspres-magnifica-start-ecam220.20.w/ECAM220.20.W.html?pid=0132240033",
-   "price": 1199,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/246473",
-   "key": "pl|De'Longhi|ecam220.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3659,7 +3566,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/246478",
    "key": "pl|De'Longhi|ecam222.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3671,7 +3578,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189478",
    "key": "pl|De'Longhi|ecam230.13",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "pl",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Start ECAM220.20.W",
+   "url": "https://www.delonghi.com/pl-pl/p/magnifica-start-automatyczny-ekspres-magnifica-start-ecam220.20.w/ECAM220.20.W.html?pid=0132240033",
+   "price": 1199,
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/246473",
+   "key": "pl|De'Longhi|ecam220.20",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3683,7 +3602,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/130766",
    "key": "pl|De'Longhi|ecam250.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3695,7 +3614,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/130840",
    "key": "pl|De'Longhi|ecam250.23",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3707,7 +3626,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/228156",
    "key": "pl|De'Longhi|ecam292.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3719,7 +3638,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228161",
    "key": "pl|De'Longhi|ecam290.21",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3731,7 +3650,7 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/336428",
    "key": "pl|De'Longhi|ecam222.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3743,7 +3662,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/336348",
    "key": "pl|De'Longhi|ecam220.61",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3751,11 +3670,11 @@
    "store": "De'Longhi",
    "name": "De'Longhi Magnifica Start ECAM220.80.SB",
    "url": "https://www.delonghi.com/pl-pl/p/magnifica-start-automatyczny-ekspres-do-kawy-magnifica-start-ecam220.80.sb-ex1/ECAM220.80.SB+EX%3A1.html?pid=0132250210",
-   "price": 1499,
+   "price": 1529,
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/296739",
    "key": "pl|De'Longhi|ecam220.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3767,7 +3686,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189471",
    "key": "pl|De'Longhi|ecam350.15",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3779,19 +3698,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/317005",
    "key": "pl|De'Longhi|ecam292.81",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Evo ECAM290.81.TB",
-   "url": "https://www.delonghi.com/pl-pl/p/magnifica-evo-automatyczny-ekspres-magnifica-evo-ecam290.81.tb-ex1/ECAM290.81.TB+EX%3A1.html?pid=0132250147",
-   "price": 1799,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/317001",
-   "key": "pl|De'Longhi|ecam290.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3803,7 +3710,19 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/83760",
    "key": "pl|De'Longhi|etam29.510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "pl",
+   "store": "De'Longhi",
+   "name": "De'Longhi Rivelia EXAM440.35.BG",
+   "url": "https://www.delonghi.com/pl-pl/p/rivelia-automatyczny-ekspres-do-kawy-rivelia-exam440.35.b/EXAM440.35.B.html?pid=0132213208",
+   "price": 1999,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/268661",
+   "key": "pl|De'Longhi|exam440.35",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3815,19 +3734,19 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/294642",
    "key": "pl|De'Longhi|ecam312.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "pl",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM440.35.BG",
-   "url": "https://www.delonghi.com/pl-pl/p/rivelia-automatyczny-ekspres-do-kawy-rivelia-exam440.35.w/EXAM440.35.W.html?pid=0132213209",
+   "name": "De'Longhi Magnifica Evo ECAM290.81.TB",
+   "url": "https://www.delonghi.com/pl-pl/p/magnifica-evo-automatyczny-ekspres-magnifica-evo-ecam290.81.tb-ex1/ECAM290.81.TB+EX%3A1.html?pid=0132250147",
    "price": 1999,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/268672",
-   "key": "pl|De'Longhi|exam440.35",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/317001",
+   "key": "pl|De'Longhi|ecam290.81",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3839,7 +3758,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/223630",
    "key": "pl|De'Longhi|ecam44.660",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3851,7 +3770,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/192118",
    "key": "pl|De'Longhi|ecam46.860",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3863,7 +3782,7 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/380697",
    "key": "pl|De'Longhi|exam422.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3875,19 +3794,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/380698",
    "key": "pl|De'Longhi|exam420.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Duo ECAM332.80.SXB",
-   "url": "https://www.delonghi.com/pl-pl/p/magnifica-duo-ekspres-automatyczny-magnifica-duo-ecam332.80.sxb/ECAM332.80.SXB.html?pid=0132250270",
-   "price": 2199,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/375518",
-   "key": "pl|De'Longhi|ecam332.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3899,7 +3806,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/276181",
    "key": "pl|De'Longhi|ecam320.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3911,7 +3818,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/323584",
    "key": "pl|De'Longhi|ecam290.89",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3923,7 +3830,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/376144",
    "key": "pl|De'Longhi|ecam330.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3935,7 +3842,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/267451",
    "key": "pl|De'Longhi|ecam382.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3947,7 +3854,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/380686",
    "key": "pl|De'Longhi|exam440.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3959,19 +3866,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/276202",
    "key": "pl|De'Longhi|ecam320.70",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi Dinamica Plus ECAM380.85.SB",
-   "url": "https://www.delonghi.com/pl-pl/p/dinamica-plus-automatyczny-ekspres-dinamica-plus-ecam380.85.sb/ECAM380.85.SB.html?pid=0132215485",
-   "price": 2599,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/267440",
-   "key": "pl|De'Longhi|ecam380.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -3983,18 +3878,31 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/191478",
    "key": "pl|De'Longhi|ecam550.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "pl",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM441.55.AMR",
-   "url": "https://www.delonghi.com/pl-pl/p/rivelia-automatyczny-ekspres-do-kawy-rivelia-exam441.55.amr/EXAM441.55.AMR.html?pid=0132250308",
+   "name": "De'Longhi Dinamica Plus ECAM380.85.SB",
+   "url": "https://www.delonghi.com/pl-pl/p/dinamica-plus-automatyczny-ekspres-dinamica-plus-ecam380.85.sb/ECAM380.85.SB.html?pid=0132215485",
+   "price": 2599,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/267440",
+   "key": "pl|De'Longhi|ecam380.85",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "pl",
+   "store": "De'Longhi",
+   "name": "De'Longhi Rivelia EXAM441.55.GR",
+   "url": "https://www.delonghi.com/pl-pl/p/rivelia-automatyczny-ekspres-do-kawy-rivelia-exam441.55.gr/EXAM441.55.GR.html?pid=0132250063",
    "price": 2609,
-   "img": "https://dam.delonghi.com/600x600/assets/378856",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/380687",
    "key": "pl|De'Longhi|exam441.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4006,7 +3914,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/276226",
    "key": "pl|De'Longhi|ecam322.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4014,11 +3922,11 @@
    "store": "De'Longhi",
    "name": "De'Longhi Dinamica Plus ECAM380.95.TB",
    "url": "https://www.delonghi.com/pl-pl/p/dinamica-plus-automatyczny-ekspres-dinamica-plus-ecam380.95.tb/ECAM380.95.TB.html?pid=0132215486",
-   "price": 2699,
+   "price": 2999,
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/267447",
    "key": "pl|De'Longhi|ecam380.95",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4030,7 +3938,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/378045",
    "key": "pl|De'Longhi|ecam472.50",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4042,43 +3950,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257455",
    "key": "pl|De'Longhi|ecam450.65",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.74.MB",
-   "url": "https://www.delonghi.com/pl-pl/p/primadonna-soul-automatyczny-ekspres-primadonna-soul-ecam610.74.mb/ECAM610.74.MB.html?pid=0132217054",
-   "price": 3499,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/190115",
-   "key": "pl|De'Longhi|ecam610.74",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
-   "url": "https://www.delonghi.com/pl-pl/p/primadonna-soul-automatyczny-ekspres-primadonna-soul-ecam610.55.sb/ECAM610.55.SB.html?pid=0132217053",
-   "price": 3499,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/191184",
-   "key": "pl|De'Longhi|ecam610.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.75.MB",
-   "url": "https://www.delonghi.com/pl-pl/p/primadonna-soul-automatyczny-ekspres-primadonna-soul-ecam610.75.mb/ECAM610.75.MB.html?pid=0132217055",
-   "price": 3499,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/190115",
-   "key": "pl|De'Longhi|ecam610.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4090,7 +3962,43 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/215516",
    "key": "pl|De'Longhi|ecam612.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "pl",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.74.MB",
+   "url": "https://www.delonghi.com/pl-pl/p/primadonna-soul-automatyczny-ekspres-primadonna-soul-ecam610.74.mb/ECAM610.74.MB.html?pid=0132217054",
+   "price": 3499,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/190115",
+   "key": "pl|De'Longhi|ecam610.74",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "pl",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.75.MB",
+   "url": "https://www.delonghi.com/pl-pl/p/primadonna-soul-automatyczny-ekspres-primadonna-soul-ecam610.75.mb/ECAM610.75.MB.html?pid=0132217055",
+   "price": 3499,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/190115",
+   "key": "pl|De'Longhi|ecam610.75",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "pl",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
+   "url": "https://www.delonghi.com/pl-pl/p/primadonna-soul-automatyczny-ekspres-primadonna-soul-ecam610.55.sb/ECAM610.55.SB.html?pid=0132217053",
+   "price": 3499,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/191184",
+   "key": "pl|De'Longhi|ecam610.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4102,7 +4010,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "pl|De'Longhi|ecam450.69",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4110,23 +4018,11 @@
    "store": "De'Longhi",
    "name": "De'Longhi Eletta Ultra ECAM470.75.TXB",
    "url": "https://www.delonghi.com/pl-pl/p/eletta-ultra-eletta-ultra-automatic-coffee-maker-ecam470.75.txb/ECAM470.75.TXB.html?pid=0132250224",
-   "price": 3599,
+   "price": 3999,
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/378044",
    "key": "pl|De'Longhi|ecam470.75",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi Eletta Explore ECAM450.86.T",
-   "url": "https://www.delonghi.com/pl-pl/p/eletta-explore-automatyczny-ekspres-do-kawy-eletta-explore-ecam450.86.t-ex4/ECAM450.86.T+EX%3A4.html?pid=0132250116",
-   "price": 3799,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/257457",
-   "key": "pl|De'Longhi|ecam450.86",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4134,11 +4030,11 @@
    "store": "De'Longhi",
    "name": "De'Longhi Eletta Ultra ECAM472.85.MB",
    "url": "https://www.delonghi.com/pl-pl/p/eletta-ultra-automatyczny-ekspres-do-kawy-eletta-ultra-ecam472.85.mb/ECAM472.85.MB.html?pid=0132250242",
-   "price": 4699,
+   "price": 4229,
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363672",
    "key": "pl|De'Longhi|ecam472.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4150,19 +4046,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/306817",
    "key": "pl|De'Longhi|ecam630.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "pl",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Aromatic ECAM630.75.TSM",
-   "url": "https://www.delonghi.com/pl-pl/p/primadonna-aromatic-automatyczny-ekspres-primadonna-aromatic-ecam630.75.tsm/ECAM630.75.TSM.html?pid=0132250179",
-   "price": 5849,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/306833",
-   "key": "pl|De'Longhi|ecam630.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4174,7 +4058,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/223655",
    "key": "se|De'Longhi|ecam22.110",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4186,7 +4070,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/252896",
    "key": "se|De'Longhi|ecam11.112",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4198,7 +4082,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189478",
    "key": "se|De'Longhi|ecam230.13",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4210,19 +4094,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/130766",
    "key": "se|De'Longhi|ecam250.33",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica S ECAM250.23.SB",
-   "url": "https://www.delonghi.com/sv-se/p/magnifica-s-smart-ecam250.23.sb-magnifica-s-smart-automatisk-kaffemaskin/ECAM250.23.SB.html?pid=0132213166",
-   "price": 3299,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/130840",
-   "key": "se|De'Longhi|ecam250.23",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4234,7 +4106,19 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/246473",
    "key": "se|De'Longhi|ecam220.20",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "se",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica S ECAM250.23.SB",
+   "url": "https://www.delonghi.com/sv-se/p/magnifica-s-smart-ecam250.23.sb-magnifica-s-smart-automatisk-kaffemaskin/ECAM250.23.SB.html?pid=0132213166",
+   "price": 3299,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/130840",
+   "key": "se|De'Longhi|ecam250.23",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4246,7 +4130,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/228156",
    "key": "se|De'Longhi|ecam292.33",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4258,7 +4142,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/228161",
    "key": "se|De'Longhi|ecam290.21",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4270,7 +4154,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/83760",
    "key": "se|De'Longhi|etam29.510",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4282,7 +4166,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/189471",
    "key": "se|De'Longhi|ecam350.15",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4294,7 +4178,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/323584",
    "key": "se|De'Longhi|ecam290.89",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4306,7 +4190,7 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/336428",
    "key": "se|De'Longhi|ecam222.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4318,7 +4202,7 @@
    "color": "white",
    "img": "https://dam.delonghi.com/600x600/assets/336348",
    "key": "se|De'Longhi|ecam220.61",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4330,7 +4214,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/296739",
    "key": "se|De'Longhi|ecam220.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4342,7 +4226,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/317005",
    "key": "se|De'Longhi|ecam292.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4354,31 +4238,19 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/317001",
    "key": "se|De'Longhi|ecam290.81",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "se",
    "store": "De'Longhi",
    "name": "De'Longhi Rivelia EXAM440.35.BG",
-   "url": "https://www.delonghi.com/sv-se/p/rivelia-rivelia-automatisk-kaffebryggare-exam440.35.bg/EXAM440.35.BG.html?pid=0132213210",
+   "url": "https://www.delonghi.com/sv-se/p/rivelia-rivelia-automatisk-kaffebryggare-exam440.35.b/EXAM440.35.B.html?pid=0132213208",
    "price": 5949,
-   "color": "beige",
-   "img": "https://dam.delonghi.com/600x600/assets/268666",
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/268661",
    "key": "se|De'Longhi|exam440.35",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Evo Next ECAM312.80.TB",
-   "url": "https://www.delonghi.com/sv-se/p/magnifica-evo-next-magnifica-evo-next-automatisk-kaffemaskin-ecam312.80.tb/ECAM312.80.TB.html?pid=0132250042",
-   "price": 5999,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/294642",
-   "key": "se|De'Longhi|ecam312.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4390,7 +4262,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/380698",
    "key": "se|De'Longhi|exam420.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4402,19 +4274,19 @@
    "color": "beige",
    "img": "https://dam.delonghi.com/600x600/assets/380697",
    "key": "se|De'Longhi|exam422.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "se",
    "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Duo ECAM332.80.SXB",
-   "url": "https://www.delonghi.com/sv-se/p/magnifica-duo-magnifica-duo-automatisk-kaffemaskin-ecam332.80.sxb/ECAM332.80.SXB.html?pid=0132250270",
-   "price": 6299,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/375518",
-   "key": "se|De'Longhi|ecam332.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "name": "De'Longhi Magnifica Evo Next ECAM312.80.TB",
+   "url": "https://www.delonghi.com/sv-se/p/magnifica-evo-next-magnifica-evo-next-automatisk-kaffemaskin-ecam312.80.tb/ECAM312.80.TB.html?pid=0132250042",
+   "price": 5999,
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/294642",
+   "key": "se|De'Longhi|ecam312.80",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4426,7 +4298,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/276181",
    "key": "se|De'Longhi|ecam320.60",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4438,7 +4310,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/376144",
    "key": "se|De'Longhi|ecam330.80",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4450,43 +4322,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/192118",
    "key": "se|De'Longhi|ecam46.860",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi Magnifica Plus ECAM320.70.TB",
-   "url": "https://www.delonghi.com/sv-se/p/magnifica-plus-ecam320.70.tb-magnifica-plus-automatisk-kaffemaskin/ECAM320.70.TB.html?pid=0132250019",
-   "price": 6999,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/276202",
-   "key": "se|De'Longhi|ecam320.70",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi Eletta Cappuccino ECAM44.660.B",
-   "url": "https://www.delonghi.com/sv-se/p/eletta-ecam44.660.b-eletta-cappuccino-automatisk-kaffebryggare/ECAM44.660.B.html?pid=0132215212",
-   "price": 6999,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/223630",
-   "key": "se|De'Longhi|ecam44.660",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM440.55.BG",
-   "url": "https://www.delonghi.com/sv-se/p/rivelia-rivelia-automatisk-kaffemaskin-exam440.55.w/EXAM440.55.W.html?pid=0132215473",
-   "price": 6999,
-   "color": "white",
-   "img": "https://dam.delonghi.com/600x600/assets/380686",
-   "key": "se|De'Longhi|exam440.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4498,7 +4334,43 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/267451",
    "key": "se|De'Longhi|ecam382.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "se",
+   "store": "De'Longhi",
+   "name": "De'Longhi Rivelia EXAM440.55.BG",
+   "url": "https://www.delonghi.com/sv-se/p/rivelia-rivelia-automatisk-kaffemaskin-exam440.55.bg/EXAM440.55.BG.html?pid=0132215474",
+   "price": 6999,
+   "color": "beige",
+   "img": "https://dam.delonghi.com/600x600/assets/380684",
+   "key": "se|De'Longhi|exam440.55",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "se",
+   "store": "De'Longhi",
+   "name": "De'Longhi Magnifica Plus ECAM320.70.TB",
+   "url": "https://www.delonghi.com/sv-se/p/magnifica-plus-ecam320.70.tb-magnifica-plus-automatisk-kaffemaskin/ECAM320.70.TB.html?pid=0132250019",
+   "price": 6999,
+   "color": "titanium",
+   "img": "https://dam.delonghi.com/600x600/assets/276202",
+   "key": "se|De'Longhi|ecam320.70",
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "se",
+   "store": "De'Longhi",
+   "name": "De'Longhi Eletta Cappuccino ECAM44.660.B",
+   "url": "https://www.delonghi.com/sv-se/p/eletta-ecam44.660.b-eletta-cappuccino-automatisk-kaffebryggare/ECAM44.660.B.html?pid=0132215212",
+   "price": 6999,
+   "color": "black",
+   "img": "https://dam.delonghi.com/600x600/assets/223630",
+   "key": "se|De'Longhi|ecam44.660",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4510,18 +4382,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/276226",
    "key": "se|De'Longhi|ecam322.70",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "se",
    "store": "De'Longhi",
-   "name": "De'Longhi Rivelia EXAM441.55.AMR",
-   "url": "https://www.delonghi.com/sv-se/p/rivelia-rivelia-automatisk-kaffemaskin-exam441.55.amr/EXAM441.55.AMR.html?pid=0132250308",
+   "name": "De'Longhi Rivelia EXAM441.55.GR",
+   "url": "https://www.delonghi.com/sv-se/p/rivelia-rivelia-automatisk-kaffemaskin-exam441.55.gr/EXAM441.55.GR.html?pid=0132250063",
    "price": 7499,
-   "img": "https://dam.delonghi.com/600x600/assets/378856",
+   "color": "grey",
+   "img": "https://dam.delonghi.com/600x600/assets/380687",
    "key": "se|De'Longhi|exam441.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4533,7 +4406,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/267440",
    "key": "se|De'Longhi|ecam380.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4545,7 +4418,7 @@
    "color": "titanium",
    "img": "https://dam.delonghi.com/600x600/assets/267447",
    "key": "se|De'Longhi|ecam380.95",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4557,7 +4430,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257458",
    "key": "se|De'Longhi|ecam450.69",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4569,7 +4442,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/191478",
    "key": "se|De'Longhi|ecam550.65",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4581,31 +4454,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/257455",
    "key": "se|De'Longhi|ecam450.65",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi Eletta Explore ECAM450.86.T",
-   "url": "https://www.delonghi.com/sv-se/p/eletta-explore-eletta-explore-automatisk-kaffemaskin-ecam450.86.t-ex4/ECAM450.86.T+EX%3A4.html?pid=0132250116",
-   "price": 9999,
-   "color": "titanium",
-   "img": "https://dam.delonghi.com/600x600/assets/257457",
-   "key": "se|De'Longhi|ecam450.86",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
-   "url": "https://www.delonghi.com/sv-se/p/primadonna-soul-ecam610.55.sb-primadonna-soul-automatisk-kaffebryggare/ECAM610.55.SB.html?pid=0132217053",
-   "price": 11499,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/191184",
-   "key": "se|De'Longhi|ecam610.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4617,7 +4466,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/215516",
    "key": "se|De'Longhi|ecam612.55",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
+  },
+  {
+   "cat": "superautomatic",
+   "market": "se",
+   "store": "De'Longhi",
+   "name": "De'Longhi PrimaDonna Soul ECAM610.55.SB",
+   "url": "https://www.delonghi.com/sv-se/p/primadonna-soul-ecam610.55.sb-primadonna-soul-automatisk-kaffebryggare/ECAM610.55.SB.html?pid=0132217053",
+   "price": 11499,
+   "color": "silver",
+   "img": "https://dam.delonghi.com/600x600/assets/191184",
+   "key": "se|De'Longhi|ecam610.55",
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4629,7 +4490,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "se|De'Longhi|ecam610.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4641,7 +4502,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/190115",
    "key": "se|De'Longhi|ecam610.74",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4653,19 +4514,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/306817",
    "key": "se|De'Longhi|ecam630.55",
-   "seen": "2026-11-13T12:30:29.382Z"
-  },
-  {
-   "cat": "superautomatic",
-   "market": "se",
-   "store": "De'Longhi",
-   "name": "De'Longhi PrimaDonna Aromatic ECAM630.75.TSM",
-   "url": "https://www.delonghi.com/sv-se/p/primadonna-aromatic-primadonna-aromatic-automatisk-kaffemaskin-ecam630.75.tsm/ECAM630.75.TSM.html?pid=0132250179",
-   "price": 16399,
-   "color": "silver",
-   "img": "https://dam.delonghi.com/600x600/assets/306833",
-   "key": "se|De'Longhi|ecam630.75",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4677,7 +4526,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/363672",
    "key": "se|De'Longhi|ecam472.85",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4689,7 +4538,7 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/245807",
    "key": "us|De'Longhi|ec950",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4700,7 +4549,7 @@
    "price": 699.95,
    "img": "https://dam.delonghi.com/600x600/assets/372923",
    "key": "us|De'Longhi|ecam33080sxb",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4712,7 +4561,7 @@
    "color": "black",
    "img": "https://dam.delonghi.com/600x600/assets/281822",
    "key": "us|De'Longhi|ecam22022",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4723,7 +4572,7 @@
    "price": 749.95,
    "img": "https://dam.delonghi.com/600x600/assets/231506",
    "key": "us|De'Longhi|ecam29043",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4735,19 +4584,19 @@
    "color": "silver",
    "img": "https://dam.delonghi.com/600x600/assets/296739",
    "key": "us|De'Longhi|ecam22080",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
    "market": "us",
    "store": "De'Longhi",
    "name": "De'Longhi Rivelia EXAM44055BG",
-   "url": "https://www.delonghi.com/en-us/p/rivelia-rivelia-fully-automatic-espresso-machine--onyx-black/EXAM44055B.html?pid=0132250088",
+   "url": "https://www.delonghi.com/en-us/p/rivelia-rivelia-fully-automatic-espresso-machine--arctic-white/EXAM44055W.html?pid=0132250087",
    "price": 999.95,
-   "color": "black",
-   "img": "https://dam.delonghi.com/600x600/assets/269456",
+   "color": "white",
+   "img": "https://dam.delonghi.com/600x600/assets/268697",
    "key": "us|De'Longhi|exam44055",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4759,7 +4608,7 @@
    "color": "grey",
    "img": "https://dam.delonghi.com/600x600/assets/268686",
    "key": "us|De'Longhi|exam44055g",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4770,7 +4619,7 @@
    "price": 1499.95,
    "img": "https://dam.delonghi.com/600x600/assets/266716",
    "key": "us|De'Longhi|de longhi eletta explore",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   },
   {
    "cat": "superautomatic",
@@ -4781,7 +4630,7 @@
    "price": 2499.95,
    "img": "https://dam.delonghi.com/600x600/assets/325075",
    "key": "us|De'Longhi|ecam63075tm",
-   "seen": "2026-11-13T12:30:29.382Z"
+   "seen": "2026-11-14T11:41:03.963Z"
   }
  ]
 }
